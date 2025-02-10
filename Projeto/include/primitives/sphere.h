@@ -6,4 +6,4 @@
 #include <cmath>
 
 
-void generateSphere(float raio, int slices, int stacks, char* outputFile);
+void generateSphere(int raio, int slices, int stacks, char* outputFile);

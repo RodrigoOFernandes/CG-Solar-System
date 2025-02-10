@@ -10,16 +10,22 @@ int main(int argc, char** argv){
     char* outputFile = argv[argc - 1];
 
     if(strcmp(primitive, SPHERE) == 0){
-        float radius = std::stof(argv[2]);
+        int radius = std::stoi(argv[2]);
         int slices = std::stoi(argv[3]);
         int stacks = std::stoi(argv[4]);
         generateSphere(radius, slices, stacks, outputFile);
     } else if(strcmp(primitive, PLANE) == 0){
-        printf("plane not available\n");
+        generatePlane(outputFile);
     } else if(strcmp(primitive, BOX) == 0){
-        printf("box not available\n");
+        int length = std::stoi(argv[2]);
+        int divisions = std::stof(argv[3]);
+        generateBox(length,divisions,outputFile);
     } else if(strcmp(primitive, CONE) == 0){
-        printf("cone not available\n");
+        int radius = std::stof(argv[2]);
+        int height = std::stof(argv[3]);
+        int slices = std::stof(argv[4]);
+        int stacks = std::stof(argv[5]);
+        generateCone(radius, height, slices, stacks, outputFile);
     }
 
     return 0;
