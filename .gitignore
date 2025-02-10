@@ -1,0 +1,12 @@
+*.o
+*.3d
+*.xml
+build/
+git/
+.vscode/
+idea/
+log/
+tmp/
+obj/
+*.DS_Store
+.png
