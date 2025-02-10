@@ -7,7 +7,7 @@ void generateSphere(float raio, int slices, int stacks, char* outputFile)
 
     if(!file.is_open())
     {
-        std::cerr << "Erro ao abrir ficheiro de output" << outputFile << std::endl;
+        std::cerr << "Error opening outputfile" << outputFile << std::endl;
         return;
     }
 
