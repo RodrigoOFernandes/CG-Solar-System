@@ -48,8 +48,7 @@ int main(int argc, char** argv)
     char* primitiva = argv[1];
     char* outputFile = argv[argc - 1];
 
-    if(strcmp(primitiva, "sphere") == 0)
-    {
+    if(strcmp(primitiva, SPHERE) == 0){
         float raio = std::stof(argv[2]);
         int slices = std::stoi(argv[3]);
         int stacks = std::stoi(argv[4]);
