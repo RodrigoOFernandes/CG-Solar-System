@@ -1,4 +1,4 @@
-#include "../include/generator/shapes/cone.h"
+#include "generator/shapes/cone.hpp"
 
 
 

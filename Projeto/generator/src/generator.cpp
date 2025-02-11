@@ -1,4 +1,4 @@
-#include "../include/generator/generator.h"
+#include "generator.hpp"
 
 int main(int argc, char** argv){
     if(argc < 2)

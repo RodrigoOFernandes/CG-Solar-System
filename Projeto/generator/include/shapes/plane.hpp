@@ -1,5 +1,5 @@
-#ifndef SPHERE_H
-#define SPHERE_H
+#ifndef PLANE_HPP
+#define PLANE_HPP
 
 #include <stdio.h>
 #include <string.h>
@@ -9,6 +9,6 @@
 #include <cmath>
 
 
-void generateSphere(int raio, int slices, int stacks, char* outputFile);
+void generatePlane(char* outputFile);
 
 #endif
