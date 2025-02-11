@@ -1,4 +1,4 @@
-#include "include/primitives/plane.h"
+#include "../include/generator/shapes/plane.h"
 
 
 void generatePlane(char* outputFile){

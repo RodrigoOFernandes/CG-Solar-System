@@ -1,4 +1,4 @@
-#include "include/primitives/sphere.h"
+#include "../include/generator/shapes/sphere.h"
 
 
 void generateSphere(int radius, int slices, int stacks, char* outputFile){

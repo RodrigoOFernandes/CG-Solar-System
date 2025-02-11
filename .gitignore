@@ -1,6 +1,4 @@
 *.o
-*.3d
-*.xml
 build/
 git/
 .vscode/
@@ -9,4 +7,3 @@ log/
 tmp/
 obj/
 *.DS_Store
-.png
