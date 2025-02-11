@@ -1,4 +1,4 @@
-#include "../include/generator/shapes/plane.h"
+#include "generator/shapes/plane.hpp"
 
 
 void generatePlane(char* outputFile){

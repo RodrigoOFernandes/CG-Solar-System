@@ -1,5 +1,5 @@
-#ifndef BOX_H
-#define BOX_H
+#ifndef BOX_HPP
+#define BOX_HPP
 
 #include <stdio.h>
 #include <string.h>

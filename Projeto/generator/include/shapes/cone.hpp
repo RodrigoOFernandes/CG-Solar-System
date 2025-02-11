@@ -1,5 +1,6 @@
-#ifndef PLANE_H
-#define PLANE_H
+#ifndef CONE_HPP
+#define CONE_HPP
+
 
 #include <stdio.h>
 #include <string.h>
@@ -8,7 +9,6 @@
 #include <iostream>
 #include <cmath>
 
-
-void generatePlane(char* outputFile);
+void generateCone(int radius, int height, int slices, int stacks, char* outputFile);
 
 #endif
