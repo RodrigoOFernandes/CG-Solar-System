@@ -1,10 +1,10 @@
 #ifndef GENERATOR_H
 #define GENERATOR_H
 
-#include "include/primitives/sphere.h"
-#include "include/primitives/box.h"
-#include "include/primitives/plane.h"
-#include "include/primitives/cone.h"
+#include "../include/generator/shapes/sphere.h"
+#include "../include/generator/shapes/box.h"
+#include "../include/generator/shapes/plane.h"
+#include "../include/generator/shapes/cone.h"
 
 #include <stdio.h>
 #include <string.h>

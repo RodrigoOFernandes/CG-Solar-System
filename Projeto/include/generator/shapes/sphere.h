@@ -1,3 +1,6 @@
+#ifndef SPHERE_H
+#define SPHERE_H
+
 #include <stdio.h>
 #include <string.h>
 #include <cstring>
@@ -7,3 +10,5 @@
 
 
 void generateSphere(int raio, int slices, int stacks, char* outputFile);
+
+#endif

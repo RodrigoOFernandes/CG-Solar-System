@@ -1,4 +1,4 @@
-#include "include/primitives/box.h"
+#include "../include/generator/shapes/box.h"
 
 
 void generateBox(int length, int divisions, char* outputFile){
