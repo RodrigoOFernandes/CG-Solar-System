@@ -11,6 +11,7 @@ struct Triangle {
 };
 
 std::vector<Triangle> sphereTriangles;
+Camera camera;  // Global Camera object
 
 void loadModel(const std::string& filename) {
     std::ifstream file(filename);
@@ -44,7 +45,7 @@ void loadModel(const std::string& filename) {
     }
 }
 
-void glutSphereInitiator(Camera camera, std::vector<Model> models) {
+void glutSphereInitiator(std::vector<Model> models) {
     for (const auto& model : models) {
         loadModel(model.file);
     }
@@ -62,7 +63,12 @@ void changeSize(int w, int h) {
 void renderScene() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
-    gluLookAt(10.0, 10.0, 10.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+    
+    // Use the Camera struct for gluLookAt
+    gluLookAt(camera.position.x, camera.position.y, camera.position.z,
+              camera.lookAt.x, camera.lookAt.y, camera.lookAt.z,
+              camera.up.x, camera.up.y, camera.up.z);
+    
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     
     glBegin(GL_TRIANGLES);
@@ -90,7 +96,6 @@ int main(int argc, char **argv) {
         return 1;
     }
     
-    Camera camera;
     tinyxml2::XMLElement* cameraElement = worldElement->FirstChildElement("camera");
     if (cameraElement) {
         camera = parseCamera(cameraElement);
@@ -105,7 +110,7 @@ int main(int argc, char **argv) {
         }
     }
     
-    glutSphereInitiator(camera, models);
+    glutSphereInitiator(models);
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
     glutInitWindowPosition(100, 100);
