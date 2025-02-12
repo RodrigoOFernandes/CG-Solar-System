@@ -1,4 +1,4 @@
-#include "generator/shapes/box.hpp"
+#include "../shapes/box.hpp"
 
 
 void generateBox(int length, int divisions, char* outputFile){

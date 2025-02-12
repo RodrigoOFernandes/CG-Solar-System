@@ -1,4 +1,4 @@
-#include "generator/shapes/sphere.hpp"
+#include "../shapes/sphere.hpp"
 
 
 void generateSphere(int radius, int slices, int stacks, char* outputFile){
