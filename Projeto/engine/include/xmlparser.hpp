@@ -1,3 +1,6 @@
+#ifndef XMLPARSER_HPP
+#define XMLPARSER_HPP
+
 #include "../include/tinyxml2.h"
 #include <string>
 #include <vector>
@@ -23,3 +26,5 @@ struct Model {
 
 Camera parseCamera(tinyxml2::XMLElement* cameraElement);
 std::vector<Model> parseModels(tinyxml2::XMLElement* modelsElement);
+
+#endif
