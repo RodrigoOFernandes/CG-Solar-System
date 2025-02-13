@@ -1,5 +1,8 @@
 #include "../shapes/sphere.hpp"
-
+#include <vector>
+#include <iostream>
+#include <fstream>
+#include <cmath>
 
 void generateSphere(int radius, int slices, int stacks, char* outputFile){
     std::ofstream file(outputFile);
@@ -10,19 +13,33 @@ void generateSphere(int radius, int slices, int stacks, char* outputFile){
         return;
     }
 
-    file << (slices + 1) * (stacks + 1) << std::endl;
+    std::vector<float> vertices;
+
+    float x,y,z, xy;
+
+    float sectorStep = 2 * M_PI / slices;
+    float stackStep = M_PI / stacks;
+    float sectorAngle, stackAngle;
 
     for(int i = 0; i <= stacks; i++)
     {
-        float phi =  M_PI * i / stacks;
+        stackAngle = M_PI / 2 - i * stackStep;        
+        xy = radius * cosf(stackAngle);            
+        z = radius * sinf(stackAngle);        
         for(int j = 0; j <= slices; j++)
         {
-            float theta =  2 * M_PI * j / slices;
-            float x = radius * sin(phi) * cos(theta);
-            float y = radius * cos(phi);
-            float z = radius * sin(phi) * sin(theta);
+            sectorAngle = j * sectorStep;           
 
-            file << x << " " << y << " " << z << std::endl;        }
+            x = xy * cosf(sectorAngle);           
+            y = xy * sinf(sectorAngle);            
+            vertices.push_back(x);
+            vertices.push_back(y);
+            vertices.push_back(z);
+        }
+    }
+
+    for (size_t i = 0; i < vertices.size(); i += 3) {
+        file << vertices[i] << " " << vertices[i + 1] << " " << vertices[i + 2] << "\n";
     }
     file.close();   
 }

@@ -15,7 +15,9 @@ int main(int argc, char** argv){
         int stacks = std::stoi(argv[4]);
         generateSphere(radius, slices, stacks, outputFile);
     } else if(strcmp(primitive, PLANE) == 0){
-        generatePlane(outputFile);
+        int length = std::stoi(argv[2]);
+        int divisions = std::stoi(argv[3]);
+        generatePlane(length, divisions, outputFile);
     } else if(strcmp(primitive, BOX) == 0){
         int length = std::stoi(argv[2]);
         int divisions = std::stof(argv[3]);
