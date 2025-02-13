@@ -1,5 +1,8 @@
 #include "../shapes/cone.hpp"
 #include <vector>
+#include <iostream>
+#include <fstream>
+#include <cmath>
 
 
 void generateCone(int radius, int height, int slices, 
