@@ -27,7 +27,7 @@ struct Triangle {
 class Model{
     public:
         void draw(Config configFile);
-        void loadModel(const std::string& filename, int modelFlag); // model flag in #define
+        int loadModel(const std::string& filename); // model flag in #define || return modelFlag
         //transformations functions will be included here 
     private:
         std::vector<Triangle> sphere_triangles;

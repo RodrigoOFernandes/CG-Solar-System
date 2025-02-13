@@ -5,11 +5,15 @@
 #include <cmath>
 
 void generatePlane(int length, int divisions, char* outputFile) {
-    std::ofstream outFile(outputFile);
+    std::string fullPath = "../models/" + std::string(outputFile);
+    std::ofstream outFile(fullPath);
+    
     if (!outFile.is_open()) {
         std::cerr << "Error: Unable to open output file." << std::endl;
         return;
     }
+
+    outFile << "plane" << "\n";
 
     float halfLength = length / 2.0f;
     float step = static_cast<float>(length) / divisions;

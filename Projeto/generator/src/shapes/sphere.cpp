@@ -5,13 +5,16 @@
 #include <cmath>
 
 void generateSphere(int radius, int slices, int stacks, char* outputFile){
-    std::ofstream file(outputFile);
-
-    if(!file.is_open())
+    std::string fullPath = "../models/" + std::string(outputFile);
+    std::ofstream outFile(fullPath);
+    
+    if(!outFile.is_open())
     {
         std::cerr << "Error opening outputfile" << outputFile << std::endl;
         return;
     }
+
+    outFile << "sphere" << "\n";
 
     std::vector<float> vertices;
 
@@ -39,7 +42,7 @@ void generateSphere(int radius, int slices, int stacks, char* outputFile){
     }
 
     for (size_t i = 0; i < vertices.size(); i += 3) {
-        file << vertices[i] << " " << vertices[i + 1] << " " << vertices[i + 2] << "\n";
+        outFile << vertices[i] << " " << vertices[i + 1] << " " << vertices[i + 2] << "\n";
     }
-    file.close();   
+    outFile.close();   
 }
