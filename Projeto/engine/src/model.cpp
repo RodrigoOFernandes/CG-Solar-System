@@ -1,0 +1,99 @@
+#include "../include/model.hpp"
+
+
+
+void Model::loadModel(const std::string& filename, int modelFlag) {
+    std::string fullPath = "../models/" + filename;
+    std::ifstream file(fullPath);
+    std::vector<Triangle> triangles; 
+    
+    if (!file.is_open()) {
+        std::cerr << "Erro ao abrir o arquivo: " << fullPath << std::endl;
+        return;
+    }
+    
+    int numVertices;
+    file >> numVertices;
+    
+    std::vector<Vec3> vertexes;
+    std::string line;
+    while (std::getline(file, line)) {
+        std::istringstream iss(line);
+        Vec3 vertex;
+        if (iss >> vertex.x >> vertex.y >> vertex.z) {
+            vertexes.push_back(vertex);
+        }
+    }
+    file.close();
+
+    for (size_t i = 0; i < vertexes.size(); i += 3) {
+        if (i + 2 < vertexes.size()) {
+            Triangle triangle;
+            triangle.v1 = vertexes[i];
+            triangle.v2 = vertexes[i + 1];
+            triangle.v3 = vertexes[i + 2];
+            triangles.push_back(triangle);
+        }
+    }
+
+    switch (modelFlag) {
+        case SPHEREMODEL: sphere_triangles = triangles; break;
+        case CONEMODEL: cone_triangles = triangles; break;
+        case BOXMODEL: box_triangles = triangles; break;
+        case PLANEMODEL: plane_triangles = triangles; break;
+        default: std::cerr << "Invalid model flag\n" << std::endl;
+    }
+}
+
+void drawTriangles(std::vector<Triangle> triangles){
+    glBegin(GL_TRIANGLES);
+        for(const auto& triangle: triangles){
+            glVertex3f(triangle.v1.x, triangle.v1.y, triangle.v1.z);
+            glVertex3f(triangle.v2.x, triangle.v2.y, triangle.v2.z);
+            glVertex3f(triangle.v3.x, triangle.v3.y, triangle.v3.z);
+        }
+    glEnd();
+}
+
+void drawAxis(void){
+	glBegin(GL_LINES);
+		// X axis in red
+		glColor3f(1.0f, 0.0f, 0.0f);
+		glVertex3f(-100.0f, 0.0f, 0.0f);
+		glVertex3f( 100.0f, 0.0f, 0.0f);
+		// Y Axis in Green
+		glColor3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(0.0f, -100.0f, 0.0f);
+		glVertex3f(0.0f, 100.0f, 0.0f);
+		// Z Axis in Blue
+		glColor3f(0.0f, 0.0f, 1.0f);
+		glVertex3f(0.0f, 0.0f, -100.0f);
+		glVertex3f(0.0f, 0.0f, 100.0f);
+	glEnd();
+}
+
+void Model::draw (Config configFile){
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glLoadIdentity();
+    
+    // Use the Camera struct for gluLookAt
+    gluLookAt(configFile.camera.position.x, configFile.camera.position.y, configFile.camera.position.z,
+              configFile.camera.lookAt.x, configFile.camera.lookAt.y, configFile.camera.lookAt.z,
+              configFile.camera.up.x, configFile.camera.up.y, configFile.camera.up.z);
+    
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    
+    drawAxis();
+    
+    glColor3f(1.0f, 1.0f, 1.0f);
+    for(const auto& models: configFile.models){
+        switch(models.modelFlag){
+            case SPHEREMODEL: drawTriangles(sphere_triangles);break;
+            case CONEMODEL: drawTriangles(cone_triangles);break;
+            case PLANEMODEL: drawTriangles(plane_triangles);break;
+            case BOXMODEL: drawTriangles(box_triangles);break;
+        }
+    }
+    
+    glutSwapBuffers();
+}
