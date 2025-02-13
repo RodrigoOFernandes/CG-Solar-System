@@ -1,4 +1,4 @@
-#include "../include/xmlparser.hpp"
+#include "../include/parser/xmlparser.hpp"
 
 Camera parseCamera(tinyxml2::XMLElement* cameraElement) {
     Camera cam;
@@ -52,15 +52,16 @@ Window parseWindow(tinyxml2::XMLElement* windowElement){
     Window window;
 
     if(windowElement) windowElement->QueryInt64Attribute("width", &window.width);
-    if(windowElement) windowElement->QueryInt64Attribute("height", &window.width);
+    if(windowElement) windowElement->QueryInt64Attribute("height", &window.height);
 
     return window;
 }
 
-Config parseFile(const tinyxml2::XMLDocument doc){
+Config parseFile(char* filename){
     Config file;
+    tinyxml2::XMLDocument doc;
 
-    if (doc.LoadFile("config.xml") != tinyxml2::XML_SUCCESS) {
+    if (doc.LoadFile(filename) != tinyxml2::XML_SUCCESS) {
         std::cerr << "Failed to load config.xml!" << std::endl;
         return Config();
     }

@@ -4,6 +4,7 @@
 #include "../include/parser/tinyxml2.h"
 #include <string>
 #include <vector>
+#include <iostream>
 #include <string.h>
 
 struct Vec3 {
@@ -27,8 +28,8 @@ struct ModelFile {
 };
 
 struct Window{
-    int height;
-    int width;
+    int64_t height;
+    int64_t width;
 };
 
 
@@ -42,6 +43,6 @@ Camera parseCamera(tinyxml2::XMLElement* cameraElement);
 std::vector<ModelFile> parseModels(tinyxml2::XMLElement* modelsElement);
 Window parseWindow(tinyxml2::XMLElement* windowElement);
 
-Config parseFile(const tinyxml2::XMLDocument doc);
+Config parseFile(char* filename);
 
 #endif

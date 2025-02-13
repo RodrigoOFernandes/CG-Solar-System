@@ -13,6 +13,8 @@
 #define BOXMODEL 3
 
 #include <iostream>
+#include <fstream>  
+#include <sstream> 
 #include <vector>
 #include "../include/parser/xmlparser.hpp"
 

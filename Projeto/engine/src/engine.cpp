@@ -17,14 +17,13 @@ void renderScene() {
 }
 
 int main(int argc, char **argv) {
-    tinyxml2::XMLDocument doc;
-    
-    if (doc.LoadFile("config.xml") != tinyxml2::XML_SUCCESS) {
-        std::cerr << "Failed to load config.xml!" << std::endl;
-        return 1;
+
+    if(argc < 2) {
+        std::cout << "Please indicate a configuration XML file\n";
     }
-    
-    configuration = parseFile(doc);
+
+    configuration = parseFile(argv[1]);
+
     for(const auto& modelFile: configuration.models){ // loading .3d information into memory
         model.loadModel(modelFile.file, modelFile.modelFlag);
     }
