@@ -1,12 +1,6 @@
 #ifndef ENGINE_HPP
 #define ENGINE_HPP
 
-#ifdef __APPLE__
-#include <GLUT/glut.h>
-#else
-#include <GL/glut.h>
-#endif
-
 #include <iostream>
 #include <vector>
 #include <fstream>
@@ -14,6 +8,7 @@
 #include <iostream>
 
 #include "../include/parser/xmlparser.hpp"
+#include "model.hpp"
 
 
 

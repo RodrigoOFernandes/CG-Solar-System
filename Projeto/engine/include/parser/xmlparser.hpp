@@ -4,6 +4,7 @@
 #include "../include/parser/tinyxml2.h"
 #include <string>
 #include <vector>
+#include <string.h>
 
 struct Vec3 {
     float x, y, z;
@@ -20,8 +21,9 @@ struct Camera {
     Projection projection;
 };
 
-struct Model {
+struct ModelFile {
     std::string file;
+    int modelFlag; // consult model flags in model.hpp
 };
 
 struct Window{
@@ -33,13 +35,13 @@ struct Window{
 typedef struct ConfigFile{
     Window window;
     Camera camera;
-    std::vector<Model> models;
+    std::vector<ModelFile> models;
 }Config;
 
 Camera parseCamera(tinyxml2::XMLElement* cameraElement);
-std::vector<Model> parseModels(tinyxml2::XMLElement* modelsElement);
+std::vector<ModelFile> parseModels(tinyxml2::XMLElement* modelsElement);
 Window parseWindow(tinyxml2::XMLElement* windowElement);
 
-Config parseFile(tinyxml2::XMLDocument doc);
+Config parseFile(const tinyxml2::XMLDocument doc);
 
 #endif

@@ -27,17 +27,22 @@ Camera parseCamera(tinyxml2::XMLElement* cameraElement) {
     return cam;
 }
 
-std::vector<Model> parseModels(tinyxml2::XMLElement* modelsElement) {
-    std::vector<Model> models;
+std::vector<ModelFile> parseModels(tinyxml2::XMLElement* modelsElement) {
+    std::vector<ModelFile> models;
     for (tinyxml2::XMLElement* modelElement = modelsElement->FirstChildElement("model");
          modelElement;
          modelElement = modelElement->NextSiblingElement("model")) {
         
-        Model model;
+        ModelFile model;
         const char* file = modelElement->Attribute("file");
         if (file) {
             model.file = file;
             models.push_back(model);
+            if(strcmp(file, "sphere.3d") == 0) model.modelFlag = 0;
+            if(strcmp(file, "cone.3d") == 0) model.modelFlag = 1;
+            if(strcmp(file, "plane.3d") == 0) model.modelFlag = 2;
+            if(strcmp(file, "box.3d") == 0){model.modelFlag = 3;} 
+            else {model.modelFlag = -1;}
         }
     }
     return models;
@@ -52,18 +57,18 @@ Window parseWindow(tinyxml2::XMLElement* windowElement){
     return window;
 }
 
-Config parseFile(tinyxml2::XMLDocument doc){
+Config parseFile(const tinyxml2::XMLDocument doc){
     Config file;
 
     if (doc.LoadFile("config.xml") != tinyxml2::XML_SUCCESS) {
         std::cerr << "Failed to load config.xml!" << std::endl;
-        return 1;
+        return Config();
     }
     
     tinyxml2::XMLElement* worldElement = doc.FirstChildElement("world");
     if (!worldElement) {
         std::cerr << "No <world> element found!" << std::endl;
-        return 1;
+        return Config();
     }
 
     tinyxml2::XMLElement* windowElement = worldElement->FirstChildElement("window");
