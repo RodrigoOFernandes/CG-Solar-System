@@ -1,7 +1,7 @@
 #ifndef XMLPARSER_HPP
 #define XMLPARSER_HPP
 
-#include "../include/tinyxml2.h"
+#include "../include/parser/tinyxml2.h"
 #include <string>
 #include <vector>
 
@@ -24,7 +24,22 @@ struct Model {
     std::string file;
 };
 
+struct Window{
+    int height;
+    int width;
+};
+
+
+typedef struct ConfigFile{
+    Window window;
+    Camera camera;
+    std::vector<Model> models;
+}Config;
+
 Camera parseCamera(tinyxml2::XMLElement* cameraElement);
 std::vector<Model> parseModels(tinyxml2::XMLElement* modelsElement);
+Window parseWindow(tinyxml2::XMLElement* windowElement);
+
+Config parseFile(tinyxml2::XMLDocument doc);
 
 #endif

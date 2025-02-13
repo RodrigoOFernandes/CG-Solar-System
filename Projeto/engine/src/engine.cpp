@@ -4,8 +4,9 @@ struct Triangle {
     Vec3 v1, v2, v3;
 };
 
-std::vector<Triangle> sphereTriangles;
-Camera camera;  // Global Camera object
+std::vector<Triangle> sphereTriangles; // maybe better ro create a class with the render functions
+Config configuration;
+
 
 void loadModel(const std::string& filename) {
     std::ifstream file(filename);
@@ -79,30 +80,13 @@ void renderScene() {
 
 int main(int argc, char **argv) {
     tinyxml2::XMLDocument doc;
+
     if (doc.LoadFile("config.xml") != tinyxml2::XML_SUCCESS) {
         std::cerr << "Failed to load config.xml!" << std::endl;
         return 1;
     }
     
-    tinyxml2::XMLElement* worldElement = doc.FirstChildElement("world");
-    if (!worldElement) {
-        std::cerr << "No <world> element found!" << std::endl;
-        return 1;
-    }
-    
-    tinyxml2::XMLElement* cameraElement = worldElement->FirstChildElement("camera");
-    if (cameraElement) {
-        camera = parseCamera(cameraElement);
-    }
-    
-    std::vector<Model> models;
-    tinyxml2::XMLElement* groupElement = worldElement->FirstChildElement("group");
-    if (groupElement) {
-        tinyxml2::XMLElement* modelsElement = groupElement->FirstChildElement("models");
-        if (modelsElement) {
-            models = parseModels(modelsElement);
-        }
-    }
+    configFile = parseFile(doc);
     
     glutSphereInitiator(models);
     glutInit(&argc, argv);

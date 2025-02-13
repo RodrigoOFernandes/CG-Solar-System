@@ -42,3 +42,48 @@ std::vector<Model> parseModels(tinyxml2::XMLElement* modelsElement) {
     }
     return models;
 }
+
+Window parseWindow(tinyxml2::XMLElement* windowElement){
+    Window window;
+
+    if(windowElement) windowElement->QueryInt64Attribute("width", &window.width);
+    if(windowElement) windowElement->QueryInt64Attribute("height", &window.width);
+
+    return window;
+}
+
+Config parseFile(tinyxml2::XMLDocument doc){
+    Config file;
+
+    if (doc.LoadFile("config.xml") != tinyxml2::XML_SUCCESS) {
+        std::cerr << "Failed to load config.xml!" << std::endl;
+        return 1;
+    }
+    
+    tinyxml2::XMLElement* worldElement = doc.FirstChildElement("world");
+    if (!worldElement) {
+        std::cerr << "No <world> element found!" << std::endl;
+        return 1;
+    }
+
+    tinyxml2::XMLElement* windowElement = worldElement->FirstChildElement("window");
+    if (windowElement) {
+        file.window = parseWindow(windowElement);
+    }
+    
+    
+    tinyxml2::XMLElement* cameraElement = worldElement->FirstChildElement("camera");
+    if (cameraElement) {
+        file.camera = parseCamera(cameraElement);
+    }
+    
+    tinyxml2::XMLElement* groupElement = worldElement->FirstChildElement("group");
+    if (groupElement) {
+        tinyxml2::XMLElement* modelsElement = groupElement->FirstChildElement("models");
+        if (modelsElement) {
+            file.models = parseModels(modelsElement);
+        }
+    }
+
+    return file;
+}
