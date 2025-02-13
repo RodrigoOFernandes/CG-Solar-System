@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 
 # Project Name
-project(CG_SOLAR_SYSTEM)
+PROJECT(CG_SOLAR_SYSTEM)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
@@ -69,6 +69,7 @@ else()  # Linux and MacOS
         message(FATAL_ERROR "GLUT not found!")
     endif()
 
-    target_link_libraries(engine ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES})
     target_link_libraries(generator ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES})
+    target_link_libraries(engine ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES})
+    
 endif()
