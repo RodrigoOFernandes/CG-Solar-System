@@ -2,21 +2,36 @@
 
 
 
-void Model::loadModel(const std::string& filename, int modelFlag) {
+int Model::loadModel(const std::string& filename) {
     std::string fullPath = "../models/" + filename;
     std::ifstream file(fullPath);
     std::vector<Triangle> triangles; 
-    
+    int modelFlag = -1;
+
     if (!file.is_open()) {
         std::cerr << "Erro ao abrir o arquivo: " << fullPath << std::endl;
-        return;
+        return -1;
     }
-    
-    int numVertices;
-    file >> numVertices;
-    
+
     std::vector<Vec3> vertexes;
     std::string line;
+
+    // first line indicates the model flag of the file
+    std::getline(file, line);
+    printf("%s ||%s\n",fullPath.c_str() ,line.c_str());
+    
+    if (line == "sphere") modelFlag = SPHEREMODEL;
+    else if (line == "cone") modelFlag = CONEMODEL;
+    else if (line == "box") modelFlag = BOXMODEL;
+    else if (line == "plane") modelFlag = PLANEMODEL;
+    else {
+        std::cerr << "Unknown Model: " << line << std::endl;
+        return -1;
+    }
+
+    int numVertices;
+    file >> numVertices;
+
     while (std::getline(file, line)) {
         std::istringstream iss(line);
         Vec3 vertex;
@@ -43,6 +58,8 @@ void Model::loadModel(const std::string& filename, int modelFlag) {
         case PLANEMODEL: plane_triangles = triangles; break;
         default: std::cerr << "Invalid model flag\n" << std::endl;
     }
+
+    return modelFlag;
 }
 
 void drawTriangles(std::vector<Triangle> triangles){

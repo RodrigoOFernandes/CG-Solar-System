@@ -5,11 +5,15 @@
 #include <cmath>
 
 void generateBox(int dimension, int divisions, char* outputFile) {
-    std::ofstream outFile(outputFile);
+    std::string fullPath = "../models/" + std::string(outputFile);
+    std::ofstream outFile(fullPath);
+
     if (!outFile.is_open()) {
         std::cerr << "Error: Unable to open output file." << std::endl;
         return;
     }
+
+    outFile << "box" << "\n";
 
     float halfDim = dimension / 2.0f;
     float step = static_cast<float>(dimension) / divisions;

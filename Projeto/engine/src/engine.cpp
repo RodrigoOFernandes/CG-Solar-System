@@ -24,8 +24,8 @@ int main(int argc, char **argv) {
 
     configuration = parseFile(argv[1]);
 
-    for(const auto& modelFile: configuration.models){ // loading .3d information into memory
-        model.loadModel(modelFile.file, modelFile.modelFlag);
+    for(auto& modelFile: configuration.models){ // loading .3d information into memory
+        modelFile.modelFlag = model.loadModel(modelFile.file);
     }
 
     glutInit(&argc, argv);

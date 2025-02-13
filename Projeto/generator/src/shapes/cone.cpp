@@ -8,13 +8,17 @@
 void generateCone(int radius, int height, int slices, 
                     int stacks, char* outputFile){
 
-    std::ofstream file(outputFile);
+    std::string fullPath = "../models/" + std::string(outputFile);
+    std::ofstream outFile(fullPath);
 
-    if(!file.is_open())
+    if(!outFile.is_open())
     {
         std::cerr << "Error opening outputfile" << outputFile << std::endl;
         return;
     }
+
+    outFile << "cone" << "\n";
+
     std::vector<float> vertices;
 
     float sectorStep = 2 * M_PI / slices;
@@ -56,7 +60,7 @@ void generateCone(int radius, int height, int slices,
     }
 
     for (size_t i = 0; i < vertices.size(); i += 3) {
-        file << vertices[i] << " " << vertices[i + 1] << " " << vertices[i + 2] << "\n";
+        outFile << vertices[i] << " " << vertices[i + 1] << " " << vertices[i + 2] << "\n";
     }
-
+    outFile.close();
 }

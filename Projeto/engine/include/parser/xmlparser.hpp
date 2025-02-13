@@ -24,7 +24,7 @@ struct Camera {
 
 struct ModelFile {
     std::string file;
-    int modelFlag; // consult model flags in model.hpp
+    int modelFlag;
 };
 
 struct Window{

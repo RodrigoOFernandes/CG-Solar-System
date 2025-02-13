@@ -38,11 +38,6 @@ std::vector<ModelFile> parseModels(tinyxml2::XMLElement* modelsElement) {
         if (file) {
             model.file = file;
             models.push_back(model);
-            if(strcmp(file, "sphere.3d") == 0) model.modelFlag = 0;
-            if(strcmp(file, "cone.3d") == 0) model.modelFlag = 1;
-            if(strcmp(file, "plane.3d") == 0) model.modelFlag = 2;
-            if(strcmp(file, "box.3d") == 0){model.modelFlag = 3;} 
-            else {model.modelFlag = -1;}
         }
     }
     return models;
