@@ -1,10 +1,4 @@
-#include "../include/xmlparser.hpp"
-#include <iostream>
-#include <vector>
-#include <fstream>
-#include <sstream>
-#include <GL/glut.h>
-#include <iostream>
+#include "../include/engine.hpp"
 
 struct Triangle {
     Vec3 v1, v2, v3;
