@@ -5,6 +5,7 @@
 #include "shapes/box.hpp"
 #include "shapes/plane.hpp"
 #include "shapes/cone.hpp"
+#include "shapes/cylinder.hpp"
 
 #include <stdio.h>
 #include <string.h>
@@ -15,5 +16,6 @@
 #define PLANE "plane"
 #define BOX "box"
 #define CONE "cone"
+#define CYLINDER "cylinder"
 
 #endif

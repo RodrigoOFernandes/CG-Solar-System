@@ -28,6 +28,11 @@ int main(int argc, char** argv){
         int slices = std::stof(argv[4]);
         int stacks = std::stof(argv[5]);
         generateCone(radius, height, slices, stacks, outputFile);
+    } else if(strcmp(primitive, CYLINDER) == 0){
+        int radius = std::stoi(argv[2]);
+        int height = std::stoi(argv[2]);
+        int slices = std::stoi(argv[2]);
+        generateCylinder(radius, height, slices, outputFile);
     }
 
     return 0;
