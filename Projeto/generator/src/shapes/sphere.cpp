@@ -16,33 +16,38 @@ void generateSphere(int radius, int slices, int stacks, char* outputFile){
 
     outFile << "sphere" << "\n";
 
-    std::vector<float> vertices;
+    for (int i = 0; i < slices; ++i) {
+        float theta1 = static_cast<float>(i) * static_cast<float>(M_PI) / static_cast<float>(slices);
+        float theta2 = static_cast<float>(i + 1) * static_cast<float>(M_PI) / static_cast<float>(slices);
 
-    float x,y,z, xy;
+        for (int j = 0; j < stacks; ++j) {
+        float phi1 = static_cast<float>(j) * 2.0f * static_cast<float>(M_PI) / static_cast<float>(stacks);
+        float phi2 = static_cast<float>(j + 1) * 2.0f * static_cast<float>(M_PI) / static_cast<float>(stacks);
 
-    float sectorStep = 2 * M_PI / slices;
-    float stackStep = M_PI / stacks;
-    float sectorAngle, stackAngle;
+            float z1 = radius * std::sin(theta1) * std::cos(phi1);
+            float x1 = radius * std::sin(theta1) * std::sin(phi1);
+            float y1 = radius * std::cos(theta1);
 
-    for(int i = 0; i <= stacks; i++)
-    {
-        stackAngle = M_PI / 2 - i * stackStep;        
-        xy = radius * cosf(stackAngle);            
-        z = radius * sinf(stackAngle);        
-        for(int j = 0; j <= slices; j++)
-        {
-            sectorAngle = j * sectorStep;           
+            float z2 = radius * std::sin(theta1) * std::cos(phi2);
+            float x2 = radius * std::sin(theta1) * std::sin(phi2);
+            float y2 = radius * std::cos(theta1);
 
-            x = xy * cosf(sectorAngle);           
-            y = xy * sinf(sectorAngle);            
-            vertices.push_back(x);
-            vertices.push_back(y);
-            vertices.push_back(z);
+            float z3 = radius * std::sin(theta2) * std::cos(phi1);
+            float x3 = radius * std::sin(theta2) * std::sin(phi1);
+            float y3 = radius * std::cos(theta2);
+
+            float z4 = radius * std::sin(theta2) * std::cos(phi2);
+            float x4 = radius * std::sin(theta2) * std::sin(phi2);
+            float y4 = radius * std::cos(theta2);          
+
+            outFile << x1 << " " << y1 << " " << z1 << std::endl;
+            outFile << x4 << " " << y4 << " " << z4 << std::endl;
+            outFile << x2 << " " << y2 << " " << z2 << std::endl;
+            
+            outFile << x1 << " " << y1 << " " << z1 << std::endl;
+            outFile << x3 << " " << y3 << " " << z3 << std::endl;
+            outFile << x4 << " " << y4 << " " << z4 << std::endl;
         }
-    }
-
-    for (size_t i = 0; i < vertices.size(); i += 3) {
-        outFile << vertices[i] << " " << vertices[i + 1] << " " << vertices[i + 2] << "\n";
     }
     outFile.close();   
 }
