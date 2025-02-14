@@ -23,6 +23,7 @@ int Model::loadModel(const std::string& filename) {
     else if (line == "cone") modelFlag = CONEMODEL;
     else if (line == "box") modelFlag = BOXMODEL;
     else if (line == "plane") modelFlag = PLANEMODEL;
+    else if(line == "cylinder") modelFlag = CYLINDERMODEL;
     else {
         std::cerr << "Unknown Model: " << line << std::endl;
         return -1;
@@ -52,6 +53,7 @@ int Model::loadModel(const std::string& filename) {
         case CONEMODEL: cone_triangles = triangles; break;
         case BOXMODEL: box_triangles = triangles; break;
         case PLANEMODEL: plane_triangles = triangles; break;
+        case CYLINDERMODEL: cylinder_triangles = triangles; break;
         default: std::cerr << "Invalid model flag\n" << std::endl;
     }
 
@@ -105,6 +107,7 @@ void Model::draw (Config configFile){
             case CONEMODEL: drawTriangles(cone_triangles);break;
             case PLANEMODEL: drawTriangles(plane_triangles);break;
             case BOXMODEL: drawTriangles(box_triangles);break;
+            case CYLINDERMODEL: drawTriangles(cylinder_triangles);break;
         }
     }
     
