@@ -4,13 +4,30 @@ Config configuration;
 Model model;
 
 void resize(int w, int h) {
-    if (h == 0) h = 1;
-    float ratio = w * 1.0 / h;
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluPerspective(45.0f, ratio, 1.0f, 1000.0f);
-    glMatrixMode(GL_MODELVIEW);
+
+	// Prevent a divide by zero, when window is too short
+	// (you cant make a window with zero width).
+	if(h == 0)
+		h = 1;
+
+	// compute window's aspect ratio 
+	float ratio = w * 1.0 / h;
+
+	// Set the projection matrix as current
+	glMatrixMode(GL_PROJECTION);
+	// Load Identity Matrix
+	glLoadIdentity();
+	
+	// Set the viewport to be the entire window
+    glViewport(0, 0, w, h);
+
+	// Set perspective
+	gluPerspective(45.0f ,ratio, 1.0f ,1000.0f);
+
+	// return to the model view matrix mode
+	glMatrixMode(GL_MODELVIEW);
 }
+
 
 void renderScene() {
     model.draw(configuration);
