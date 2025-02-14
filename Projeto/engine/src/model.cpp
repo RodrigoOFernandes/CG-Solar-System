@@ -18,7 +18,6 @@ int Model::loadModel(const std::string& filename) {
 
     // first line indicates the model flag of the file
     std::getline(file, line);
-    printf("%s ||%s\n",fullPath.c_str() ,line.c_str());
     
     if (line == "sphere") modelFlag = SPHEREMODEL;
     else if (line == "cone") modelFlag = CONEMODEL;
@@ -28,9 +27,6 @@ int Model::loadModel(const std::string& filename) {
         std::cerr << "Unknown Model: " << line << std::endl;
         return -1;
     }
-
-    int numVertices;
-    file >> numVertices;
 
     while (std::getline(file, line)) {
         std::istringstream iss(line);
