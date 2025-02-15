@@ -22,7 +22,8 @@ void resize(int w, int h) {
     glViewport(0, 0, w, h);
 
 	// Set perspective
-	gluPerspective(45.0f ,ratio, 1.0f ,1000.0f);
+    gluPerspective(configuration.camera.projection.fov, (configuration.window.height/configuration.window.width),
+    configuration.camera.projection.near,configuration.camera.projection.fov);
 
 	// return to the model view matrix mode
 	glMatrixMode(GL_MODELVIEW);
