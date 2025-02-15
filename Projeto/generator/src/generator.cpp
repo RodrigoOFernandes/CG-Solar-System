@@ -30,8 +30,8 @@ int main(int argc, char** argv){
         generateCone(radius, height, slices, stacks, outputFile);
     } else if(strcmp(primitive, CYLINDER) == 0){
         int radius = std::stoi(argv[2]);
-        int height = std::stoi(argv[2]);
-        int slices = std::stoi(argv[2]);
+        int height = std::stoi(argv[3]);
+        int slices = std::stoi(argv[4]);
         generateCylinder(radius, height, slices, outputFile);
     }
 

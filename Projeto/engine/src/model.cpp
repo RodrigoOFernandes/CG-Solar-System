@@ -103,10 +103,10 @@ void Model::draw (Config configFile){
     glColor3f(1.0f, 1.0f, 1.0f);
     for(const auto& models: configFile.models){
         switch(models.modelFlag){
-            case SPHEREMODEL: drawTriangles(sphere_triangles);break;
-            case CONEMODEL: drawTriangles(cone_triangles);break;
-            case PLANEMODEL: drawTriangles(plane_triangles);break;
-            case BOXMODEL: drawTriangles(box_triangles);break;
+            case SPHEREMODEL:   drawTriangles(sphere_triangles);break;
+            case CONEMODEL:     drawTriangles(cone_triangles);break;
+            case PLANEMODEL:    drawTriangles(plane_triangles);break;
+            case BOXMODEL:      drawTriangles(box_triangles);break;
             case CYLINDERMODEL: drawTriangles(cylinder_triangles);break;
         }
     }
