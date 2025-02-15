@@ -1,8 +1,5 @@
 #include "../shapes/sphere.hpp"
-#include <vector>
-#include <iostream>
-#include <fstream>
-#include <cmath>
+
 
 void generateSphere(int radius, int slices, int stacks, char* outputFile){
     std::string fullPath = "../models/" + std::string(outputFile);

@@ -11,6 +11,7 @@
 #define CONEMODEL 1
 #define PLANEMODEL 2
 #define BOXMODEL 3
+#define CYLINDERMODEL 4
 
 #include <iostream>
 #include <fstream>  
@@ -34,6 +35,7 @@ class Model{
         std::vector<Triangle> box_triangles;
         std::vector<Triangle> plane_triangles;
         std::vector<Triangle> cone_triangles;
+        std::vector<Triangle> cylinder_triangles;
 };
 
 
