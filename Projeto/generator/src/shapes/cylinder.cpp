@@ -29,10 +29,11 @@ void generateCylinder(int r, int h , int slices, char* outputFile) {
     // Top
     for(int i = 0; i < slices; ++i){
         outFile << 0 << " " << (height / 2) << " " << 0 << "\n";
-        outFile << radius * sin((i + 1) * delta) << " " << (height / 2) << " "
-                            << radius * cos((i + 1) * delta)  << "\n";
         outFile << radius * sin(i * delta) << " " << (height / 2) << " " 
                             << radius * cos(i * delta) << "\n";
+        outFile << radius * sin((i + 1) * delta) << " " << (height / 2) << " "
+                            << radius * cos((i + 1) * delta)  << "\n";
+
         
     } 
 
