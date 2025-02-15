@@ -89,13 +89,19 @@ void drawAxis(void){
 
 void Model::draw (Config configFile){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    
+    gluPerspective(configFile.camera.projection.fov, (configFile.window.height/configFile.window.width),
+                    configFile.camera.projection.near,configFile.camera.projection.fov);
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
     // Use the Camera struct for gluLookAt
     gluLookAt(configFile.camera.position.x, configFile.camera.position.y, configFile.camera.position.z,
               configFile.camera.lookAt.x, configFile.camera.lookAt.y, configFile.camera.lookAt.z,
               configFile.camera.up.x, configFile.camera.up.y, configFile.camera.up.z);
     
+
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     
     drawAxis();
