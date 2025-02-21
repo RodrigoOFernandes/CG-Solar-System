@@ -56,11 +56,11 @@ void generateCone(int radius, int height, int slices, int stacks, char* outputFi
 
             outFile << x2_1 << " " << y2 << " " << z2_1 << "\n";
             outFile << x1_1 << " " << y1 << " " << z1_1 << "\n";
-            outFile << x2_2 << " " << y2 << " " << z2_2 << "\n";
-
             outFile << x1_2 << " " << y1 << " " << z1_2 << "\n";
+            
             outFile << x2_2 << " " << y2 << " " << z2_2 << "\n";
-            outFile << x1_1 << " " << y1 << " " << z1_1 << "\n";
+            outFile << x2_1 << " " << y2 << " " << z2_1 << "\n";
+            outFile << x1_2 << " " << y1 << " " << z1_2 << "\n";
 
         }
     }
