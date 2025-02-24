@@ -8,3 +8,4 @@ tmp/
 obj/
 *.DS_Store
 *.3d
+toolkits/
