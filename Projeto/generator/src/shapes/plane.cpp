@@ -25,13 +25,13 @@ void generatePlane(int length, int divisions, char* outputFile) {
             float z1 = -halfLength + j * step;
             float z2 = z1 + step;
 
-            outFile << x1 << " " << 0.0f << " " << z1 << "\n"; 
+            outFile << x1 << " " << 0.0f << " " << z1 << "\n";
             outFile << x1 << " " << 0.0f << " " << z2 << "\n";
-            outFile << x2 << " " << 0.0f << " " << z2 << "\n"; 
-
-            outFile << x1 << " " << 0.0f << " " << z1 << "\n"; 
-            outFile << x2 << " " << 0.0f << " " << z2 << "\n"; 
             outFile << x2 << " " << 0.0f << " " << z1 << "\n";
+
+            outFile << x2 << " " << 0.0f << " " << z1 << "\n";
+            outFile << x1 << " " << 0.0f << " " << z2 << "\n";
+            outFile << x2 << " " << 0.0f << " " << z2 << "\n";
         }
     }
     

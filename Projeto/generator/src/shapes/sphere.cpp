@@ -14,9 +14,8 @@ void generateSphere(int radius, int slices, int stacks, char* outputFile){
     outFile << "sphere" << "\n";
 
     for (int i = 0; i < slices; ++i) {
-        float theta1 = static_cast<float>(i) * M_PI / static_cast<float>(stacks);
-        float theta2 = static_cast<float>(i + 1) * M_PI / static_cast<float>(stacks);
-
+        float theta1 = static_cast<float>(i) * static_cast<float>(M_PI) / static_cast<float>(slices);
+        float theta2 = static_cast<float>(i + 1) * static_cast<float>(M_PI) / static_cast<float>(slices);
 
         for (int j = 0; j < stacks; ++j) {
         float phi1 = static_cast<float>(j) * 2.0f * static_cast<float>(M_PI) / static_cast<float>(stacks);
