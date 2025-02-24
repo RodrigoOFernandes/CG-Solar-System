@@ -27,60 +27,58 @@ void generateBox(int dimension, int divisions, char* outputFile) {
                 float y2 = y1 + step;
 
                 switch (face) {
-                    case 0: // Frente
+                    case 0: // Frente 
                         outFile << x1 << " " << y2 << " " << halfDim << "\n";
                         outFile << x1 << " " << y1 << " " << halfDim << "\n";
-                        outFile << x2 << " " << y1 << " " << halfDim << "\n";
-                        
                         outFile << x2 << " " << y2 << " " << halfDim << "\n";
-                        outFile << x1 << " " << y2 << " " << halfDim << "\n";
+
+                        outFile << x2 << " " << y2 << " " << halfDim << "\n";
+                        outFile << x1 << " " << y1 << " " << halfDim << "\n";
                         outFile << x2 << " " << y1 << " " << halfDim << "\n";
                         break;
-                    case 1: // Trás
+                    case 1: // Trás 
                         outFile << x1 << " " << y2 << " " << -halfDim << "\n";
-                        outFile << x1 << " " << y1 << " " << -halfDim << "\n";
-                        outFile << x2 << " " << y1 << " " << -halfDim << "\n";
-                        
                         outFile << x2 << " " << y2 << " " << -halfDim << "\n";
-                        outFile << x1 << " " << y2 << " " << -halfDim << "\n";
+                        outFile << x1 << " " << y1 << " " << -halfDim << "\n";
+
+                        outFile << x2 << " " << y2 << " " << -halfDim << "\n";
                         outFile << x2 << " " << y1 << " " << -halfDim << "\n";
-                    
+                        outFile << x1 << " " << y1 << " " << -halfDim << "\n";
                         break;
-                    case 2: // Esquerda
+                    case 2: // Esquerda 
                         outFile << -halfDim << " " << y2 << " " << x1 << "\n";
                         outFile << -halfDim << " " << y1 << " " << x1 << "\n";
-                        outFile << -halfDim << " " << y1 << " " << x2 << "\n";
-                        
                         outFile << -halfDim << " " << y2 << " " << x2 << "\n";
-                        outFile << -halfDim << " " << y2 << " " << x1 << "\n";
+
+                        outFile << -halfDim << " " << y2 << " " << x2 << "\n";
+                        outFile << -halfDim << " " << y1 << " " << x1 << "\n";
                         outFile << -halfDim << " " << y1 << " " << x2 << "\n";
                         break;
-
-                    case 3: // Direita
+                    case 3: // Direita 
                         outFile << halfDim << " " << y2 << " " << x1 << "\n";
-                        outFile << halfDim << " " << y1 << " " << x1 << "\n";
-                        outFile << halfDim << " " << y1 << " " << x2 << "\n";
-                        
                         outFile << halfDim << " " << y2 << " " << x2 << "\n";
-                        outFile << halfDim << " " << y2 << " " << x1 << "\n";
-                        outFile << halfDim << " " << y1 << " " << x2 << "\n";                
+                        outFile << halfDim << " " << y1 << " " << x1 << "\n";
+
+                        outFile << halfDim << " " << y2 << " " << x2 << "\n";
+                        outFile << halfDim << " " << y1 << " " << x2 << "\n";
+                        outFile << halfDim << " " << y1 << " " << x1 << "\n";
                         break;
-                    case 4: // Topo
+                    case 4: // Topo 
                         outFile << x1 << " " << halfDim << " " << y2 << "\n";
-                        outFile << x1 << " " << halfDim << " " << y1 << "\n";
-                        outFile << x2 << " " << halfDim << " " << y1 << "\n";
-                        
                         outFile << x2 << " " << halfDim << " " << y2 << "\n";
-                        outFile << x1 << " " << halfDim << " " << y2 << "\n";
-                        outFile << x2 << " " << halfDim << " " << y1 << "\n";                    
+                        outFile << x1 << " " << halfDim << " " << y1 << "\n";
+
+                        outFile << x2 << " " << halfDim << " " << y2 << "\n";
+                        outFile << x2 << " " << halfDim << " " << y1 << "\n";
+                        outFile << x1 << " " << halfDim << " " << y1 << "\n";
                         break;
                     case 5: // Base
                         outFile << x1 << " " << -halfDim << " " << y2 << "\n";
                         outFile << x1 << " " << -halfDim << " " << y1 << "\n";
-                        outFile << x2 << " " << -halfDim << " " << y1 << "\n";
-                        
                         outFile << x2 << " " << -halfDim << " " << y2 << "\n";
-                        outFile << x1 << " " << -halfDim << " " << y2 << "\n";
+
+                        outFile << x2 << " " << -halfDim << " " << y2 << "\n";
+                        outFile << x1 << " " << -halfDim << " " << y1 << "\n";
                         outFile << x2 << " " << -halfDim << " " << y1 << "\n";
                         break;
                 }
