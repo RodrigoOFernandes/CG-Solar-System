@@ -92,7 +92,6 @@ void Model::draw (Config configFile){
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    
     // Use the Camera struct for gluLookAt
     gluLookAt(configFile.camera.position.x, configFile.camera.position.y, configFile.camera.position.z,
               configFile.camera.lookAt.x, configFile.camera.lookAt.y, configFile.camera.lookAt.z,
