@@ -40,10 +40,10 @@ int main(int argc, char **argv) {
         std::cout << "Please indicate a configuration XML file\n";
     }
 
-    configuration = parseFile(argv[1]);
+    configuration.parseFile(argv[1]);
 
-    for(auto& modelFile: configuration.models){ // loading .3d information into memory
-        modelFile.modelFlag = model.loadModel(modelFile.file);
+    for(auto& modelFile: configuration.model.models){ // loading .3d information into memory
+        modelFile.modelFlag = model.loadModel(modelFile.filename);
     }
 
     glutInit(&argc, argv);

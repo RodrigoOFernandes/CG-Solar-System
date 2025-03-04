@@ -17,8 +17,8 @@
 #include <fstream>  
 #include <sstream> 
 #include <vector>
-#include "../include/parser/xmlparser.hpp"
 
+#include "../include/config/config.hpp"
 
 struct Triangle {
     Vec3 v1, v2, v3;
