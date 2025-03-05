@@ -23,7 +23,9 @@ endfunction()
 # === Engine Executable ===
 add_executable(engine)  # Creates `engine` executable
 add_source_files(engine "${CMAKE_CURRENT_SOURCE_DIR}/engine/src")
+add_source_files(engine "${CMAKE_CURRENT_SOURCE_DIR}/Projeto/src/config")  # Add config source files
 add_include_directories(engine "${CMAKE_CURRENT_SOURCE_DIR}/engine/include")
+add_include_directories(engine "${CMAKE_CURRENT_SOURCE_DIR}/Projeto/include/config")  # Add config include directory
 
 # === Generator Executable ===
 add_executable(generator)  # Creates `generator` executable
