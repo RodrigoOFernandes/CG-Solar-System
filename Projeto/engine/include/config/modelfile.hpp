@@ -19,6 +19,7 @@ class ModelFile{
         std::vector<File> models;
 
         void parseModels(tinyxml2::XMLElement* modelsElement);
+        void print() const;
 };
 
 #endif

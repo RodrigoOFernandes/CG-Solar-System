@@ -1,30 +1,6 @@
 #include "../include/config/config.hpp"
 
-void Config::parseGroup(tinyxml2::XMLElement* groupElement, const Transforms& parentTransforms) {
-    if (!groupElement) {
-        return;
-    }
-
-    Transforms currentTransforms = parentTransforms;
-
-    tinyxml2::XMLElement* transformElement = groupElement->FirstChildElement("transform");
-    if (transformElement) {
-        currentTransforms.parseTransforms(transformElement);
-    }
-
-    tinyxml2::XMLElement* modelsElement = groupElement->FirstChildElement("models");
-    if (modelsElement) {
-        model.parseModels(modelsElement);
-    }
-
-    tinyxml2::XMLElement* childGroupElement = groupElement->FirstChildElement("group");
-    while (childGroupElement) {
-        parseGroup(childGroupElement, currentTransforms); 
-        childGroupElement = childGroupElement->NextSiblingElement("group");
-    }
-}
-
-void Config::parseFile(char* filename) {
+void Config::parseFile(const char* filename) {
     tinyxml2::XMLDocument doc;
 
     if (doc.LoadFile(filename) != tinyxml2::XML_SUCCESS) {
@@ -49,8 +25,24 @@ void Config::parseFile(char* filename) {
     }
 
     tinyxml2::XMLElement* groupElement = worldElement->FirstChildElement("group");
-    if (groupElement) {
-        Transforms initialTransforms; 
-        parseGroup(groupElement, initialTransforms);
+    while (groupElement) {
+        Group group;
+        group.parseGroup(groupElement);
+        groups.push_back(group);
+        groupElement = groupElement->NextSiblingElement("group");
+    }
+}
+
+void Config::print() const {
+    std::cout << "Configuration:\n";
+
+    // Print window and camera (assuming they have print functions)
+    window.print();
+    camera.print();
+
+    // Print all groups
+    std::cout << "Groups:\n";
+    for (const auto& group : groups) {
+        group.print();
     }
 }

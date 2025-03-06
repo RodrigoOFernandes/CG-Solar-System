@@ -10,6 +10,7 @@ class Window{
         int64_t width;
 
         void parseWindow(tinyxml2::XMLElement* windowElement);
+        void print() const;
 };
 
 #endif

@@ -3,9 +3,9 @@
 
 #include "../include/parser/tinyxml2.h"
 #include "../include/config/window.hpp"
+#include "../include/config/group.hpp"
 #include "../include/config/camera.hpp"
 #include "../include/config/modelfile.hpp"
-#include "../include/config/transforms.hpp"
 #include <string>
 #include <vector>
 #include <iostream>
@@ -17,10 +17,10 @@ class Config{
         Window window;
         Camera camera;
         ModelFile model;
-        Transforms transforms;
+        std::vector<Group> groups;
 
-        void parseGroup(tinyxml2::XMLElement* groupElement, const Transforms& parentTransforms);
-        void parseFile(char* filename);
+        void parseFile(const char* filename);
+        void print() const;
 };
 
 
