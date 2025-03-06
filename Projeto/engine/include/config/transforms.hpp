@@ -5,6 +5,10 @@
 #include <string>
 #include <iostream>
 
+#define ROTATE 0
+#define TRANSLATE 1
+#define SCALE 2
+
 struct Translate {
     int x, y, z;
 };
@@ -22,6 +26,7 @@ class Transforms{
         Translate translate;
         Rotate rotate;
         Scale scale;
+        int type;
         
         void parseTransforms(tinyxml2::XMLElement* transformElement);
 };
