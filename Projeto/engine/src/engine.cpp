@@ -41,7 +41,8 @@ int main(int argc, char **argv) {
     }
 
     configuration.parseFile(argv[1]);
-
+    configuration.print();
+    
     for(auto& modelFile: configuration.model.models){ // loading .3d information into memory
         modelFile.modelFlag = model.loadModel(modelFile.filename);
     }

@@ -3,6 +3,7 @@
 
 
 #include "../include/parser/tinyxml2.h"
+#include <iostream>
 
 struct Vec3 {
     float x, y, z;
@@ -20,7 +21,8 @@ class Camera{
         Vec3 up;
         Projection projection;
 
-        void  parseCamera(tinyxml2::XMLElement* cameraElement);
+        void parseCamera(tinyxml2::XMLElement* cameraElement);
+        void print() const;
 };
 
 #endif

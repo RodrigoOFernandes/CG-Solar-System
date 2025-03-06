@@ -25,3 +25,11 @@ void Camera::parseCamera(tinyxml2::XMLElement* cameraElement){
     if (proj) proj->QueryFloatAttribute("near", &this->projection.near);
     if (proj) proj->QueryFloatAttribute("far", &this->projection.far);
 }
+
+void Camera::print() const {
+    std::cout << "Camera:\n";
+    std::cout << "  Position: x=" << position.x << ", y=" << position.y << ", z=" << position.z << "\n";
+    std::cout << "  LookAt: x=" << lookAt.x << ", y=" << lookAt.y << ", z=" << lookAt.z << "\n";
+    std::cout << "  Up: x=" << up.x << ", y=" << up.y << ", z=" << up.z << "\n";
+    std::cout << "  Projection: fov=" << projection.fov << ", near=" << projection.near << ", far=" << projection.far << "\n";
+}

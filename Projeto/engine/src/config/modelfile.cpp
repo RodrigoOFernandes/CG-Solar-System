@@ -13,3 +13,10 @@ void ModelFile::parseModels(tinyxml2::XMLElement* modelsElement){
         models.push_back(file);
     }
 }
+
+void ModelFile::print() const {
+    std::cout << "  Models:\n";
+    for (const auto& file : models) {
+        std::cout << "    Model file: " << file.filename << " | Model flag: " << file.modelFlag << "\n";
+    }
+}
