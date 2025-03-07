@@ -33,6 +33,12 @@ int main(int argc, char** argv){
         int height = std::stoi(argv[3]);
         int slices = std::stoi(argv[4]);
         generateCylinder(radius, height, slices, outputFile);
+    } else if(strcmp(primitive, TORUS) == 0) {
+        int minor_radius = std::stoi(argv[2]);
+        int major_radius = std::stoi(argv[3]);
+        int stacks = std::stoi(argv[4]);
+        int slices = std::stoi(argv[5]);
+        generateTorus(minor_radius, major_radius, stacks, slices, outputFile);
     }
 
     return 0;
