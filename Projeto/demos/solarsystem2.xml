@@ -21,6 +21,7 @@
         <!-- Mercúrio -->
         <group>
             <transform>
+                <rotate y="1" angle="88" />
                 <translate x="15" y="0" z="0" />
                 <scale x="0.4" y="0.4" z="0.4" />
             </transform>
@@ -32,6 +33,7 @@
         <!-- Vênus -->
         <group>
             <transform>
+                <rotate y="1" angle="224" />
                 <translate x="25" y="0" z="0" />
                 <scale x="0.9" y="0.9" z="0.9" />
             </transform>
@@ -43,6 +45,7 @@
         <!-- Terra e Lua -->
         <group>
             <transform>
+                <rotate y="1" angle="365" />
                 <translate x="35" y="0" z="0" />
             </transform>
             <group>
@@ -55,6 +58,7 @@
             </group>
             <group>
                 <transform>
+                    <rotate y="1" angle="27" />
                     <translate x="2" y="0" z="0" />
                     <scale x="0.3" y="0.3" z="0.3" />
                 </transform>
@@ -67,6 +71,7 @@
         <!-- Marte e luas -->
         <group>
             <transform>
+                <rotate y="1" angle="687" />
                 <translate x="50" y="0" z="0" />
             </transform>
             <group>
@@ -100,26 +105,17 @@
         <!-- Júpiter e luas -->
         <group>
             <transform>
+                <rotate y="1" angle="4333" />
                 <translate x="100" y="0" z="0" />
                 <scale x="6" y="6" z="6" />
             </transform>
             <models>
                 <model file="sphere_1_8_8.3d" />
             </models>
-            <!-- Luas de Júpiter -->
             <group>
                 <transform>
-                    <translate x="10" y="0" z="0" />
-                    <scale x="0.1" y="0.1" z="0.1" />
-                </transform>
-                <models>
-                    <model file="sphere_1_8_8.3d" />
-                </models>
-            </group>
-            <group>
-                <transform>
-                    <translate x="-10" y="0" z="0" />
-                    <scale x="0.1" y="0.1" z="0.1" />
+                    <translate x="8" y="0" z="0" />
+                    <scale x="0.5" y="0.5" z="0.5" />
                 </transform>
                 <models>
                     <model file="sphere_1_8_8.3d" />
@@ -127,104 +123,43 @@
             </group>
         </group>
 
-        <!-- Saturno e anéis -->
+        <!-- Saturno e anel -->
         <group>
             <transform>
+                <rotate y="1" angle="10759" />
                 <translate x="150" y="0" z="0" />
                 <scale x="5.5" y="5.5" z="5.5" />
             </transform>
             <models>
                 <model file="sphere_1_8_8.3d" />
             </models>
-            <!-- Anel de Saturno -->
-            <group>
-                <transform>
-                    <rotate x="1" y="0" z="0" angle="90" /> <!-- Rotaciona o torus para que fique na horizontal -->
-                    <scale x="0.01" y="0.4" z="0.1" /> <!-- Ajusta o tamanho do anel -->
-                </transform>
-                <models>
-                    <model file="torus.3d" /> <!-- Arquivo do modelo do torus -->
-                </models>
-            </group>
-            <!-- Luas de Saturno -->
-            <group>
-                <transform>
-                    <translate x="12" y="0" z="0" />
-                    <scale x="0.1" y="0.1" z="0.1" />
-                </transform>
-                <models>
-                    <model file="sphere_1_8_8.3d" />
-                </models>
-            </group>
-            <group>
-                <transform>
-                    <translate x="-12" y="0" z="0" />
-                    <scale x="0.1" y="0.1" z="0.1" />
-                </transform>
-                <models>
-                    <model file="sphere_1_8_8.3d" />
-                </models>
-            </group>
+            <models>
+                <model file="torus_3d_ring.3d" />
+            </models>
         </group>
 
         <!-- Urano -->
         <group>
             <transform>
+                <rotate y="1" angle="30687" />
                 <translate x="200" y="0" z="0" />
                 <scale x="4" y="4" z="4" />
             </transform>
             <models>
                 <model file="sphere_1_8_8.3d" />
             </models>
-            <!-- Luas de Urano -->
-            <group>
-                <transform>
-                    <translate x="8" y="0" z="0" />
-                    <scale x="0.1" y="0.1" z="0.1" />
-                </transform>
-                <models>
-                    <model file="sphere_1_8_8.3d" />
-                </models>
-            </group>
-            <group>
-                <transform>
-                    <translate x="-8" y="0" z="0" />
-                    <scale x="0.1" y="0.1" z="0.1" />
-                </transform>
-                <models>
-                    <model file="sphere_1_8_8.3d" />
-                </models>
-            </group>
         </group>
 
         <!-- Netuno -->
         <group>
             <transform>
+                <rotate y="1" angle="60190" />
                 <translate x="250" y="0" z="0" />
                 <scale x="3.8" y="3.8" z="3.8" />
             </transform>
             <models>
                 <model file="sphere_1_8_8.3d" />
             </models>
-            <!-- Luas de Netuno -->
-            <group>
-                <transform>
-                    <translate x="6" y="0" z="0" />
-                    <scale x="0.1" y="0.1" z="0.1" />
-                </transform>
-                <models>
-                    <model file="sphere_1_8_8.3d" />
-                </models>
-            </group>
-            <group>
-                <transform>
-                    <translate x="-6" y="0" z="0" />
-                    <scale x="0.1" y="0.1" z="0.1" />
-                </transform>
-                <models>
-                    <model file="sphere_1_8_8.3d" />
-                </models>
-            </group>
         </group>
     </group>
 </world>
