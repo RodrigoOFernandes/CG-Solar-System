@@ -1,7 +1,6 @@
 #include "../include/engine.hpp"
 
 Config configuration;
-Model model;
 
 void resize(int w, int h) {
 
@@ -31,7 +30,7 @@ void resize(int w, int h) {
 
 
 void renderScene() {
-    model.draw(configuration);
+    configuration.draw();
 }
 
 int main(int argc, char **argv) {
@@ -43,10 +42,6 @@ int main(int argc, char **argv) {
     configuration.parseFile(argv[1]);
     configuration.print();
     
-    for(auto& modelFile: configuration.model.models){ // loading .3d information into memory
-        modelFile.modelFlag = model.loadModel(modelFile.filename);
-    }
-
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
     glutInitWindowPosition(100, 100);

@@ -5,7 +5,6 @@
 #include "../include/config/window.hpp"
 #include "../include/config/group.hpp"
 #include "../include/config/camera.hpp"
-#include "../include/config/modelfile.hpp"
 #include <string>
 #include <vector>
 #include <iostream>
@@ -16,10 +15,10 @@ class Config{
     public:
         Window window;
         Camera camera;
-        ModelFile model;
-        std::vector<Group> groups;
+        Group group;
 
         void parseFile(const char* filename);
+        void draw();
         void print() const;
 };
 
