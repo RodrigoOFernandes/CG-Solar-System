@@ -6,6 +6,7 @@
 #include "shapes/plane.hpp"
 #include "shapes/cone.hpp"
 #include "shapes/cylinder.hpp"
+#include "shapes/torus.hpp"
 
 #include <stdio.h>
 #include <string.h>
@@ -17,5 +18,6 @@
 #define BOX "box"
 #define CONE "cone"
 #define CYLINDER "cylinder"
+#define TORUS "torus"
 
 #endif
