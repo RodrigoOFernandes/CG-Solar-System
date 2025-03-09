@@ -135,7 +135,7 @@ void Group::print(int depth) const {
     if (!models.empty()) {
         std::cout << indent << "  Models:\n";
         for (const auto& model : models) {
-            std::cout << indent << "    - Model\n"; 
+            std::cout << indent << "    - Model:\n"; 
         }
     }
 

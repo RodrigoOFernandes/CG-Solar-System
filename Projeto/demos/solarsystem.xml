@@ -139,11 +139,11 @@
             <!-- Anel de Saturno -->
             <group>
                 <transform>
-                    <rotate x="1" y="0" z="0" angle="90" /> <!-- Rotaciona o torus para que fique na horizontal -->
-                    <scale x="0.01" y="0.4" z="0.1" /> <!-- Ajusta o tamanho do anel -->
+                    <rotate x="1" y="0" z="0" angle="90" /> 
+                    <scale x="0.01" y="0.4" z="0.1" /> 
                 </transform>
                 <models>
-                    <model file="torus.3d" /> <!-- Arquivo do modelo do torus -->
+                    <model file="torus.3d" /> <!--./generator torus 2 4 100 100 --> 
                 </models>
             </group>
             <!-- Luas de Saturno -->
@@ -228,3 +228,4 @@
         </group>
     </group>
 </world>
+
