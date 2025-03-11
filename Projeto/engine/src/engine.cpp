@@ -3,30 +3,23 @@
 Config configuration;
 
 void resize(int w, int h) {
+    if (h == 0)
+        h = 1;
 
-	// Prevent a divide by zero, when window is too short
-	// (you cant make a window with zero width).
-	if(h == 0)
-		h = 1;
+    float aspect_ratio = static_cast<float>(w) / static_cast<float>(h);
 
-	// compute window's aspect ratio 
-	float ratio = w * 1.0 / h;
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
 
-	// Set the projection matrix as current
-	glMatrixMode(GL_PROJECTION);
-	// Load Identity Matrix
-	glLoadIdentity();
-	
-	// Set the viewport to be the entire window
     glViewport(0, 0, w, h);
 
-	// Set perspective
-    gluPerspective(configuration.camera.projection.fov, (configuration.window.height/configuration.window.width),
-    configuration.camera.projection.near,configuration.camera.projection.far);
+    gluPerspective(configuration.camera.projection.fov, aspect_ratio, 
+                   configuration.camera.projection.near, configuration.camera.projection.far);
 
-	// return to the model view matrix mode
-	glMatrixMode(GL_MODELVIEW);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 }
+
 
 
 void renderScene() {
