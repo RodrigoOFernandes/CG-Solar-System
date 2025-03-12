@@ -139,7 +139,7 @@
             <!-- Luas de Saturno -->
             <group>
                 <transform>
-                    <translate x="5" y="0" z="0" />
+                    <translate x="2" y="0" z="0" />
                     <scale x="0.1" y="0.1" z="0.1" />
                 </transform>
                 <models>
@@ -148,7 +148,7 @@
             </group>
             <group>
                 <transform>
-                    <translate x="-5" y="0" z="0" />
+                    <translate x="-2" y="0" z="0" />
                     <scale x="0.1" y="0.1" z="0.1" />
                 </transform>
                 <models>
@@ -157,7 +157,7 @@
             </group>
             <group>
                 <transform>
-                    <translate x="0" y="5" z="0" />
+                    <translate x="0" y="2" z="0" />
                     <scale x="0.1" y="0.1" z="0.1" />
                 </transform>
                 <models>
@@ -166,7 +166,7 @@
             </group>
             <group>
                 <transform>
-                    <translate x="0" y="-5" z="0" />
+                    <translate x="0" y="-2" z="0" />
                     <scale x="0.1" y="0.1" z="0.1" />
                 </transform>
                 <models>
@@ -175,35 +175,111 @@
             </group>
             <group>
                 <transform>
-                    <translate x="0" y="0" z="5" />
+                    <translate x="0" y="0" z="2" />
                     <scale x="0.1" y="0.1" z="0.1" />
                 </transform>
                 <models>
                     <model file="sphere_1_8_8.3d" />
                 </models>
             </group>
-          </group>
-          <!-- Urano -->
-          <group>
+        </group>
+
+        <!-- Urano e Luas -->
+        <group>
             <transform>
-              <rotate y="1" angle="280" />
-              <translate x="40" y="0" z="0" />
-              <scale x="2.0" y="2.0" z="2.0" />
+                <rotate y="1" angle="280" />
+                <translate x="40" y="0" z="0" />
+                <scale x="2.0" y="2.0" z="2.0" />
             </transform>
             <models>
-              <model file="sphere_1_8_8.3d" />
+                <model file="sphere_1_8_8.3d" />
             </models>
-          </group>
-          <!--Neptuno-->
-          <group>
+            <!-- Luas de Urano -->
+            <group>
+                <transform>
+                    <translate x="2" y="0" z="0" />
+                    <scale x="0.1" y="0.1" z="0.1" />
+                </transform>
+                <models>
+                    <model file="sphere_1_8_8.3d" />
+                </models>
+            </group>
+            <group>
+                <transform>
+                    <translate x="-2" y="0" z="0" />
+                    <scale x="0.1" y="0.1" z="0.1" />
+                </transform>
+                <models>
+                    <model file="sphere_1_8_8.3d" />
+                </models>
+            </group>
+            <group>
+                <transform>
+                    <translate x="0" y="2" z="0" />
+                    <scale x="0.1" y="0.1" z="0.1" />
+                </transform>
+                <models>
+                    <model file="sphere_1_8_8.3d" />
+                </models>
+            </group>
+            <group>
+                <transform>
+                    <translate x="0" y="-2" z="0" />
+                    <scale x="0.1" y="0.1" z="0.1" />
+                </transform>
+                <models>
+                    <model file="sphere_1_8_8.3d" />
+                </models>
+            </group>
+        </group>
+
+        <!-- Netuno e Luas -->
+        <group>
             <transform>
-              <rotate y="1" angle="320" />
-              <translate x="40" y="0" z="0" />
-              <scale x="1.5" y="1.5" z="1.5" />
+                <rotate y="1" angle="320" />
+                <translate x="40" y="0" z="0" />
+                <scale x="1.5" y="1.5" z="1.5" />
             </transform>
             <models>
-              <model file="sphere_1_8_8.3d" />
+                <model file="sphere_1_8_8.3d" />
             </models>
-          </group>
+            <!-- Luas de Netuno -->
+            <group>
+                <transform>
+                    <translate x="2" y="0" z="0" />
+                    <scale x="0.1" y="0.1" z="0.1" />
+                </transform>
+                <models>
+                    <model file="sphere_1_8_8.3d" />
+                </models>
+            </group>
+            <group>
+                <transform>
+                    <translate x="-2" y="0" z="0" />
+                    <scale x="0.1" y="0.1" z="0.1" />
+                </transform>
+                <models>
+                    <model file="sphere_1_8_8.3d" />
+                </models>
+            </group>
+            <group>
+                <transform>
+                    <translate x="0" y="2" z="0" />
+                    <scale x="0.1" y="0.1" z="0.1" />
+                </transform>
+                <models>
+                    <model file="sphere_1_8_8.3d" />
+                </models>
+            </group>
+            <group>
+                <transform>
+                    <translate x="0" y="-2" z="0" />
+                    <scale x="0.1" y="0.1" z="0.1" />
+                </transform>
+                <models>
+                    <model file="sphere_1_8_8.3d" />
+                </models>
+            </group>
+        </group>
     </group>
 </world>
