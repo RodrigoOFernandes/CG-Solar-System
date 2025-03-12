@@ -16,7 +16,7 @@
             <models>
                 <model file="sphere_1_16_16.3d" />
             </models>
-        </group>
+  </group>
 
         <!-- Mercúrio -->
         <group>
@@ -134,7 +134,7 @@
                 <model file="sphere_1_8_8.3d" />
             </models>
             <models>
-                <model file="torus_3d_ring.3d" />
+                <model file="torus_1_9_40_2.3d" />
             </models>
         </group>
 
