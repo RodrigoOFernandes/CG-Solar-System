@@ -8,129 +8,180 @@
     </camera>
 
     <group>
-      <!--"SOL"--> 
-      <group>
-        <transform>
-          <scale x="10" y = "10" z = "10" />
-        </transform>
-        <models>
-          <model file="sphere_1_16_16.3d" />
-        </models>
-      </group>
-      <!--Mercúrio-->
-      <group>
-        <transform>
-          <rotate y="1" angle="40" />
-          <translate x="40" y="0" z="0" />
-        </transform>
-        <models>
-          <model file="sphere_1_8_8.3d" />
-        </models>
-        <!--Venus--> 
-          <group>
+        <!-- "SOL" -->
+        <group>
             <transform>
-              <rotate y="1" angle="40" />
-              <translate x="40" y="0" z="0" />
+                <scale x="10" y="10" z="10" />
             </transform>
             <models>
-              <model file="sphere_1_8_8.3d" />
+                <model file="sphere_1_16_16.3d" />
             </models>
-            <!-- Terra e lua -->
-            <group>
-              <transform>
+        </group>
+
+        <!-- Mercúrio -->
+        <group>
+            <transform>
                 <rotate y="1" angle="40" />
                 <translate x="40" y="0" z="0" />
-                <scale x="2.0" y="2.0" z="2.0" />
-              </transform>
-              <models>
+            </transform>
+            <models>
                 <model file="sphere_1_8_8.3d" />
-              </models>
-              <group>
+            </models>
+        </group>
+
+        <!-- Vênus -->
+        <group>
+            <transform>
+                <rotate y="1" angle="80" />
+                <translate x="40" y="0" z="0" />
+            </transform>
+            <models>
+                <model file="sphere_1_8_8.3d" />
+            </models>
+        </group>
+
+        <!-- Terra e Lua -->
+        <group>
+            <transform>
+                <rotate y="1" angle="120" />
+                <translate x="40" y="0" z="0" />
+                <scale x="2.0" y="2.0" z="2.0" />
+            </transform>
+            <models>
+                <model file="sphere_1_8_8.3d" />
+            </models>
+            <group>
                 <transform>
-                  <rotate y="1" angle="20" />
-                  <translate x="-2" y="0" z="-2" />
-                  <scale x="0.3" y="0.3" z="0.3"/>
+                    <rotate y="1" angle="20" />
+                    <translate x="-2" y="0" z="-2" />
+                    <scale x="0.3" y="0.3" z="0.3" />
                 </transform>
                 <models>
-                  <model file="sphere_1_8_8.3d" />
+                    <model file="sphere_1_8_8.3d" />
                 </models>
-              </group>
             </group>
+        </group>
 
-            <!-- Marte e luas -->
-            <group>
-              <transform>
-                <rotate y="1" angle ="80" />
+        <!-- Marte e Luas -->
+        <group>
+            <transform>
+                <rotate y="1" angle="160" />
                 <translate x="40" y="0" z="0" />
                 <scale x="1.5" y="1.5" z="1.5" />
-              </transform>
-              <models>
+            </transform>
+            <models>
                 <model file="sphere_1_8_8.3d" />
-              </models>
-              <group>
+            </models>
+            <group>
                 <transform>
-                  <translate x="2" y="1" z="2" />
-                  <scale x="0.3" y="0.3" z="0.3" />
+                    <translate x="2" y="1" z="2" />
+                    <scale x="0.3" y="0.3" z="0.3" />
                 </transform>
                 <models>
-                  <model file="sphere_1_8_8.3d" />
-                </models>
-                <group>
-                  <transform>
-                    <translate x="-4" y="2" z="-5" />
-                  </transform>
-                  <models>
                     <model file="sphere_1_8_8.3d" />
-                  </models>
-                </group>
-              </group>
-              <!-- Jupiter e luas -->
-              <group>
-                <transform>
-                  <rotate y="1" angle ="40" />
-                  <translate x="40" y="0" z="0" />
-                  <scale x="4.0" y="4.0" z="4.0" />
-                </transform>
-                <models>
-                  <model file="sphere_1_8_8.3d" />
                 </models>
                 <group>
-                  <transform>
-                  <translate x="1" y="0.5" z="-1" />
-                  <scale x="0.1" y="0.1" z="0.1" />
-                 </transform>
-                  <group><transform><translate x="-5" y="2" z="-3" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
-                  <group><transform><translate x="7" y="-1" z="5" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
-                  <group><transform><translate x="-3" y="3" z="-6" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
-                  <group><transform><translate x="4" y="-2" z="-4" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
-                  <group><transform><translate x="-6" y="4" z="3" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
-                  <group><transform><translate x="5" y="-3" z="-5" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
-                  <group><transform><translate x="-2" y="2" z="4" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
-                  <group><transform><translate x="-4" y="-1" z="6" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
+                    <transform>
+                        <translate x="-4" y="2" z="-5" />
+                    </transform>
+                    <models>
+                        <model file="sphere_1_8_8.3d" />
+                    </models>
                 </group>
-              </group>
-              <!-- Saturno, anel e luas -->
-              <group>
+            </group>
+        </group>
+
+        <!-- Júpiter e Luas -->
+        <group>
+            <transform>
+                <rotate y="1" angle="200" />
+                <translate x="40" y="0" z="0" />
+                <scale x="4.0" y="4.0" z="4.0" />
+            </transform>
+            <models>
+                <model file="sphere_1_8_8.3d" />
+            </models>
+            <group>
                 <transform>
-                  <rotate y="1" angle="40" />
-                  <translate x="80" y="0" z="0" />
-                  <scale x="3.0" y="3.0" z="3.0" />
+                    <translate x="1" y="0.5" z="-1" />
+                    <scale x="0.1" y="0.1" z="0.1" />
                 </transform>
-                <models>
-                  <model file="sphere_1_8_8.3d" />
-                </models>
-                <group>
-                  <transform>
+                <group><transform><translate x="-5" y="2" z="-3" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
+                <group><transform><translate x="7" y="-1" z="5" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
+                <group><transform><translate x="-3" y="3" z="-6" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
+                <group><transform><translate x="4" y="-2" z="-4" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
+                <group><transform><translate x="-6" y="4" z="3" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
+                <group><transform><translate x="5" y="-3" z="-5" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
+                <group><transform><translate x="-2" y="2" z="4" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
+                <group><transform><translate x="-4" y="-1" z="6" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
+            </group>
+        </group>
+
+        <!-- Saturno, Anel e Luas -->
+        <group>
+            <transform>
+                <rotate y="1" angle="240" />
+                <translate x="80" y="0" z="0" />
+                <scale x="3.0" y="3.0" z="3.0" />
+            </transform>
+            <models>
+                <model file="sphere_1_8_8.3d" />
+            </models>
+            <group>
+                <transform>
                     <scale x="0.2" y="0.2" z="0.2" />
                     <rotate x="1" angle="75" />
-                  </transform>
-                  <models>
-                    <model file ="torus_1_9_40_2.3d" />
-                  </models>
-                </group>
-              </group>
+                </transform>
+                <models>
+                    <model file="torus_1_9_40_2.3d" />
+                </models>
             </group>
-          </group>
+            <!-- Luas de Saturno -->
+            <group>
+                <transform>
+                    <translate x="5" y="0" z="0" />
+                    <scale x="0.1" y="0.1" z="0.1" />
+                </transform>
+                <models>
+                    <model file="sphere_1_8_8.3d" />
+                </models>
+            </group>
+            <group>
+                <transform>
+                    <translate x="-5" y="0" z="0" />
+                    <scale x="0.1" y="0.1" z="0.1" />
+                </transform>
+                <models>
+                    <model file="sphere_1_8_8.3d" />
+                </models>
+            </group>
+            <group>
+                <transform>
+                    <translate x="0" y="5" z="0" />
+                    <scale x="0.1" y="0.1" z="0.1" />
+                </transform>
+                <models>
+                    <model file="sphere_1_8_8.3d" />
+                </models>
+            </group>
+            <group>
+                <transform>
+                    <translate x="0" y="-5" z="0" />
+                    <scale x="0.1" y="0.1" z="0.1" />
+                </transform>
+                <models>
+                    <model file="sphere_1_8_8.3d" />
+                </models>
+            </group>
+            <group>
+                <transform>
+                    <translate x="0" y="0" z="5" />
+                    <scale x="0.1" y="0.1" z="0.1" />
+                </transform>
+                <models>
+                    <model file="sphere_1_8_8.3d" />
+                </models>
+            </group>
         </group>
     </group>
 </world>
