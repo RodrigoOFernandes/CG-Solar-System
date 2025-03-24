@@ -21,8 +21,9 @@
         <!-- Mercúrio -->
         <group>
             <transform>
-                <rotate y="1" angle="40" />
-                <translate x="40" y="0" z="0" />
+                <rotate y="1" angle="25" /> <!-- Ângulo ajustado -->
+                <translate x="27" y="0" z="0" />
+                <scale x="1.1" y="1.1" z="1.1" />
             </transform>
             <models>
                 <model file="sphere_1_8_8.3d" />
@@ -32,8 +33,9 @@
         <!-- Vênus -->
         <group>
             <transform>
-                <rotate y="1" angle="80" />
-                <translate x="40" y="0" z="0" />
+                <rotate y="1" angle="190" /> <!-- Ângulo ajustado -->
+                <translate x="35" y="0" z="0" />
+                <scale x="1.2" y="1.2" z="1.2" />
             </transform>
             <models>
                 <model file="sphere_1_8_8.3d" />
@@ -43,8 +45,8 @@
         <!-- Terra e Lua -->
         <group>
             <transform>
-                <rotate y="1" angle="120" />
-                <translate x="40" y="0" z="0" />
+                <rotate y="1" angle="325" /> <!-- Ângulo ajustado -->
+                <translate x="50" y="0" z="0" />
                 <scale x="2.0" y="2.0" z="2.0" />
             </transform>
             <models>
@@ -65,8 +67,8 @@
         <!-- Marte e Luas -->
         <group>
             <transform>
-                <rotate y="1" angle="160" />
-                <translate x="40" y="0" z="0" />
+                <rotate y="1" angle="150" /> <!-- Ângulo ajustado -->
+                <translate x="65" y="0" z="0" />
                 <scale x="1.5" y="1.5" z="1.5" />
             </transform>
             <models>
@@ -94,8 +96,8 @@
         <!-- Júpiter e Luas -->
         <group>
             <transform>
-                <rotate y="1" angle="200" />
-                <translate x="40" y="0" z="0" />
+                <rotate y="1" angle="70" /> <!-- Ângulo ajustado -->
+                <translate x="80" y="0" z="0" />
                 <scale x="4.0" y="4.0" z="4.0" />
             </transform>
             <models>
@@ -120,8 +122,8 @@
         <!-- Saturno, Anel e Luas -->
         <group>
             <transform>
-                <rotate y="1" angle="240" />
-                <translate x="40" y="0" z="0" />
+                <rotate y="1" angle="230" /> <!-- Ângulo ajustado -->
+                <translate x="85" y="0" z="0" />
                 <scale x="3.0" y="3.0" z="3.0" />
             </transform>
             <models>
@@ -187,8 +189,8 @@
         <!-- Urano e Luas -->
         <group>
             <transform>
-                <rotate y="1" angle="280" />
-                <translate x="40" y="0" z="0" />
+                <rotate y="1" angle="270" /> <!-- Ângulo ajustado -->
+                <translate x="110" y="0" z="0" />
                 <scale x="2.0" y="2.0" z="2.0" />
             </transform>
             <models>
@@ -236,8 +238,8 @@
         <!-- Netuno e Luas -->
         <group>
             <transform>
-                <rotate y="1" angle="320" />
-                <translate x="40" y="0" z="0" />
+                <rotate y="1" angle="360" /> <!-- Ângulo ajustado -->
+                <translate x="125" y="0" z="0" />
                 <scale x="1.5" y="1.5" z="1.5" />
             </transform>
             <models>

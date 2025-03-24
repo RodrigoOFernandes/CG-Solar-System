@@ -8,7 +8,7 @@
     </camera>
 	<group> 
   		<models> 
-			<model file="torus1.3d" />
+			<model file="torus_2_10_20_20.3d" />
  		</models>
  	</group>
 </world>
