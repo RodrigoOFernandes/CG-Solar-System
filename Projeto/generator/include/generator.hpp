@@ -7,6 +7,7 @@
 #include "shapes/cone.hpp"
 #include "shapes/cylinder.hpp"
 #include "shapes/torus.hpp"
+#include "shapes/patch.hpp"
 
 #include <stdio.h>
 #include <string.h>
@@ -19,5 +20,6 @@
 #define CONE "cone"
 #define CYLINDER "cylinder"
 #define TORUS "torus"
+#define PATCH "patch"
 
 #endif
