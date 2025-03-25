@@ -39,6 +39,10 @@ int main(int argc, char** argv){
         int stacks = std::stoi(argv[4]);
         int slices = std::stoi(argv[5]);
         generateTorus(minor_radius, major_radius, stacks, slices, outputFile);
+    } else if(strcmp(primitive, PATCH) == 0) {
+        char *patch_file = argv[2];
+        int tesselation = std::stoi(argv[3]);
+        generatePatch(patch_file, tesselation, outputFile);
     }
 
     return 0;
