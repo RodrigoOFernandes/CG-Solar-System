@@ -1,5 +1,4 @@
 #include "../shapes/patch.hpp"
-
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -26,8 +25,7 @@ void parsePatch(char *patch_file) {
         std::istringstream iss(line);
         int index;
         while (iss >> index) {
-            // Adjust for 0-based indexing if needed
-            patches[i].push_back(index);  // Or use (index - 1) if file uses 1-based indexing
+            patches[i].push_back(index);  
             if (iss.peek() == ',') iss.ignore();
         }
     }
@@ -41,25 +39,20 @@ void parsePatch(char *patch_file) {
         file >> controlPoints[i].x >> comma >> controlPoints[i].y >> comma >> controlPoints[i].z;
     }
 
-    // Debug output
     std::cout << "Number of patches: " << numPatches << std::endl;
-    for (const auto& patch : patches) {
-        for (int index : patch) {
-            std::cout << index << " ";
+    for (int i = 0; i < patches.size(); i++) {
+        std::cout << "Patch " << i << " control points:" << std::endl;
+        for (int index : patches[i]) {
+            std::cout << "  Index " << index << ": ("
+                      << controlPoints[index].x << ", "
+                      << controlPoints[index].y << ", "
+                      << controlPoints[index].z << ")" << std::endl;
         }
-        std::cout << std::endl;
     }
     
-    std::cout << "Number of control points: " << numControlPoints << std::endl;
-    for (int i = 0; i < numControlPoints - 1; i++) {
-        std::cout << "Control Point " << i << ": "
-                  << controlPoints[i].x << ", "
-                  << controlPoints[i].y << ", "
-                  << controlPoints[i].z << std::endl;
-    }  
+    std::cout << "Total number of control points: " << numControlPoints << std::endl;
 }
 
 void generatePatch(char *patch_file, int tesselation, char *outputFile) {
    parsePatch(patch_file);
 }
-
