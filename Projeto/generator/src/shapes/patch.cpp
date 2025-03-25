@@ -8,7 +8,7 @@ struct ControlPoint {
     float x, y, z;
 };
 
-void parsePatch(char *patch_file) {
+void generatePatch(char *patch_file, int tesselation, char *outputFile) {
     std::ifstream file(patch_file);
     if (!file) {
         std::cerr << "Error opening file." << std::endl;
@@ -53,6 +53,3 @@ void parsePatch(char *patch_file) {
     std::cout << "Total number of control points: " << numControlPoints << std::endl;
 }
 
-void generatePatch(char *patch_file, int tesselation, char *outputFile) {
-   parsePatch(patch_file);
-}
