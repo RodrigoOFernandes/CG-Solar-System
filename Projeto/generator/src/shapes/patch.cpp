@@ -88,12 +88,13 @@ void generatePatch(char *patch_file, int tesselation, char *outputFile) {
                 ControlPoint p3 = bezierPoint(patchPoints, u1, v2);
                 ControlPoint p4 = bezierPoint(patchPoints, u2, v2);
                 
+                // Ensure correct winding order (counter-clockwise, right-hand rule)
                 outFile << p1.x << " " << p1.y << " " << p1.z << "\n";
-                outFile << p2.x << " " << p2.y << " " << p2.z << "\n";
                 outFile << p3.x << " " << p3.y << " " << p3.z << "\n";
                 outFile << p2.x << " " << p2.y << " " << p2.z << "\n";
+                outFile << p2.x << " " << p2.y << " " << p2.z << "\n";
+                outFile << p3.x << " " << p3.y << " " << p3.z << "\n";
                 outFile << p4.x << " " << p4.y << " " << p4.z << "\n";
-                outFile << p3.x << " " << p3.y << " " << p3.z << "\n";
             }
         }
     }
