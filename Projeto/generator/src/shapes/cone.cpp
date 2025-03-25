@@ -7,7 +7,7 @@
 void generateCone(int radius, int height, int slices, int stacks, char* outputFile) {
     std::string fullPath = "../models/" + std::string(outputFile);
     std::ofstream outFile(fullPath);
-
+  
     if (!outFile.is_open()) {
         std::cerr << "Error opening output file: " << outputFile << std::endl;
         return;
