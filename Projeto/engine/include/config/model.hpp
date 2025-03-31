@@ -26,10 +26,13 @@ struct Triangle {
 
 class Model {
     public:
-        std::vector<Triangle> triangles;
-
-        void draw() const;
+        GLuint vboID;
+        std::vector<float> triangles; // Agora diretamente armazenado como floats
+    
+        Model() : vboID(0) {}
+    
         void parseModel(tinyxml2::XMLElement* modelElement);
+        void draw() const;
 };
 
 

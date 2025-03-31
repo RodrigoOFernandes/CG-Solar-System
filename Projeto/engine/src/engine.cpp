@@ -47,20 +47,25 @@ int main(int argc, char **argv) {
         std::cout << "Please indicate a configuration XML file\n";
     }
 
-    configuration.parseFile(argv[1]);
-    configuration.print();
-    
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
     glutInitWindowPosition(100, 100);
-    glutInitWindowSize(configuration.window.width, configuration.window.height);
+
+    glutInitWindowSize(500, 500);
     glutCreateWindow("CG-SOLAR-System");
     
+
     glutDisplayFunc(renderScene);
     glutReshapeFunc(resize);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
-    
+
+    configuration.parseFile(argv[1]);
+    configuration.print();
+
+    glutReshapeWindow(configuration.window.width, configuration.window.height);
+    resize(configuration.window.width, configuration.window.height);
+
     glutMainLoop();
     return 0;
 }
