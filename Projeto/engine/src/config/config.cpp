@@ -65,8 +65,6 @@ void Config::draw(){
     glColor3f(1.0f, 1.0f, 1.0f);
 
     group.drawGroup();
-
-    glutSwapBuffers();
 }
 
 void Config::print() const {

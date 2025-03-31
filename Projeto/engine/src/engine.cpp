@@ -1,6 +1,9 @@
 #include "../include/engine.hpp"
 
 Config configuration;
+char frames[64];
+int tbase = 0, t = 0;
+float frame = 0.0f, fps = 0.0f;
 
 void resize(int w, int h) {
     if (h == 0)
@@ -24,6 +27,18 @@ void resize(int w, int h) {
 
 void renderScene() {
     configuration.draw();
+    frame++;
+    t = glutGet(GLUT_ELAPSED_TIME);
+    if (t - tbase > 1000) { 
+        fps = frame * 1000.0f / (t - tbase); 
+        tbase = t;
+        frame = 0;
+    }
+
+    sprintf(frames, "CG-SOLAR-System || FPS: %.2f", fps);
+    glutSetWindowTitle(frames);
+    glutPostRedisplay();
+    glutSwapBuffers();
 }
 
 int main(int argc, char **argv) {
