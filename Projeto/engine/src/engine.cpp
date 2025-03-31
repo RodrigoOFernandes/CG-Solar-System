@@ -1,6 +1,9 @@
 #include "../include/engine.hpp"
 
 Config configuration;
+char frames[64];
+int tbase = 0, t = 0;
+float frame = 0.0f, fps = 0.0f;
 
 void resize(int w, int h) {
     if (h == 0)
@@ -24,6 +27,18 @@ void resize(int w, int h) {
 
 void renderScene() {
     configuration.draw();
+    frame++;
+    t = glutGet(GLUT_ELAPSED_TIME);
+    if (t - tbase > 1000) { 
+        fps = frame * 1000.0f / (t - tbase); 
+        tbase = t;
+        frame = 0;
+    }
+
+    sprintf(frames, "CG-SOLAR-System || FPS: %.2f", fps);
+    glutSetWindowTitle(frames);
+    glutPostRedisplay();
+    glutSwapBuffers();
 }
 
 int main(int argc, char **argv) {
@@ -32,20 +47,25 @@ int main(int argc, char **argv) {
         std::cout << "Please indicate a configuration XML file\n";
     }
 
-    configuration.parseFile(argv[1]);
-    configuration.print();
-    
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
     glutInitWindowPosition(100, 100);
-    glutInitWindowSize(configuration.window.width, configuration.window.height);
+
+    glutInitWindowSize(500, 500);
     glutCreateWindow("CG-SOLAR-System");
     
+
     glutDisplayFunc(renderScene);
     glutReshapeFunc(resize);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
-    
+
+    configuration.parseFile(argv[1]);
+    configuration.print();
+
+    glutReshapeWindow(configuration.window.width, configuration.window.height);
+    resize(configuration.window.width, configuration.window.height);
+
     glutMainLoop();
     return 0;
 }
