@@ -54,6 +54,13 @@ int main(int argc, char **argv) {
     glutInitWindowSize(500, 500);
     glutCreateWindow("CG-SOLAR-System");
     
+    #if !defined(__APPLE__)
+        GLenum err = glewInit();
+        if (err != GLEW_OK) {
+            std::cerr << "Error initializing GLEW: " << glewGetErrorString(err) << std::endl;
+            return 1;
+        }
+    #endif
 
     glutDisplayFunc(renderScene);
     glutReshapeFunc(resize);
