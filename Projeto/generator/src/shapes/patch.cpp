@@ -37,6 +37,7 @@ ControlPoint bezierPoint(const std::vector<ControlPoint>& patch, float u, float 
 
 void generatePatch(char *patch_file, int tesselation, char *outputFile) {
     std::string fullPath = "../models/" + std::string(outputFile);
+    std::string fullPathPatch = "../patches/" + std::string(patch_file);
     std::ofstream outFile(fullPath);
     
     if (!outFile.is_open()) {
@@ -44,9 +45,9 @@ void generatePatch(char *patch_file, int tesselation, char *outputFile) {
         return;
     }
     
-    std::ifstream file(patch_file);
+    std::ifstream file(fullPathPatch);
     if (!file) {
-        std::cerr << "Error opening file." << std::endl;
+        std::cerr << "Error opening file: " << fullPathPatch << std::endl;
         return;
     }
     
