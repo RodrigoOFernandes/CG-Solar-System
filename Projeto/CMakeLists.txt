@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.5)
 set(CMAKE_CXX_STANDARD 11) # Ou 14, 17...
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-
 # Project Name
 PROJECT(CG_SOLAR_SYSTEM)
 
@@ -35,7 +34,7 @@ add_executable(generator)  # Creates `generator` executable
 add_source_files(generator "${CMAKE_CURRENT_SOURCE_DIR}/generator/src")
 add_include_directories(generator "${CMAKE_CURRENT_SOURCE_DIR}/generator/include")
 
-# === OpenGL and GLUT Configuration ===
+# === OpenGL, GLUT and GLEW Configuration ===
 find_package(OpenGL REQUIRED)
 include_directories(${OpenGL_INCLUDE_DIRS})
 link_directories(${OpenGL_LIBRARY_DIRS})
@@ -44,6 +43,15 @@ add_definitions(${OpenGL_DEFINITIONS})
 if(NOT OPENGL_FOUND)
     message(FATAL_ERROR "OpenGL not found!")
 endif()
+
+# Manual GLEW configuration
+set(GLEW_INCLUDE_DIR "/usr/include")  # Parent of GL/glew.h
+set(GLEW_LIBRARY "/usr/lib/x86_64-linux-gnu/libGLEW.so")  # Full path to library
+include_directories(${GLEW_INCLUDE_DIR})
+
+message(STATUS "Using manual GLEW paths:")
+message(STATUS "  GLEW_INCLUDE_DIR = ${GLEW_INCLUDE_DIR}")
+message(STATUS "  GLEW_LIBRARY = ${GLEW_LIBRARY}")
 
 if (WIN32)
     set(TOOLKITS_FOLDER "" CACHE PATH "Path to Toolkits folder")
@@ -54,8 +62,16 @@ if (WIN32)
     
     include_directories(${TOOLKITS_FOLDER}/glut)
     
-    target_link_libraries(engine ${OPENGL_LIBRARIES} ${TOOLKITS_FOLDER}/glut/glut32.lib)
-    target_link_libraries(generator ${OPENGL_LIBRARIES} ${TOOLKITS_FOLDER}/glut/glut32.lib)
+    target_link_libraries(engine 
+        ${OPENGL_LIBRARIES} 
+        ${GLEW_LIBRARIES}
+        ${TOOLKITS_FOLDER}/glut/glut32.lib
+    )
+    target_link_libraries(generator 
+        ${OPENGL_LIBRARIES} 
+        ${GLEW_LIBRARIES}
+        ${TOOLKITS_FOLDER}/glut/glut32.lib
+    )
     
     if (EXISTS "${TOOLKITS_FOLDER}/glut/glut32.dll")
         file(COPY ${TOOLKITS_FOLDER}/glut/glut32.dll DESTINATION ${CMAKE_BINARY_DIR})
@@ -74,7 +90,14 @@ else()  # Linux and MacOS
         message(FATAL_ERROR "GLUT not found!")
     endif()
 
-    target_link_libraries(generator ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES})
-    target_link_libraries(engine ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES})
-    
+    target_link_libraries(engine 
+        ${OPENGL_LIBRARIES} 
+        ${GLEW_LIBRARY}  # Using manual path
+        ${GLUT_LIBRARIES}
+    )
+    target_link_libraries(generator 
+        ${OPENGL_LIBRARIES} 
+        ${GLEW_LIBRARY}  # Using manual path
+        ${GLUT_LIBRARIES}
+    )
 endif()
