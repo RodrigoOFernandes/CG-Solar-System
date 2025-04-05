@@ -19,12 +19,12 @@ void Model::parseModel(tinyxml2::XMLElement* modelElement) {
     std::ifstream file(fullPath);
 
     if (!file) {
-        std::cerr << "Erro ao abrir arquivo: " << fullPath << std::endl;
+        std::cerr << "Erro ao abrir ficheiro: " << fullPath << std::endl;
         return;
     }
 
     std::string line;
-    std::getline(file, line); // Ignora a primeira linha (modelo do arquivo)
+    std::getline(file, line); // Ignora a primeira linha (modelo do ficheiro)
 
     while (std::getline(file, line)) {
         std::istringstream iss(line);
