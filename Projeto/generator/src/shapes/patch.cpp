@@ -1,9 +1,5 @@
 #include "../shapes/patch.hpp"
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <sstream>
-#include <cmath>
+
 
 struct ControlPoint {
     float x, y, z;
@@ -26,8 +22,8 @@ float bernstein(int i, float t) {
 
 ControlPoint bezierPoint(const std::vector<ControlPoint>& patch, float u, float v) {
     ControlPoint p = {0, 0, 0};
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 4; j++) {
+    for (int i = 0; i < 4; ++i) {
+        for (int j = 0; j < 4; ++j) {
             float b = bernstein(i, u) * bernstein(j, v);
             
             p.x += patch[i * 4 + j].x * b;
@@ -42,7 +38,7 @@ void generatePatch(char *patch_file, int tesselation, char *outputFile) {
     std::string fullPath = "../models/" + std::string(outputFile);
     std::string fullPathPatch = "../patches/" + std::string(patch_file);
     std::ofstream outFile(fullPath);
-    
+    std::vector<ControlPoint> controlPoints;
     if (!outFile.is_open()) {
         std::cerr << "Error opening output file: " << outputFile << std::endl;
         return;
@@ -54,81 +50,71 @@ void generatePatch(char *patch_file, int tesselation, char *outputFile) {
         return;
     }
     
-    int numPatches;
-    file >> numPatches;
-    std::vector<std::vector<int>> patches(numPatches);
-    
-    for (int i = 0; i < numPatches; i++) {
-        std::string line;
-        std::getline(file >> std::ws, line);
-        std::istringstream iss(line);
-        
-        std::vector<int> patchIndices;
-        int index;
-        while (patchIndices.size() < 16 && iss >> index) {
-            patchIndices.push_back(index);
-            if (iss.peek() == ',') iss.ignore();
-        }
-        
-        if (patchIndices.size() != 16) {
-            std::cerr << "Error: Patch " << i << " does not have 16 indices." << std::endl;
-            continue;
-        }
-        
-        patches[i] = patchIndices;
-    }
-    
-    int numControlPoints;
-    file >> numControlPoints;
-    std::vector<ControlPoint> controlPoints(numControlPoints);
-    
-    for (int i = 0; i < numControlPoints; i++) {
-        char comma;
-        file >> controlPoints[i].x >> comma >> controlPoints[i].y >> comma >> controlPoints[i].z;
-    }
-    
-    for (const auto& patch : patches) {
-        std::vector<ControlPoint> patchPoints(16);
-        for (int i = 0; i < 16; i++) {
-            if (patch[i] < 0 || patch[i] >= numControlPoints) {
-                std::cerr << "Invalid control point index: " << patch[i] << std::endl;
-                continue;
-            }
-            patchPoints[i] = controlPoints[patch[i]];
-        }
-        
-        // Create points for the current tessellation level
-        std::vector<std::vector<ControlPoint>> surfacePoints(tesselation + 1, 
-            std::vector<ControlPoint>(tesselation + 1));
-        
-        // Precompute surface points
-        for (int i = 0; i <= tesselation; i++) {
-            float u = (float)i / tesselation;
-            for (int j = 0; j <= tesselation; j++) {
-                float v = (float)j / tesselation;
-                surfacePoints[i][j] = bezierPoint(patchPoints, u, v);
-            }
-        }
-        
-        // Generate triangles following right-hand rule (single triangle per square)
-        for (int i = 0; i < tesselation ; i++) {
-            for (int j = 0; j < tesselation ; j++) {
-                // Get four corner points of the current grid square
-                ControlPoint p1 = surfacePoints[i][j];      // Bottom-left
-                ControlPoint p2 = surfacePoints[i+1][j];    // Top-left
-                ControlPoint p3 = surfacePoints[i][j+1];    // Bottom-right
-                ControlPoint p4 = surfacePoints[i+1][j+1];  // Top-right
-                
-                // First triangle: (p1, p2, p3)
-                outFile << p1.x << " " << p1.y << " " << p1.z << "\n";
-                outFile << p4.x << " " << p4.y << " " << p4.z << "\n";
-                 outFile << p2.x << " " << p2.y << " " << p2.z << "\n";
-                outFile << p1.x << " " << p1.y << " " << p1.z << "\n";
-                 outFile << p3.x << " " << p3.y << " " << p3.z << "\n";
-                outFile << p4.x << " " << p4.y << " " << p4.z << "\n"; 
-            }
+    size_t num_patches;
+    file >> num_patches;
+  
+    std::vector<std::vector<size_t>> patches(num_patches, std::vector<size_t>(16));
+  
+
+    for (size_t i = 0; i < num_patches; ++i) {
+        for (size_t j = 0; j < 16; ++j) {
+            size_t idx;
+            file >> idx;
+            file.ignore();
+            patches[i][j] = idx;
         }
     }
-    
-    outFile.close();
+  
+    size_t numberOfControlPoints;
+    file >> numberOfControlPoints;
+  
+    for (size_t i = 0; i < numberOfControlPoints; ++i) {
+        float x, y, z;
+        file >> x;
+        file.ignore();
+        file >> y;
+        file.ignore();
+        file >> z;
+        file.ignore();
+
+        controlPoints.push_back(ControlPoint{x, y, z});
+    }
+  
+    file.close();
+
+    for (size_t i = 0; i < num_patches; ++i) {
+        std::vector<ControlPoint> patchControlPoints;
+        for (size_t j = 0; j < 16; ++j) {
+            patchControlPoints.push_back(controlPoints[patches[i][j]]);
+        }
+      
+        // Precompute all points: creating matrix
+        std::vector<std::vector<ControlPoint>> precomputedPoints(tesselation + 2, 
+                                                               std::vector<ControlPoint>(tesselation + 2));
+
+        for (int u = 0; u < tesselation; ++u) {
+            for (int v = 0; v < tesselation; ++v) {
+                float u_param = static_cast<float>(u) / tesselation;
+                float v_param = static_cast<float>(v) / tesselation;
+                precomputedPoints[u][v] = bezierPoint(patchControlPoints, u_param, v_param);
+            }
+        }
+        for (int u = 0; u <= tesselation; u++) {
+          for (int v = 0; v <= tesselation; v++) {
+              ControlPoint bottom_left  = precomputedPoints[u][v];
+              ControlPoint top_left     = precomputedPoints[u][v+1];
+              ControlPoint bottom_right = precomputedPoints[u+1][v];
+              ControlPoint top_right    = precomputedPoints[u+1][v+1];
+      
+
+              outFile << bottom_left.x  << " " << bottom_left.y  << " " << bottom_left.z  << "\n";
+              outFile << top_left.x     << " " << top_left.y     << " " << top_left.z     << "\n";
+              outFile << bottom_right.x << " " << bottom_right.y << " " << bottom_right.z << "\n";
+      
+              outFile << top_left.x     << " " << top_left.y     << " " << top_left.z     << "\n";
+              outFile << top_right.x    << " " << top_right.y    << " " << top_right.z    << "\n";
+              outFile << bottom_right.x << " " << bottom_right.y << " " << bottom_right.z << "\n";
+          }
+      }
+    }
 }
