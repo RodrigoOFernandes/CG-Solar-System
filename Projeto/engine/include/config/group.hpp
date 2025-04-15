@@ -4,12 +4,8 @@
 
 #include "../include/parser/tinyxml2.h"
 #include "../include/config/model.hpp"
+#include "../include/catmull-rom.hpp"
 
-#include "../include/parser/tinyxml2.h"
-#include "../include/config/model.hpp"
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
 
 #include <iostream>
 #include <vector>

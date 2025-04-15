@@ -76,7 +76,7 @@ void Group::parseGroup(tinyxml2::XMLElement* groupElement) {
 
 void Group::drawGroup() const {
     glPushMatrix();
-    glMultMatrixf(glm::value_ptr(static_transformations));
+    glMultMatrixf(glm::value_ptr(static_transformations)); // applying static transformations
 
     for (const auto& model : models) {
         model.draw();
