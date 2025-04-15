@@ -66,15 +66,3 @@ void Config::draw(){
 
     group.drawGroup();
 }
-
-void Config::print() const {
-    std::cout << "Configuration:\n";
-
-    // Print window and camera (assuming they have print functions)
-    window.print();
-    camera.print();
-
-    // Print all groups
-    std::cout << "Groups:\n";
-    group.print(0);
-}

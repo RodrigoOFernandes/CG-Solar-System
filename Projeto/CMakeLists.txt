@@ -2,12 +2,34 @@ cmake_minimum_required(VERSION 3.5)
 set(CMAKE_CXX_STANDARD 11) # Ou 14, 17...
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-
 # Project Name
 PROJECT(CG_SOLAR_SYSTEM)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
+# Configuração multiplataforma para GLM
+if(APPLE)
+    # macOS - Homebrew (Apple Silicon ou Intel)
+    set(GLM_INCLUDE_DIR "/opt/homebrew/include" "/usr/local/include")
+else()
+    # Linux
+    set(GLM_INCLUDE_DIR "/usr/include")
+endif()
+
+find_path(GLM_INCLUDE_PATH glm/glm.hpp
+    PATHS ${GLM_INCLUDE_DIR}
+    DOC "Caminho para os headers do GLM"
+)
+
+if(NOT GLM_INCLUDE_PATH)
+    message(FATAL_ERROR "GLM não encontrado! Instale via: brew install glm (macOS) ou sudo apt-get install libglm-dev (Linux)")
+else()
+    message(STATUS "GLM encontrado em: ${GLM_INCLUDE_PATH}")
+    include_directories(${GLM_INCLUDE_PATH})
+endif()
+
+# Restante do seu CMakeLists.txt original permanece igual abaixo...
+# -----------------------------------------------------------------
 # Function to add source files from a directory
 function(add_source_files target directory)
     file(GLOB_RECURSE SOURCE_FILES "${directory}/*.cpp")

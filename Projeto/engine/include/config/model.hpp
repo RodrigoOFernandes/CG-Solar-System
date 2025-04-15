@@ -8,7 +8,6 @@
 #include <GL/glut.h>
 #endif
 
-
 #include <iostream>
 #include <fstream>  
 #include <sstream> 
@@ -29,7 +28,6 @@ class Model {
     public:
         GLuint vboID;
         std::vector<float> triangles; // Agora diretamente armazenado como floats
-    
         Model() : vboID(0) {}
     
         void parseModel(tinyxml2::XMLElement* modelElement);
