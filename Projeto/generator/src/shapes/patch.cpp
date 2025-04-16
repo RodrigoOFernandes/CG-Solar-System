@@ -1,120 +1,97 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <sstream>
+#include <cmath>
 #include "../shapes/patch.hpp"
-
 
 struct ControlPoint {
     float x, y, z;
 };
 
-float bernstein(int i, float t) {
-    switch (i) {
-        case 0:
-            return std::pow(1 - t, 3);
-        case 1:
-            return 3 * t * std::pow(1 - t, 2);
-        case 2:
-            return 3 * std::pow(t, 2) * (1 - t);
-        case 3:
-            return std::pow(t, 3);
-        default:
-            return 0;
+int binomialCoefficient(int n, int i) {
+    int res = 1;
+    for(int k = 0; k < i; ++k) {
+        res *= (n - k);
+        res /= (k + 1);
     }
+
+    return res;
 }
 
-ControlPoint bezierPoint(const std::vector<ControlPoint>& patch, float u, float v) {
-    ControlPoint p = {0, 0, 0};
-    for (int i = 0; i < 4; ++i) {
-        for (int j = 0; j < 4; ++j) {
-            float b = bernstein(i, u) * bernstein(j, v);
-            
-            p.x += patch[i * 4 + j].x * b;
-            p.y += patch[i * 4 + j].y * b;
-            p.z += patch[i * 4 + j].z * b;
-        }
-    }
-    return p;
+float bernstein(int n, int i, float y) {
+    int bin = binomialCoefficient(n, i);
+    return bin * pow(1 - y, n - i) * pow(y, i);
 }
 
-void generatePatch(char *patch_file, int tesselation, char *outputFile) {
-    std::string fullPath = "../models/" + std::string(outputFile);
-    std::string fullPathPatch = "../patches/" + std::string(patch_file);
-    std::ofstream outFile(fullPath);
-    std::vector<ControlPoint> controlPoints;
-    if (!outFile.is_open()) {
-        std::cerr << "Error opening output file: " << outputFile << std::endl;
-        return;
-    }
-    
-    std::ifstream file(fullPathPatch);
-    if (!file) {
-        std::cerr << "Error opening file: " << fullPathPatch << std::endl;
-        return;
-    }
-    
-    size_t num_patches;
-    file >> num_patches;
-  
-    std::vector<std::vector<size_t>> patches(num_patches, std::vector<size_t>(16));
-  
+void generatePatch(char* patches_file, int tesselation, char* output_file) {    
+    std::ifstream file;
+    std::ofstream out(output_file);
+    file.open(patches_file);
 
-    for (size_t i = 0; i < num_patches; ++i) {
-        for (size_t j = 0; j < 16; ++j) {
-            size_t idx;
-            file >> idx;
-            file.ignore();
-            patches[i][j] = idx;
-        }
-    }
-  
-    size_t numberOfControlPoints;
-    file >> numberOfControlPoints;
-  
-    for (size_t i = 0; i < numberOfControlPoints; ++i) {
-        float x, y, z;
-        file >> x;
-        file.ignore();
-        file >> y;
-        file.ignore();
-        file >> z;
-        file.ignore();
+    std::string line;
 
-        controlPoints.push_back(ControlPoint{x, y, z});
-    }
-  
-    file.close();
+    int patches_number;
+    int points_number;
+        
+    if(file.is_open()) {
+        std::getline(file, line);
+        patches_number = std::stoi(line);
 
-    for (size_t i = 0; i < num_patches; ++i) {
-        std::vector<ControlPoint> patchControlPoints;
-        for (size_t j = 0; j < 16; ++j) {
-            patchControlPoints.push_back(controlPoints[patches[i][j]]);
-        }
-      
-        // Precompute all points: creating matrix
-        std::vector<std::vector<ControlPoint>> precomputedPoints(tesselation + 2, 
-                                                               std::vector<ControlPoint>(tesselation + 2));
+        int points_indexes[patches_number][16];
+        for(int i = 0; i < patches_number; i++) {
+            std::getline(file, line);
+            std::istringstream iss(line);
+            std::string token;
 
-        for (int u = 0; u < tesselation; ++u) {
-            for (int v = 0; v < tesselation; ++v) {
-                float u_param = static_cast<float>(u) / tesselation;
-                float v_param = static_cast<float>(v) / tesselation;
-                precomputedPoints[u][v] = bezierPoint(patchControlPoints, u_param, v_param);
+            for(int j = 0; j < 16; j++) {
+                std::getline(iss, token, ',');
+                token.erase(0, token.find_first_not_of(" \t\n\r\f\v"));
+                token.erase(token.find_last_not_of(" \t\n\r\f\v") + 1);
+                points_indexes[i][j] = std::stoi(token);
             }
         }
-        for (int u = 0; u <= tesselation; u++) {
-          for (int v = 0; v <= tesselation; v++) {
-              ControlPoint bottom_left  = precomputedPoints[u][v];
-              ControlPoint top_left     = precomputedPoints[u][v+1];
-              ControlPoint bottom_right = precomputedPoints[u+1][v];
-              ControlPoint top_right    = precomputedPoints[u+1][v+1];
-      
+                
+        std::getline(file, line);
+        points_number = std::stoi(line);
+        
+        ControlPoint control_points[points_number];
 
-              outFile << bottom_left.x  << " " << bottom_left.y  << " " << bottom_left.z  << "\n";
-              outFile << top_left.x     << " " << top_left.y     << " " << top_left.z     << "\n";
-              outFile << bottom_right.x << " " << bottom_right.y << " " << bottom_right.z << "\n";
-      
-              outFile << top_left.x     << " " << top_left.y     << " " << top_left.z     << "\n";
-              outFile << top_right.x    << " " << top_right.y    << " " << top_right.z    << "\n";
-              outFile << bottom_right.x << " " << bottom_right.y << " " << bottom_right.z << "\n";
-          }
-      }
+        for(int i = 0; i < points_number; i++) {
+            std::getline(file, line);
+            std::istringstream iss(line);
+            
+            char comma;
+
+            iss >> control_points[i].x >> comma
+                >> control_points[i].y >> comma 
+                >> control_points[i].z;
+        }
+
+        for(int p = 0; p < patches_number; p++){
+            for(int iu = 0; iu <= tesselation; iu++ ) {
+                float u = (float)iu/tesselation;
+                for(int iv = 0; iv <= tesselation; iv++) {
+                    float v = (float)iv/tesselation;
+
+                    float x = 0, y = 0, z = 0;
+                    for(int i = 0; i < 4; i++) {
+                        float Bu = bernstein(3, i, u);
+                        for(int j = 0; j < 4; j++) {
+                            float Bv = bernstein(3, j ,v);
+                            int idx = points_indexes[p][i * 4 + j];
+                            ControlPoint cp = control_points[idx];
+
+                            x += Bu * Bv * cp.x;
+                            y += Bu * Bv * cp.y;
+                            z += Bu * Bv * cp.z;
+                        }
+                    }
+                    out << x << " " << y << " " << z << "\n";
+                }
+            }
+        }
+    } else {
+        std::cout << "Couldn't open";
     }
 }
