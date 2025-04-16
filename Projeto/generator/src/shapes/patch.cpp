@@ -1,158 +1,124 @@
-#include <fstream>
-#include <sstream>
-#include <vector>
 #include <iostream>
+#include <vector>
+#include <fstream>
+#include <string>
+#include <sstream>
 #include <cmath>
 #include "../shapes/patch.hpp"
 
-using namespace std;
-
-struct Point {
-    double x, y, z;
-    Point() : x(0), y(0), z(0) {}
-    Point(double x, double y, double z) : x(x), y(y), z(z) {}
-    
-    Point operator+(const Point& p) const {
-        return Point(x + p.x, y + p.y, z + p.z);
-    }
-    
-    Point operator*(double s) const {
-        return Point(x * s, y * s, z * s);
-    }
+struct ControlPoint {
+    float x, y, z;
 };
 
-vector<vector<int>> patches;
-vector<Point> controlPoints;
-
-void parse(string filename) {
-    ifstream file(filename);
-    if (!file.is_open()) {
-        cerr << "Error opening file: " << filename << endl;
-        return;
+int binomialCoefficient(int n, int i) {
+    int res = 1;
+    for(int k = 0; k < i; ++k) {
+        res *= (n - k);
+        res /= (k + 1);
     }
 
-    string line;
-
-    getline(file, line);
-    int numPatches = stoi(line);
-    
-    patches.resize(numPatches);
-
-    for(int i = 0; i < numPatches; i++) {
-        getline(file, line);
-        stringstream ss(line);
-        string index;
-
-        while(getline(ss, index, ',')) {
-            patches[i].push_back(stoi(index));
-        }
-    }
-
-    getline(file, line);
-    int numControlPoints = stoi(line);
-    controlPoints.resize(numControlPoints);
-
-    for(int i = 0; i < numControlPoints; i++) {
-        getline(file, line);
-        stringstream ss(line);
-        string coord;
-        vector<double> coords;
-
-        while(getline(ss, coord, ',')) {
-            coords.push_back(stod(coord));
-        }
-
-        if(coords.size() == 3) {
-            controlPoints[i] = Point(coords[0], coords[1], coords[2]);
-        }
-    }
-    
-    file.close();
+    return res;
 }
 
-Point evaluateBezierCurve(const Point P[4], double t) {
-    double t2 = t * t;
-    double t3 = t2 * t;
-    double mt = 1 - t;
-    double mt2 = mt * mt;
-    double mt3 = mt2 * mt;
-    
-    Point result = P[0] * mt3;
-    result = result + P[1] * (3 * mt2 * t);
-    result = result + P[2] * (3 * mt * t2);
-    result = result + P[3] * t3;
-    
-    return result;
+float bernstein(int n, int i, float y) {
+    int bin = binomialCoefficient(n, i);
+    return bin * pow(1 - y, n - i) * pow(y, i);
 }
 
-Point evaluateBezierPatch(const vector<Point>& patchPoints, double u, double v) {
-    Point uCurve[4];
-    
-    // First evaluate 4 curves along u direction
-    for (int i = 0; i < 4; ++i) {
-        Point curveP[4];
-        for (int j = 0; j < 4; ++j) {
-            curveP[j] = patchPoints[i * 4 + j];
-        }
-        uCurve[i] = evaluateBezierCurve(curveP, u);
-    }
-    
-    // Then evaluate the final point along v direction
-    return evaluateBezierCurve(uCurve, v);
-}
-
-void generatePatch(string filename, int tessellation, string output) {
-    parse(filename);
-    
-    ofstream outFile(output);
-    if (!outFile.is_open()) {
-        cerr << "Error creating output file: " << output << endl;
-        return;
-    }
-    
-    for (const auto& patchIndices : patches) {
-        // Get the 16 control points for this patch
-        vector<Point> patchPoints;
-        for (int index : patchIndices) {
-            patchPoints.push_back(controlPoints[index]);
-        }
+void generatePatch(char* patches_file, int tesselation, char* output_file) {    
+    std::ifstream file;
+    std::ofstream out(output_file);
+    file.open(patches_file);
+    std::string line;
+    int patches_number;
+    int points_number;
         
-        // Evaluate points on the surface
-        vector<Point> patchVertices;
-        for (int j = 0; j <= tessellation; ++j) {
-            double v = j / (double)tessellation;
-            for (int i = 0; i <= tessellation; ++i) {
-                double u = i / (double)tessellation;
-                patchVertices.push_back(evaluateBezierPatch(patchPoints, u, v));
+    if(file.is_open()) {
+        std::getline(file, line);
+        patches_number = std::stoi(line);
+        int points_indexes[patches_number][16];
+        for(int i = 0; i < patches_number; i++) {
+            std::getline(file, line);
+            std::istringstream iss(line);
+            std::string token;
+            for(int j = 0; j < 16; j++) {
+                std::getline(iss, token, ',');
+                token.erase(0, token.find_first_not_of(" \t\n\r\f\v"));
+                token.erase(token.find_last_not_of(" \t\n\r\f\v") + 1);
+                points_indexes[i][j] = std::stoi(token);
             }
         }
-        
-        // Generate triangles with right-hand rule and output vertices directly
-        for (int row = 0; row < tessellation; ++row) {
-            for (int col = 0; col < tessellation; ++col) {
-                int idx = row * (tessellation + 1) + col;
                 
-                // Get the four vertices of this quad
-                Point& v0 = patchVertices[idx];
-                Point& v1 = patchVertices[idx + tessellation + 1];
-                Point& v2 = patchVertices[idx + tessellation + 2];
-                Point& v3 = patchVertices[idx + 1];
+        std::getline(file, line);
+        points_number = std::stoi(line);
+        
+        ControlPoint control_points[points_number];
+        for(int i = 0; i < points_number; i++) {
+            std::getline(file, line);
+            std::istringstream iss(line);
             
-outFile << v1.x << " " << v1.y << " " << v1.z << "\n";
-outFile << v0.x << " " << v0.y << " " << v0.z << "\n";
-outFile << v3.x << " " << v3.y << " " << v3.z << "\n";
-
-// Triângulo 2: v1, v3, v2
-outFile << v1.x << " " << v1.y << " " << v1.z << "\n";
-outFile << v3.x << " " << v3.y << " " << v3.z << "\n";
-outFile << v2.x << " " << v2.y << " " << v2.z << "\n";
-            }
-
+            char comma;
+            iss >> control_points[i].x >> comma
+                >> control_points[i].y >> comma 
+                >> control_points[i].z;
         }
+        
+        // Escrever o número total de triângulos para o arquivo de saída
+        int total_triangles = patches_number * 2 * tesselation * tesselation;
+        out << total_triangles << "\n";
+        
+        for(int p = 0; p < patches_number; p++) {
+            // Armazenar pontos da grade para cada patch
+            std::vector<ControlPoint> grid_points;
+            
+            // Gerar pontos da superfície para o patch atual
+            for(int iu = 0; iu <= tesselation; iu++) {
+                float u = (float)iu/tesselation;
+                for(int iv = 0; iv <= tesselation; iv++) {
+                    float v = (float)iv/tesselation;
+                    
+                    ControlPoint point = {0, 0, 0};
+                    for(int i = 0; i < 4; i++) {
+                        float Bu = bernstein(3, i, u);
+                        for(int j = 0; j < 4; j++) {
+                            float Bv = bernstein(3, j, v);
+                            int idx = points_indexes[p][i * 4 + j];
+                            ControlPoint cp = control_points[idx];
+                            point.x += Bu * Bv * cp.x;
+                            point.y += Bu * Bv * cp.y;
+                            point.z += Bu * Bv * cp.z;
+                        }
+                    }
+                    grid_points.push_back(point);
+                }
+            }
+            
+            for(int iu = 0; iu < tesselation; iu++) {
+                for(int iv = 0; iv < tesselation; iv++) {
+                    int index00 = iu * (tesselation + 1) + iv;
+                    int index01 = iu * (tesselation + 1) + (iv + 1);
+                    int index10 = (iu + 1) * (tesselation + 1) + iv;
+                    int index11 = (iu + 1) * (tesselation + 1) + (iv + 1);
+                    
+                    ControlPoint p00 = grid_points[index00];
+                    ControlPoint p01 = grid_points[index01];
+                    ControlPoint p10 = grid_points[index10]; 
+                    ControlPoint p11 = grid_points[index11];
+                  
+                    out << p00.x << " " << p00.y << " " << p00.z << "\n";
+                    out << p11.x << " " << p11.y << " " << p11.z << "\n";
+                    out << p10.x << " " << p10.y << " " << p10.z << "\n";
+
+                    out << p00.x << " " << p00.y << " " << p00.z << "\n";  
+                    out << p01.x << " " << p01.y << " " << p01.z << "\n";
+                    out << p11.x << " " << p11.y << " " << p11.z << "\n";
+                }
+            }
+        }
+        
+        file.close();
+        out.close();
+    } else {
+        std::cout << "Couldn't open file: " << patches_file << std::endl;
     }
-    
-    outFile.close();
-    cout << "Triangle vertices written to " << output << endl;
 }
-
-
