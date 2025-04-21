@@ -68,11 +68,10 @@ int main(int argc, char **argv) {
     glEnable(GL_CULL_FACE);
 
     configuration.parseFile(argv[1]);
-    configuration.print();
 
     glutReshapeWindow(configuration.window.width, configuration.window.height);
     resize(configuration.window.width, configuration.window.height);
-
+   
     glutMainLoop();
     return 0;
 }

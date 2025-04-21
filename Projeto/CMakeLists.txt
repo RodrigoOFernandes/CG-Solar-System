@@ -7,6 +7,29 @@ PROJECT(CG_SOLAR_SYSTEM)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
+# Configuração multiplataforma para GLM
+if(APPLE)
+    # macOS - Homebrew (Apple Silicon ou Intel)
+    set(GLM_INCLUDE_DIR "/opt/homebrew/include" "/usr/local/include")
+else()
+    # Linux
+    set(GLM_INCLUDE_DIR "/usr/include")
+endif()
+
+find_path(GLM_INCLUDE_PATH glm/glm.hpp
+    PATHS ${GLM_INCLUDE_DIR}
+    DOC "Caminho para os headers do GLM"
+)
+
+if(NOT GLM_INCLUDE_PATH)
+    message(FATAL_ERROR "GLM não encontrado! Instale via: brew install glm (macOS) ou sudo apt-get install libglm-dev (Linux)")
+else()
+    message(STATUS "GLM encontrado em: ${GLM_INCLUDE_PATH}")
+    include_directories(${GLM_INCLUDE_PATH})
+endif()
+
+# Restante do seu CMakeLists.txt original permanece igual abaixo...
+# -----------------------------------------------------------------
 # Function to add source files from a directory
 function(add_source_files target directory)
     file(GLOB_RECURSE SOURCE_FILES "${directory}/*.cpp")
@@ -34,7 +57,7 @@ add_executable(generator)  # Creates `generator` executable
 add_source_files(generator "${CMAKE_CURRENT_SOURCE_DIR}/generator/src")
 add_include_directories(generator "${CMAKE_CURRENT_SOURCE_DIR}/generator/include")
 
-# === OpenGL, GLUT and GLEW Configuration ===
+# === OpenGL and GLUT Configuration ===
 find_package(OpenGL REQUIRED)
 include_directories(${OpenGL_INCLUDE_DIRS})
 link_directories(${OpenGL_LIBRARY_DIRS})
@@ -43,15 +66,6 @@ add_definitions(${OpenGL_DEFINITIONS})
 if(NOT OPENGL_FOUND)
     message(FATAL_ERROR "OpenGL not found!")
 endif()
-
-# Manual GLEW configuration
-set(GLEW_INCLUDE_DIR "/usr/include")  # Parent of GL/glew.h
-set(GLEW_LIBRARY "/usr/lib/x86_64-linux-gnu/libGLEW.so")  # Full path to library
-include_directories(${GLEW_INCLUDE_DIR})
-
-message(STATUS "Using manual GLEW paths:")
-message(STATUS "  GLEW_INCLUDE_DIR = ${GLEW_INCLUDE_DIR}")
-message(STATUS "  GLEW_LIBRARY = ${GLEW_LIBRARY}")
 
 if (WIN32)
     set(TOOLKITS_FOLDER "" CACHE PATH "Path to Toolkits folder")
@@ -62,16 +76,8 @@ if (WIN32)
     
     include_directories(${TOOLKITS_FOLDER}/glut)
     
-    target_link_libraries(engine 
-        ${OPENGL_LIBRARIES} 
-        ${GLEW_LIBRARIES}
-        ${TOOLKITS_FOLDER}/glut/glut32.lib
-    )
-    target_link_libraries(generator 
-        ${OPENGL_LIBRARIES} 
-        ${GLEW_LIBRARIES}
-        ${TOOLKITS_FOLDER}/glut/glut32.lib
-    )
+    target_link_libraries(engine ${OPENGL_LIBRARIES} ${TOOLKITS_FOLDER}/glut/glut32.lib)
+    target_link_libraries(generator ${OPENGL_LIBRARIES} ${TOOLKITS_FOLDER}/glut/glut32.lib)
     
     if (EXISTS "${TOOLKITS_FOLDER}/glut/glut32.dll")
         file(COPY ${TOOLKITS_FOLDER}/glut/glut32.dll DESTINATION ${CMAKE_BINARY_DIR})
@@ -82,22 +88,18 @@ if (WIN32)
 else()  # Linux and MacOS
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated")
     find_package(GLUT REQUIRED)
-    include_directories(${GLUT_INCLUDE_DIR})
-    link_directories(${GLUT_LIBRARY_DIRS})
-    add_definitions(${GLUT_DEFINITIONS})
+    find_package(GLEW REQUIRED)  # Adicione esta linha
+    
+    include_directories(${GLUT_INCLUDE_DIR} ${GLEW_INCLUDE_DIRS})  # Modifique esta linha
     
     if(NOT GLUT_FOUND)
         message(FATAL_ERROR "GLUT not found!")
     endif()
+    
+    if(NOT GLEW_FOUND)
+        message(FATAL_ERROR "GLEW not found!")
+    endif()
 
-    target_link_libraries(engine 
-        ${OPENGL_LIBRARIES} 
-        ${GLEW_LIBRARY}  # Using manual path
-        ${GLUT_LIBRARIES}
-    )
-    target_link_libraries(generator 
-        ${OPENGL_LIBRARIES} 
-        ${GLEW_LIBRARY}  # Using manual path
-        ${GLUT_LIBRARIES}
-    )
+    target_link_libraries(generator ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES} ${GLEW_LIBRARIES})  # Modifique esta linha
+    target_link_libraries(engine ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES} ${GLEW_LIBRARIES})
 endif()
