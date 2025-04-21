@@ -2,7 +2,6 @@
 
 void Model::draw() const {
     if (vboID == 0) return;
-
     glBindBuffer(GL_ARRAY_BUFFER, vboID);
     glEnableClientState(GL_VERTEX_ARRAY);
     
