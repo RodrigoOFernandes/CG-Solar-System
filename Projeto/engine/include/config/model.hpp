@@ -27,8 +27,8 @@ struct Triangle {
 class Model {
     public:
         GLuint vboID;
-        std::vector<float> triangles; // Agora diretamente armazenado como floats
         Model() : vboID(0) {}
+        GLsizei triangle_count;
     
         void parseModel(tinyxml2::XMLElement* modelElement);
         void draw() const;

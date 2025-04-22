@@ -6,7 +6,7 @@ void Model::draw() const {
     glEnableClientState(GL_VERTEX_ARRAY);
     
     glVertexPointer(3, GL_FLOAT, 0, 0);
-    glDrawArrays(GL_TRIANGLES, 0, triangles.size() / 3);
+    glDrawArrays(GL_TRIANGLES, 0, triangle_count);
 
     glDisableClientState(GL_VERTEX_ARRAY);
 }
@@ -16,7 +16,8 @@ void Model::parseModel(tinyxml2::XMLElement* modelElement) {
     const char* filename = modelElement->Attribute("file");
     std::string fullPath = std::string("../models/") + std::string(filename);
     std::ifstream file(fullPath);
-
+    std::vector<float> triangles; // Agora diretamente armazenado como floats
+    
     if (!file) {
         std::cerr << "Erro ao abrir ficheiro: " << fullPath << std::endl;
         return;
@@ -41,6 +42,7 @@ void Model::parseModel(tinyxml2::XMLElement* modelElement) {
         return;
     }
 
+    triangle_count = triangles.size() / 3;
     // Criar VBO
     glGenBuffers(1, &vboID);
     glBindBuffer(GL_ARRAY_BUFFER, vboID);
