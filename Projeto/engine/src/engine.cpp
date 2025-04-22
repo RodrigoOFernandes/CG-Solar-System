@@ -8,6 +8,7 @@ float frame = 0.0f, fps = 0.0f;
 // ======== Novas variáveis para rato/teclado =========
 int lastMouseX = -1, lastMouseY = -1;
 bool mouseLeftPressed = false;
+bool mouseRightPressed = false;
 bool view_axis = true;
 // ============================================
 
@@ -59,21 +60,33 @@ void mouseButton(int button, int state, int x, int y) {
         } else if (state == GLUT_UP) {
             mouseLeftPressed = false;
         }
+    } else if (button == GLUT_RIGHT_BUTTON) {
+        if (state == GLUT_DOWN) {
+            mouseRightPressed = true;
+            lastMouseY = y;  // Só precisamos da coordenada Y para o zoom
+        } else if (state == GLUT_UP) {
+            mouseRightPressed = false;
+        }
     }
 }
 
 void mouseMotion(int x, int y) {
-    if (!mouseLeftPressed) return;
+    if (mouseLeftPressed) {
+        int deltaX = x - lastMouseX;
+        int deltaY = y - lastMouseY;
 
-    int deltaX = x - lastMouseX;
-    int deltaY = y - lastMouseY;
+        configuration.camera.updateOrbit(deltaX, deltaY);
 
-    configuration.camera.updateOrbit(deltaX, deltaY);
+        lastMouseX = x;
+        lastMouseY = y;
 
-    lastMouseX = x;
-    lastMouseY = y;
-
-    glutPostRedisplay();
+        glutPostRedisplay();
+    } else if (mouseRightPressed) {
+        int deltaY = y - lastMouseY;
+        configuration.camera.updateZoom(deltaY);
+        lastMouseY = y;
+        glutPostRedisplay();
+    }
 }
 
 void processKeys(unsigned char key, int x, int y) {

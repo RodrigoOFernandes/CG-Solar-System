@@ -36,3 +36,19 @@ void Camera::updateOrbit(float deltaX, float deltaY) {
     position.y = lookAt.y + radius * std::sin(angleY);
     position.z = lookAt.z + radius * std::cos(angleY) * std::sin(angleX);
 }
+
+void Camera::updateZoom(float deltaY) {
+    const float sensitivity = 0.1f;
+    radius -= deltaY * sensitivity;
+    
+    // Limita o raio mínimo e máximo (opcional)
+    if (radius < 1.0f) radius = 1.0f;
+    if (radius > 100.0f) radius = 100.0f;
+    
+    // Atualiza a posição com base no novo raio
+    position.x = lookAt.x + radius * std::cos(angleY) * std::cos(angleX);
+    position.y = lookAt.y + radius * std::sin(angleY);
+    position.z = lookAt.z + radius * std::cos(angleY) * std::sin(angleX);
+}
+
+
