@@ -1,35 +1,38 @@
 #include "../include/config/camera.hpp"
 
-
-
 void Camera::parseCamera(tinyxml2::XMLElement* cameraElement){
-
     tinyxml2::XMLElement* pos = cameraElement->FirstChildElement("position");
-    tinyxml2::XMLElement* lookAt = cameraElement->FirstChildElement("lookAt");
-    tinyxml2::XMLElement* up = cameraElement->FirstChildElement("up");
+    tinyxml2::XMLElement* look = cameraElement->FirstChildElement("lookAt");
+    tinyxml2::XMLElement* u = cameraElement->FirstChildElement("up");
     tinyxml2::XMLElement* proj = cameraElement->FirstChildElement("projection");
 
-    if (pos) pos->QueryFloatAttribute("x", &this->position.x);
-    if (pos) pos->QueryFloatAttribute("y", &this->position.y);
-    if (pos) pos->QueryFloatAttribute("z", &this->position.z);
+    if (pos) { pos->QueryFloatAttribute("x", &position.x); pos->QueryFloatAttribute("y", &position.y); pos->QueryFloatAttribute("z", &position.z); }
+    if (look) { look->QueryFloatAttribute("x", &lookAt.x); look->QueryFloatAttribute("y", &lookAt.y); look->QueryFloatAttribute("z", &lookAt.z); }
+    if (u) { u->QueryFloatAttribute("x", &up.x); u->QueryFloatAttribute("y", &up.y); u->QueryFloatAttribute("z", &up.z); }
+    if (proj) { proj->QueryFloatAttribute("fov", &projection.fov); proj->QueryFloatAttribute("near", &projection.near); proj->QueryFloatAttribute("far", &projection.far); }
 
-    if (lookAt) lookAt->QueryFloatAttribute("x", &this->lookAt.x);
-    if (lookAt) lookAt->QueryFloatAttribute("y", &this->lookAt.y);
-    if (lookAt) lookAt->QueryFloatAttribute("z", &this->lookAt.z);
-
-    if (up) up->QueryFloatAttribute("x", &this->up.x);
-    if (up) up->QueryFloatAttribute("y", &this->up.y);
-    if (up) up->QueryFloatAttribute("z", &this->up.z);
-
-    if (proj) proj->QueryFloatAttribute("fov", &this->projection.fov);
-    if (proj) proj->QueryFloatAttribute("near", &this->projection.near);
-    if (proj) proj->QueryFloatAttribute("far", &this->projection.far);
+    // Cálculo dos ângulos esféricos e raio
+    float dx = position.x - lookAt.x;
+    float dy = position.y - lookAt.y;
+    float dz = position.z - lookAt.z;
+    radius = std::sqrt(dx*dx + dy*dy + dz*dz);
+    angleX = std::atan2(dz, dx);
+    angleY = std::asin(dy / radius);
 }
 
-void Camera::print() const {
-    std::cout << "Camera:\n";
-    std::cout << "  Position: x=" << position.x << ", y=" << position.y << ", z=" << position.z << "\n";
-    std::cout << "  LookAt: x=" << lookAt.x << ", y=" << lookAt.y << ", z=" << lookAt.z << "\n";
-    std::cout << "  Up: x=" << up.x << ", y=" << up.y << ", z=" << up.z << "\n";
-    std::cout << "  Projection: fov=" << projection.fov << ", near=" << projection.near << ", far=" << projection.far << "\n";
+
+void Camera::updateOrbit(float deltaX, float deltaY) {
+    const float sensitivity = 0.005f;
+    angleX += deltaX * sensitivity;
+    angleY += deltaY * sensitivity;
+
+    // Limita o ângulo vertical
+    const float limit = M_PI / 2.0f - 0.01f; // ~89.4°
+    if (angleY > limit) angleY = limit;
+    if (angleY < -limit) angleY = -limit;
+
+    // Atualiza a posição com base nos ângulos
+    position.x = lookAt.x + radius * std::cos(angleY) * std::cos(angleX);
+    position.y = lookAt.y + radius * std::sin(angleY);
+    position.z = lookAt.z + radius * std::cos(angleY) * std::sin(angleX);
 }

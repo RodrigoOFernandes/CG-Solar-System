@@ -49,7 +49,7 @@ void drawAxis(void){
 }
 
 
-void Config::draw(){
+void Config::draw(bool view_axis){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -60,8 +60,10 @@ void Config::draw(){
         camera.up.x, camera.up.y, camera.up.z);
 
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-    drawAxis();
+    
+    if(view_axis){
+        drawAxis();
+    }
     glColor3f(1.0f, 1.0f, 1.0f);
 
     group.drawGroup();
