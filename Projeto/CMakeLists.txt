@@ -1,18 +1,15 @@
 cmake_minimum_required(VERSION 3.5)
-set(CMAKE_CXX_STANDARD 11) # Ou 14, 17...
+set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Project Name
 PROJECT(CG_SOLAR_SYSTEM)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # Configuração multiplataforma para GLM
 if(APPLE)
-    # macOS - Homebrew (Apple Silicon ou Intel)
     set(GLM_INCLUDE_DIR "/opt/homebrew/include" "/usr/local/include")
 else()
-    # Linux
     set(GLM_INCLUDE_DIR "/usr/include")
 endif()
 
@@ -28,15 +25,12 @@ else()
     include_directories(${GLM_INCLUDE_PATH})
 endif()
 
-# Restante do seu CMakeLists.txt original permanece igual abaixo...
-# -----------------------------------------------------------------
-# Function to add source files from a directory
+# Funções auxiliares
 function(add_source_files target directory)
     file(GLOB_RECURSE SOURCE_FILES "${directory}/*.cpp")
     target_sources(${target} PRIVATE ${SOURCE_FILES})
 endfunction()
 
-# Function to add include directories
 function(add_include_directories target directory)
     file(GLOB_RECURSE INCLUDE_DIRS "${directory}/*.hpp" "${directory}/*.h")
     foreach(INCLUDE_DIR ${INCLUDE_DIRS})
@@ -45,19 +39,19 @@ function(add_include_directories target directory)
     endforeach()
 endfunction()
 
-# === Engine Executable ===
-add_executable(engine)  # Creates `engine` executable
+# === Executável Engine ===
+add_executable(engine)
 add_source_files(engine "${CMAKE_CURRENT_SOURCE_DIR}/engine/src")
-add_source_files(engine "${CMAKE_CURRENT_SOURCE_DIR}/Projeto/src/config")  # Add config source files
+add_source_files(engine "${CMAKE_CURRENT_SOURCE_DIR}/Projeto/src/config")
 add_include_directories(engine "${CMAKE_CURRENT_SOURCE_DIR}/engine/include")
-add_include_directories(engine "${CMAKE_CURRENT_SOURCE_DIR}/Projeto/include/config")  # Add config include directory
+add_include_directories(engine "${CMAKE_CURRENT_SOURCE_DIR}/Projeto/include/config")
 
-# === Generator Executable ===
-add_executable(generator)  # Creates `generator` executable
+# === Executável Generator ===
+add_executable(generator)
 add_source_files(generator "${CMAKE_CURRENT_SOURCE_DIR}/generator/src")
 add_include_directories(generator "${CMAKE_CURRENT_SOURCE_DIR}/generator/include")
 
-# === OpenGL and GLUT Configuration ===
+# === OpenGL e GLUT ===
 find_package(OpenGL REQUIRED)
 include_directories(${OpenGL_INCLUDE_DIRS})
 link_directories(${OpenGL_LIBRARY_DIRS})
@@ -85,21 +79,45 @@ if (WIN32)
 
     set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT engine)
 
-else()  # Linux and MacOS
+else()  # Linux e macOS
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated")
     find_package(GLUT REQUIRED)
-    find_package(GLEW REQUIRED)  # Adicione esta linha
-    
-    include_directories(${GLUT_INCLUDE_DIR} ${GLEW_INCLUDE_DIRS})  # Modifique esta linha
-    
+
     if(NOT GLUT_FOUND)
         message(FATAL_ERROR "GLUT not found!")
     endif()
-    
-    if(NOT GLEW_FOUND)
-        message(FATAL_ERROR "GLEW not found!")
-    endif()
 
-    target_link_libraries(generator ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES} ${GLEW_LIBRARIES})  # Modifique esta linha
-    target_link_libraries(engine ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES} ${GLEW_LIBRARIES})
+    include_directories(${GLUT_INCLUDE_DIR})
+
+    # === GLEW multiplataforma ===
+    if(APPLE)
+        find_path(GLEW_INCLUDE_DIR GL/glew.h
+            PATHS /opt/homebrew/include /usr/local/include
+        )
+
+        find_library(GLEW_LIBRARY GLEW
+            PATHS /opt/homebrew/lib /usr/local/lib
+        )
+
+        if(NOT GLEW_INCLUDE_DIR OR NOT GLEW_LIBRARY)
+            message(FATAL_ERROR "GLEW não encontrado! Instale com: brew install glew")
+        else()
+            message(STATUS "GLEW encontrado!")
+        endif()
+
+        include_directories(${GLEW_INCLUDE_DIR})
+        target_link_libraries(generator ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES} ${GLEW_LIBRARY})
+        target_link_libraries(engine ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES} ${GLEW_LIBRARY})
+    else()
+        find_package(GLEW REQUIRED)
+
+        if(NOT GLEW_FOUND)
+            message(FATAL_ERROR "GLEW not found!")
+        endif()
+
+        include_directories(${GLEW_INCLUDE_DIRS})
+        target_link_libraries(generator ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES} ${GLEW_LIBRARIES})
+        target_link_libraries(engine ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES} ${GLEW_LIBRARIES})
+    endif()
 endif()
+
