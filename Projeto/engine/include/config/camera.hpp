@@ -21,8 +21,8 @@ class Camera {
         Projection projection;
 
         void parseCamera(tinyxml2::XMLElement* cameraElement);
-
         void updateOrbit(float deltaX, float deltaY);
+        void updateZoom(float deltaY);
 
     private:
         float radius;
