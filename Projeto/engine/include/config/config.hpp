@@ -18,7 +18,7 @@ class Config{
         Group group;
 
         void parseFile(const char* filename);
-        void draw(bool view_axis);
+        void draw(bool view_axis, bool show_catmull);
         void print() const;
 };
 

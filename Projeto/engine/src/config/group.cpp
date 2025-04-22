@@ -169,7 +169,7 @@ glm::mat4 Group::applyTimeTranslation(float elapsed_time, std::vector<glm::vec3>
 
 }
 
-void Group::applyTransformations(float speed_factor) const {
+void Group::applyTransformations(float speed_factor, bool show_catmull) const {
     float elapsed_time = speed_factor * glutGet(GLUT_ELAPSED_TIME) / 1000.0f;
     glm::mat4 matrix = glm::mat4(1.0f);
     bool static_applied = false;
@@ -177,7 +177,9 @@ void Group::applyTransformations(float speed_factor) const {
     for (int type : order) {
         switch (type) {
           case TRANSLATIONS:
-            renderCatmullRomCurve(controlPoints);
+            if(show_catmull){
+                renderCatmullRomCurve(controlPoints);
+            }
             matrix *= applyTimeTranslation(elapsed_time, controlPoints);
             break;
           case ROTATIONS:
@@ -195,19 +197,19 @@ void Group::applyTransformations(float speed_factor) const {
     glMultMatrixf(&matrix[0][0]);
 }
 
-void Group::drawGroup() const {
+void Group::drawGroup(bool show_catmull) const {
     float speed_factor = time / 10.0f;
 
     glPushMatrix();
 
-    applyTransformations(speed_factor);
+    applyTransformations(speed_factor, show_catmull);
 
     for (const auto& model : models) {
         model.draw();
     }
 
     for (const auto& subGroup : subGroups) {
-        subGroup.drawGroup();
+        subGroup.drawGroup(show_catmull);
     }
 
     glPopMatrix();
