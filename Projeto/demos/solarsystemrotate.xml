@@ -21,6 +21,7 @@
         <!-- Mercúrio -->
         <group>
             <transform>
+                <rotate time="3" y="1" />
                 <rotate y="1" angle="25" /> <!-- Ângulo ajustado -->
                 <translate x="27" y="0" z="0" />
                 <scale x="1.1" y="1.1" z="1.1" />
@@ -33,6 +34,7 @@
         <!-- Vênus -->
         <group>
             <transform>
+                <rotate time="21" y="1" />
                 <rotate y="1" angle="190" /> <!-- Ângulo ajustado -->
                 <translate x="35" y="0" z="0" />
                 <scale x="1.2" y="1.2" z="1.2" />
@@ -45,6 +47,7 @@
         <!-- Terra e Lua -->
         <group>
             <transform>
+                <rotate time="10" y="1" />
                 <rotate y="1" angle="325" /> <!-- Ângulo ajustado -->
                 <translate x="50" y="0" z="0" />
                 <scale x="2.0" y="2.0" z="2.0" />
@@ -54,6 +57,7 @@
             </models>
             <group>
                 <transform>
+                    <rotate time="5" y="1" />
                     <rotate y="1" angle="20" />
                     <translate x="-2" y="0" z="-2" />
                     <scale x="0.3" y="0.3" z="0.3" />
@@ -67,6 +71,7 @@
         <!-- Marte e Luas -->
         <group>
             <transform>
+                <rotate time="50" y="1" />
                 <rotate y="1" angle="150" /> <!-- Ângulo ajustado -->
                 <translate x="65" y="0" z="0" />
                 <scale x="1.5" y="1.5" z="1.5" />
@@ -76,6 +81,7 @@
             </models>
             <group>
                 <transform>
+                    <rotate time="5" y="1" />
                     <translate x="2" y="1" z="2" />
                     <scale x="0.3" y="0.3" z="0.3" />
                 </transform>
@@ -96,6 +102,7 @@
         <!-- Júpiter e Luas -->
         <group>
             <transform>
+                <rotate time="15" y="1" />
                 <rotate y="1" angle="70" /> <!-- Ângulo ajustado -->
                 <translate x="80" y="0" z="0" />
                 <scale x="4.0" y="4.0" z="4.0" />
@@ -105,23 +112,25 @@
             </models>
             <group>
                 <transform>
+                    <rotate time="14" y="1" />
                     <translate x="1" y="0.5" z="-1" />
                     <scale x="0.1" y="0.1" z="0.1" />
                 </transform>
-                <group><transform><translate x="-5" y="2" z="-3" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
-                <group><transform><translate x="7" y="-1" z="5" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
-                <group><transform><translate x="-3" y="3" z="-6" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
-                <group><transform><translate x="4" y="-2" z="-4" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
-                <group><transform><translate x="-6" y="4" z="3" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
-                <group><transform><translate x="5" y="-3" z="-5" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
-                <group><transform><translate x="-2" y="2" z="4" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
-                <group><transform><translate x="-4" y="-1" z="6" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
+                <group><transform><rotate time="15" y="1" /><translate x="-5" y="2" z="-3" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
+                <group><transform><rotate time="3" y="1" /><translate x="7" y="-1" z="5" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
+                <group><transform><rotate time="8" y="1" /><translate x="-3" y="3" z="-6" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
+                <group><transform><rotate time="7" y="1" /><translate x="4" y="-2" z="-4" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
+                <group><transform><rotate time="17" y="1" /><translate x="-6" y="4" z="3" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
+                <group><transform><rotate time="10" y="1" /><translate x="5" y="-3" z="-5" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
+                <group><transform><rotate time="34" y="1" /><translate x="-2" y="2" z="4" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
+                <group><transform><rotate time="4" y="1" /><translate x="-4" y="-1" z="6" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
             </group>
         </group>
 
         <!-- Saturno, Anel e Luas -->
         <group>
             <transform>
+                <rotate time="7" y="1" />
                 <rotate y="1" angle="230" /> <!-- Ângulo ajustado -->
                 <translate x="85" y="0" z="0" />
                 <scale x="3.0" y="3.0" z="3.0" />
@@ -141,6 +150,7 @@
             <!-- Luas de Saturno -->
             <group>
                 <transform>
+                    <rotate time="5" y="1" />
                     <translate x="2" y="0" z="0" />
                     <scale x="0.1" y="0.1" z="0.1" />
                 </transform>
@@ -150,6 +160,7 @@
             </group>
             <group>
                 <transform>
+                    <rotate time="5" y="1" />
                     <translate x="-2" y="0" z="0" />
                     <scale x="0.1" y="0.1" z="0.1" />
                 </transform>
@@ -159,6 +170,7 @@
             </group>
             <group>
                 <transform>
+                    <rotate time="5" y="1" />
                     <translate x="0" y="2" z="0" />
                     <scale x="0.1" y="0.1" z="0.1" />
                 </transform>
@@ -168,6 +180,7 @@
             </group>
             <group>
                 <transform>
+                    <rotate time="5" y="1" />
                     <translate x="0" y="-2" z="0" />
                     <scale x="0.1" y="0.1" z="0.1" />
                 </transform>
@@ -177,6 +190,7 @@
             </group>
             <group>
                 <transform>
+                    <rotate time="5" y="1" />
                     <translate x="0" y="0" z="2" />
                     <scale x="0.1" y="0.1" z="0.1" />
                 </transform>
@@ -189,6 +203,7 @@
         <!-- Urano e Luas -->
         <group>
             <transform>
+                <rotate time="15" y="1" />
                 <rotate y="1" angle="270" /> <!-- Ângulo ajustado -->
                 <translate x="110" y="0" z="0" />
                 <scale x="2.0" y="2.0" z="2.0" />
@@ -199,6 +214,7 @@
             <!-- Luas de Urano -->
             <group>
                 <transform>
+                    <rotate time="5" y="1" />
                     <translate x="2" y="0" z="0" />
                     <scale x="0.1" y="0.1" z="0.1" />
                 </transform>
@@ -208,6 +224,7 @@
             </group>
             <group>
                 <transform>
+                    <rotate time="5" y="1" />
                     <translate x="-2" y="0" z="0" />
                     <scale x="0.1" y="0.1" z="0.1" />
                 </transform>
@@ -217,6 +234,7 @@
             </group>
             <group>
                 <transform>
+                    <rotate time="5" y="1" />
                     <translate x="0" y="2" z="0" />
                     <scale x="0.1" y="0.1" z="0.1" />
                 </transform>
@@ -226,6 +244,7 @@
             </group>
             <group>
                 <transform>
+                    <rotate time="5" y="1" />
                     <translate x="0" y="-2" z="0" />
                     <scale x="0.1" y="0.1" z="0.1" />
                 </transform>
@@ -238,6 +257,7 @@
         <!-- Netuno e Luas -->
         <group>
             <transform>
+                <rotate time="10" y="1" />
                 <rotate y="1" angle="360" /> <!-- Ângulo ajustado -->
                 <translate x="125" y="0" z="0" />
                 <scale x="1.5" y="1.5" z="1.5" />
@@ -248,6 +268,7 @@
             <!-- Luas de Netuno -->
             <group>
                 <transform>
+                <rotate time="3" y="1" />
                     <translate x="2" y="0" z="0" />
                     <scale x="0.1" y="0.1" z="0.1" />
                 </transform>
@@ -257,6 +278,7 @@
             </group>
             <group>
                 <transform>
+                    <rotate time="3" y="1" />
                     <translate x="-2" y="0" z="0" />
                     <scale x="0.1" y="0.1" z="0.1" />
                 </transform>
@@ -266,6 +288,7 @@
             </group>
             <group>
                 <transform>
+                    <rotate time="3" y="1" />
                     <translate x="0" y="2" z="0" />
                     <scale x="0.1" y="0.1" z="0.1" />
                 </transform>
@@ -275,6 +298,7 @@
             </group>
             <group>
                 <transform>
+                    <rotate time="3" y="1" />
                     <translate x="0" y="-2" z="0" />
                     <scale x="0.1" y="0.1" z="0.1" />
                 </transform>
