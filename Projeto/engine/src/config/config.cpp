@@ -49,7 +49,7 @@ void drawAxis(void){
 }
 
 
-void Config::draw(bool view_axis){
+void Config::draw(bool view_axis, bool show_catmull){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -66,5 +66,5 @@ void Config::draw(bool view_axis){
     }
     glColor3f(1.0f, 1.0f, 1.0f);
 
-    group.drawGroup();
+    group.drawGroup(show_catmull);
 }

@@ -18,6 +18,36 @@
             </models>
         </group>
 
+            <!-- Órbita elíptica perfeita no plano XZ sem auto-interseções -->
+<group>
+    <translate x="-20" y="0" z="0"/>
+    <transform>
+        <translate time="300" align="true">
+            <!-- 16 pontos distribuídos harmonicamente em torno da elipse -->
+            <point x="160" y="0" z="0"/>
+            <point x="139" y="0" z="60"/>
+            <point x="96" y="0" z="111"/>
+            <point x="42" y="0" z="149"/>
+            <point x="0" y="0" z="160"/>
+            <point x="-42" y="0" z="149"/>
+            <point x="-96" y="0" z="111"/>
+            <point x="-139" y="0" z="60"/>
+            <point x="-160" y="0" z="0"/>
+            <point x="-139" y="0" z="-60"/>
+            <point x="-96" y="0" z="-111"/>
+            <point x="-42" y="0" z="-149"/>
+            <point x="0" y="0" z="-160"/>
+            <point x="42" y="0" z="-149"/>
+            <point x="96" y="0" z="-111"/>
+            <point x="139" y="0" z="-60"/>
+        </translate>
+        <scale x="0.7" y="0.7" z="0.7"/>
+    </transform>
+    <models>
+        <model file="comet.3d"/>
+    </models>
+</group>
+
         <!-- Mercúrio -->
         <group>
             <transform>

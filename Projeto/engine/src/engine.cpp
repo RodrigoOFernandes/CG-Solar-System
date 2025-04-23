@@ -9,6 +9,7 @@ float frame = 0.0f, fps = 0.0f;
 int lastMouseX = -1, lastMouseY = -1;
 bool mouseLeftPressed = false;
 bool mouseRightPressed = false;
+bool show_catmull = true;
 bool view_axis = true;
 // ============================================
 
@@ -33,7 +34,7 @@ void renderScene() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
 
-    configuration.draw(view_axis);
+    configuration.draw(view_axis, show_catmull);
 
     frame++;
     t = glutGet(GLUT_ELAPSED_TIME);
@@ -94,6 +95,12 @@ void processKeys(unsigned char key, int x, int y) {
         case 't':
         case 'T':
             view_axis = !view_axis;
+            std::cout << "View axis toggled to: " << (view_axis ? "ON" : "OFF") << std::endl;
+            glutPostRedisplay();
+            break;
+        case 'c':
+        case 'C':
+            show_catmull = !show_catmull;
             std::cout << "View axis toggled to: " << (view_axis ? "ON" : "OFF") << std::endl;
             glutPostRedisplay();
             break;
