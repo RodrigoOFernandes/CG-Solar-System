@@ -24,22 +24,18 @@
     <transform>
         <translate time="300" align="true">
             <!-- 16 pontos distribuídos harmonicamente em torno da elipse -->
-            <point x="160" y="0" z="0"/>
-            <point x="139" y="0" z="60"/>
-            <point x="96" y="0" z="111"/>
-            <point x="42" y="0" z="149"/>
-            <point x="0" y="0" z="160"/>
-            <point x="-42" y="0" z="149"/>
-            <point x="-96" y="0" z="111"/>
-            <point x="-139" y="0" z="60"/>
-            <point x="-160" y="0" z="0"/>
-            <point x="-139" y="0" z="-60"/>
-            <point x="-96" y="0" z="-111"/>
-            <point x="-42" y="0" z="-149"/>
-            <point x="0" y="0" z="-160"/>
-            <point x="42" y="0" z="-149"/>
-            <point x="96" y="0" z="-111"/>
-            <point x="139" y="0" z="-60"/>
+            <point x="170" y="0" z="0"/>
+            <point x="156.6025" y="0" z="9"/>
+            <point x="120" y="0" z="15.5885"/>
+            <point x="70" y="0" z="18"/>
+            <point x="20" y="0" z="15.5885"/>
+            <point x="-16.6025" y="0" z="9"/>
+            <point x="-30" y="0" z="0"/>
+            <point x="-16.6025" y="0" z="-9"/>
+            <point x="20" y="0" z="-15.5885"/>
+            <point x="70" y="0" z="-18"/>
+            <point x="120" y="0" z="-15.5885"/>
+            <point x="156.6025" y="0" z="-9"/>
         </translate>
         <scale x="0.7" y="0.7" z="0.7"/>
     </transform>
