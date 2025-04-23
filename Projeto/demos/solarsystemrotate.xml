@@ -44,7 +44,7 @@
         <scale x="0.7" y="0.7" z="0.7"/>
     </transform>
     <models>
-        <model file="bezier_10.3d"/>
+        <model file="comet.3d"/>
     </models>
 </group>
 
