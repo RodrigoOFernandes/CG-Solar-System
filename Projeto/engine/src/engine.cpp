@@ -35,7 +35,7 @@ void renderScene() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
 
-    configuration.draw(view_axis, show_catmull, lighting);
+    
 
     frame++;
     t = glutGet(GLUT_ELAPSED_TIME);
@@ -44,9 +44,10 @@ void renderScene() {
         tbase = t;
         frame = 0;
     }
-
     sprintf(frames, "CG-SOLAR-System || FPS: %.2f", fps);
     glutSetWindowTitle(frames);
+
+    configuration.draw(view_axis, show_catmull, lighting);
     glutPostRedisplay();
     glutSwapBuffers();
 }
