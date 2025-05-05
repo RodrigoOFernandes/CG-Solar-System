@@ -29,11 +29,13 @@ class Group{
         mutable float elapsed_time = 0.0f;
         std::vector<Group> subGroups;
         std::vector<Model> models;
+        
+        Material material;
 
         void parseGroup(tinyxml2::XMLElement* groupElement);
         void parseTransforms(tinyxml2::XMLElement* transformElement);
         void parseModels(tinyxml2::XMLElement* modelsElement);
-        void drawGroup(bool show_catmull) const;
+        void drawGroup(bool show_catmull, bool lights)  const;
         void applyTransformations(float speed_factor, bool show_catmull) const;
         glm::mat4 applyTimeRotation(float elapsed_time) const;
         glm::mat4 applyTimeTranslation(float elapsed_time, std::vector<glm::vec3> control_points) const;
