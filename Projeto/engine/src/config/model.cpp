@@ -6,7 +6,7 @@ void Model::draw() const {
         glBindBuffer(GL_ARRAY_BUFFER, vboID);
         glEnableClientState(GL_VERTEX_ARRAY);
         glVertexPointer(3, GL_FLOAT, 0, 0); // Definindo os vértices
-
+       
         // Se o VBO de normais estiver presente, ativa e usa ele
         if (normalVBOId != 0) {
             glBindBuffer(GL_ARRAY_BUFFER, normalVBOId);
@@ -14,16 +14,16 @@ void Model::draw() const {
             glNormalPointer(GL_FLOAT, 0, 0); // Definindo as normais
         }
 
+       
         // Se o VBO de texturas estiver presente, ativa e usa ele
         if (textureVBOId != 0) {
             glBindBuffer(GL_ARRAY_BUFFER, textureVBOId);
             glEnableClientState(GL_TEXTURE_COORD_ARRAY);
             glTexCoordPointer(2, GL_FLOAT, 0, 0); // Definindo as coordenadas de textura
         }
-
+        
         // Desenha os triângulos
         glDrawArrays(GL_TRIANGLES, 0, triangle_count);
-
         // Desativa os estados após o desenho
         glDisableClientState(GL_VERTEX_ARRAY);
         if (normalVBOId != 0) {
@@ -63,26 +63,9 @@ void Model::parseModel(tinyxml2::XMLElement* modelElement) {
     while (std::getline(file, line)) {
         std::istringstream iss(line);
         
-        // Tentamos ler as coordenadas de vértices, normais e texturas
         float x, y, z, nx, ny, nz, tx, ty;
-
-        // Caso a linha tenha apenas as coordenadas de vértices (x, y, z)
-        if (iss >> x >> y >> z) {
-            triangles.push_back(x);
-            triangles.push_back(y);
-            triangles.push_back(z);
-
-            // Se não houverem normais e texturas na linha, usamos valores default
-            normals.push_back(0.0f); // Normal padrão (não normalizada)
-            normals.push_back(0.0f);
-            normals.push_back(1.0f); // Normal apontando para a direção Z
-
-            textures.push_back(0.0f); // Coordenada de textura padrão (0.0, 0.0)
-            textures.push_back(0.0f);
-        }
-
-        // Caso a linha tenha as coordenadas completas: x, y, z, nx, ny, nz, tx, ty
-        else if (iss >> x >> y >> z >> nx >> ny >> nz >> tx >> ty) {
+       
+        if (iss >> x >> y >> z >> nx >> ny >> nz >> tx >> ty) {
             triangles.push_back(x);
             triangles.push_back(y);
             triangles.push_back(z);
@@ -91,6 +74,9 @@ void Model::parseModel(tinyxml2::XMLElement* modelElement) {
             normals.push_back(nz);
             textures.push_back(tx);
             textures.push_back(ty);
+        } else {
+            std::cerr << "[ERROR]3d file: Invalid File format"<< "\n"<< "---> Supported .3d file format: 'x y z nx ny nz tx ty'" << std::endl;
+            exit(EXIT_FAILURE);
         }
     }
     file.close();

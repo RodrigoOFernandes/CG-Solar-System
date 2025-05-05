@@ -68,8 +68,6 @@ void Config::draw(bool view_axis, bool show_catmull, bool lighting){
     
     if(lighting) drawLights(lights);
 
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
     if (view_axis) {
         drawAxis();
     }
