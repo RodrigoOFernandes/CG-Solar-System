@@ -11,6 +11,7 @@ bool mouseLeftPressed = false;
 bool mouseRightPressed = false;
 bool show_catmull = true;
 bool view_axis = true;
+bool lighting = false;
 // ============================================
 
 void resize(int w, int h) {
@@ -34,7 +35,7 @@ void renderScene() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
 
-    configuration.draw(view_axis, show_catmull);
+    configuration.draw(view_axis, show_catmull, lighting);
 
     frame++;
     t = glutGet(GLUT_ELAPSED_TIME);
@@ -119,14 +120,13 @@ int main(int argc, char **argv) {
     glutInitWindowPosition(100, 100);
     glutInitWindowSize(500, 500);
     glutCreateWindow("CG-SOLAR-System");
-
-#if !defined(__APPLE__)
-    GLenum err = glewInit();
-    if (err != GLEW_OK) {
-        std::cerr << "Error initializing GLEW: " << glewGetErrorString(err) << std::endl;
-        return 1;
-    }
-#endif
+    #if !defined(__APPLE__)
+        GLenum err = glewInit();
+        if (err != GLEW_OK) {
+            std::cerr << "Error initializing GLEW: " << glewGetErrorString(err) << std::endl;
+            return 1;
+        }
+    #endif
 
     glutDisplayFunc(renderScene);
     glutReshapeFunc(resize);
@@ -141,10 +141,10 @@ int main(int argc, char **argv) {
     glEnable(GL_CULL_FACE);
 
     configuration.parseFile(argv[1]);
-
     glutReshapeWindow(configuration.window.width, configuration.window.height);
     resize(configuration.window.width, configuration.window.height);
 
+    lighting = setupLights(configuration.lights);
     glutMainLoop();
     return 0;
 }

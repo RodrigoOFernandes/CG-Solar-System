@@ -24,6 +24,12 @@ void Config::parseFile(const char* filename) {
         camera.parseCamera(cameraElement);
     }
 
+    tinyxml2::XMLElement* lightElement = worldElement->FirstChildElement("lights");
+    if (lightElement) {
+        lights = parseLights(lightElement);
+        printLights(lights);
+    }
+
     tinyxml2::XMLElement* groupElement = worldElement->FirstChildElement("group");
     if(groupElement){
         group.parseGroup(groupElement);
@@ -49,22 +55,26 @@ void drawAxis(void){
 }
 
 
-void Config::draw(bool view_axis, bool show_catmull){
+void Config::draw(bool view_axis, bool show_catmull, bool lighting){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    // Use the Camera struct for gluLookAt
     gluLookAt(camera.position.x, camera.position.y, camera.position.z,
-        camera.lookAt.x, camera.lookAt.y, camera.lookAt.z,
-        camera.up.x, camera.up.y, camera.up.z);
+              camera.lookAt.x, camera.lookAt.y, camera.lookAt.z,
+              camera.up.x, camera.up.y, camera.up.z);
+
+    glEnable(GL_DEPTH_TEST);
+    
+    if(lighting) drawLights(lights);
 
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    
-    if(view_axis){
+
+    if (view_axis) {
         drawAxis();
     }
-    glColor3f(1.0f, 1.0f, 1.0f);
 
-    group.drawGroup(show_catmull);
+    glColor3f(1.0f, 1.0f, 1.0f); // fallback color (se lighting estiver off)
+
+    group.drawGroup(show_catmull, lighting);
 }

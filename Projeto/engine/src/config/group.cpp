@@ -122,8 +122,17 @@ void Group::parseModels(tinyxml2::XMLElement* modelsElement) {
     for (tinyxml2::XMLElement* modelElement = modelsElement->FirstChildElement("model");
          modelElement;
          modelElement = modelElement->NextSiblingElement("model")) {
+        
         Model model;
         model.parseModel(modelElement);
+
+        tinyxml2::XMLElement* colorElement = modelElement->FirstChildElement("color");
+        if (colorElement) {
+            Material mat = parseMaterial(colorElement);
+            model.setMaterial(mat);
+        }
+
+        model.printMaterial(); 
         models.push_back(model);
     }
 }
@@ -197,19 +206,19 @@ void Group::applyTransformations(float speed_factor, bool show_catmull) const {
     glMultMatrixf(&matrix[0][0]);
 }
 
-void Group::drawGroup(bool show_catmull) const {
+void Group::drawGroup(bool show_catmull, bool lights) const {
     float speed_factor = time / 10.0f;
-
     glPushMatrix();
 
     applyTransformations(speed_factor, show_catmull);
 
     for (const auto& model : models) {
+        if(lights) model.setupMaterial();
         model.draw();
     }
 
     for (const auto& subGroup : subGroups) {
-        subGroup.drawGroup(show_catmull);
+        subGroup.drawGroup(show_catmull, lights);
     }
 
     glPopMatrix();
