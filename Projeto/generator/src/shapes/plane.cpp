@@ -25,13 +25,19 @@ void generatePlane(int length, int divisions, char* outputFile) {
             float z1 = -halfLength + j * step;
             float z2 = z1 + step;
 
-            outFile << x1 << " " << 0.0f << " " << z1 << "\n"; 
-            outFile << x1 << " " << 0.0f << " " << z2 << "\n";
-            outFile << x2 << " " << 0.0f << " " << z2 << "\n"; 
+            float u1 = static_cast<float>(i) / static_cast<float>(divisions);
+            float u2 = static_cast<float>(i + 1) / static_cast<float>(divisions);
+            float v1 = static_cast<float>(j) / static_cast<float>(divisions);
+            float v2 = static_cast<float>(j + 1) / static_cast<float>(divisions);
 
-            outFile << x1 << " " << 0.0f << " " << z1 << "\n"; 
-            outFile << x2 << " " << 0.0f << " " << z2 << "\n"; 
-            outFile << x2 << " " << 0.0f << " " << z1 << "\n";
+
+            outFile << x1 << " " << 0.0f << " " << z1 << " 0.0f 1.0f 0.0f " << u1 << " " << v1 << "\n"; 
+            outFile << x1 << " " << 0.0f << " " << z2 << " 0.0f 1.0f 0.0f " << u1 << " " << v1 << "\n";
+            outFile << x2 << " " << 0.0f << " " << z2 << " 0.0f 1.0f 0.0f " << u1 << " " << v1 << "\n"; 
+
+            outFile << x1 << " " << 0.0f << " " << z1 << " 0.0f 1.0f 0.0f " << u1 << " " << v1 << "\n"; 
+            outFile << x2 << " " << 0.0f << " " << z2 << " 0.0f 1.0f 0.0f " << u1 << " " << v1 << "\n"; 
+            outFile << x2 << " " << 0.0f << " " << z1 << " 0.0f 1.0f 0.0f " << u1 << " " << v1 << "\n";
         }
     }
     
