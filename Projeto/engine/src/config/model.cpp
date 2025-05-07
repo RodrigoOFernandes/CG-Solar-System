@@ -1,11 +1,10 @@
 #include "../include/config/model.hpp"
 
 void Model::draw() const {
-        // Caso os VBOs estejam ativos, desenha usando os VBOs
         // Vincula o VBO para os vértices
         glBindBuffer(GL_ARRAY_BUFFER, vboID);
         glEnableClientState(GL_VERTEX_ARRAY);
-        glVertexPointer(3, GL_FLOAT, 0, 0); // Definindo os vértices
+        glVertexPointer(3, GL_FLOAT, 0, 0);
        
         // Se o VBO de normais estiver presente, ativa e usa ele
         if (normalVBOId != 0) {
