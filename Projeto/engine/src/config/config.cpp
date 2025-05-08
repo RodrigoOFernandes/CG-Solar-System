@@ -37,7 +37,8 @@ void Config::parseFile(const char* filename) {
 }
 
 
-void drawAxis(void){
+void drawAxis(bool lighting){
+    if(lighting) glDisable(GL_LIGHTING);
 	glBegin(GL_LINES);
 		// X axis in red
 		glColor3f(1.0f, 0.0f, 0.0f);
@@ -52,6 +53,7 @@ void drawAxis(void){
 		glVertex3f(0.0f, 0.0f, -100.0f);
 		glVertex3f(0.0f, 0.0f, 100.0f);
 	glEnd();
+    if(lighting) glEnable(GL_LIGHTING);
 }
 
 
@@ -69,7 +71,7 @@ void Config::draw(bool view_axis, bool show_catmull, bool lighting){
     if(lighting) drawLights(lights);
 
     if (view_axis) {
-        drawAxis();
+        drawAxis(lighting);
     }
 
     glColor3f(1.0f, 1.0f, 1.0f); // fallback color (se lighting estiver off)

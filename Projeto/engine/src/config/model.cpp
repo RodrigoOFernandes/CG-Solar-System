@@ -1,38 +1,85 @@
 #include "../include/config/model.hpp"
 
 void Model::draw() const {
-        // Vincula o VBO para os vértices
-        glBindBuffer(GL_ARRAY_BUFFER, vboID);
-        glEnableClientState(GL_VERTEX_ARRAY);
-        glVertexPointer(3, GL_FLOAT, 0, 0);
-       
-        // Se o VBO de normais estiver presente, ativa e usa ele
-        if (normalVBOId != 0) {
-            glBindBuffer(GL_ARRAY_BUFFER, normalVBOId);
-            glEnableClientState(GL_NORMAL_ARRAY);
-            glNormalPointer(GL_FLOAT, 0, 0); // Definindo as normais
-        }
+    // Bind da textura
+    if (textID != 0) {
+        glEnable(GL_TEXTURE_2D);
+        glBindTexture(GL_TEXTURE_2D, textID);
+    }
+    
 
-       
-        // Se o VBO de texturas estiver presente, ativa e usa ele
-        if (textureVBOId != 0) {
-            glBindBuffer(GL_ARRAY_BUFFER, textureVBOId);
-            glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-            glTexCoordPointer(2, GL_FLOAT, 0, 0); // Definindo as coordenadas de textura
-        }
-        
-        // Desenha os triângulos
-        glDrawArrays(GL_TRIANGLES, 0, triangle_count);
-        // Desativa os estados após o desenho
-        glDisableClientState(GL_VERTEX_ARRAY);
-        if (normalVBOId != 0) {
-            glDisableClientState(GL_NORMAL_ARRAY);
-        }
-        if (textureVBOId != 0) {
-            glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-        }
+    glBindBuffer(GL_ARRAY_BUFFER, vboID);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glVertexPointer(3, GL_FLOAT, 0, 0);
 
+    if (normalVBOId != 0) {
+        glBindBuffer(GL_ARRAY_BUFFER, normalVBOId);
+        glEnableClientState(GL_NORMAL_ARRAY);
+        glNormalPointer(GL_FLOAT, 0, 0);
+    }
+
+    if (textureVBOId != 0) {
+        glBindBuffer(GL_ARRAY_BUFFER, textureVBOId);
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+        glTexCoordPointer(2, GL_FLOAT, 0, 0);
+    }
+
+    glDrawArrays(GL_TRIANGLES, 0, triangle_count);
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+    if (normalVBOId != 0) {
+        glDisableClientState(GL_NORMAL_ARRAY);
+    }
+    if (textureVBOId != 0) {
+        glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    }
+
+    if(textID != 0){
+        glBindTexture(GL_TEXTURE_2D, 0);
+        glDisable(GL_TEXTURE_2D);
+    }
 }
+
+
+void Model::loadTexture(std::string filename){
+    std::string fullPath = "../textures/" + filename;
+
+    ILuint t;
+    ilGenImages(1, &t);
+    ilBindImage(t);
+    
+    if (!ilLoadImage(fullPath.c_str())) {
+        std::cerr << "======Erro ao carregar a textura: ====" << fullPath << std::endl;
+        ilDeleteImages(1, &t); // limpa mesmo em falha
+        textID = 0; // <--- previne o uso indevido
+        exit(EXIT_FAILURE);
+        return;
+    }
+
+    ilConvertImage(IL_BGRA, IL_UNSIGNED_BYTE); 
+    int tw = ilGetInteger(IL_IMAGE_WIDTH);
+    int th = ilGetInteger(IL_IMAGE_HEIGHT);
+    unsigned char* textData = ilGetData();
+    glEnable(GL_TEXTURE_2D);
+
+    glGenTextures(1, &textID);
+    glBindTexture(GL_TEXTURE_2D, textID);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+
+    
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tw, th, 0, GL_BGRA, GL_UNSIGNED_BYTE, textData);
+    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+    glGenerateMipmap(GL_TEXTURE_2D);
+
+    ilDeleteImages(1, &t); 
+    glDisable(GL_TEXTURE_2D);
+}
+
+
 
 void Model::setupMaterial() const{
     glMaterialfv(GL_FRONT, GL_AMBIENT, glm::value_ptr(material.ambient));
@@ -41,7 +88,17 @@ void Model::setupMaterial() const{
     glMaterialfv(GL_FRONT, GL_EMISSION, glm::value_ptr(material.emission));
     glMaterialf(GL_FRONT, GL_SHININESS, material.shininess);
 }
+void Model::parseTexture(tinyxml2::XMLElement* textureElement) {
+    if (!textureElement) return;
 
+    const char* file = textureElement->Attribute("file");
+    if (file) {
+        textureFileName = file;
+    } else {
+        std::cerr << "Atributo 'file' em <texture> está ausente ou inválido.\n";
+    }
+    loadTexture(textureFileName);
+}
 
 void Model::parseModel(tinyxml2::XMLElement* modelElement) {
     const char* filename = modelElement->Attribute("file");

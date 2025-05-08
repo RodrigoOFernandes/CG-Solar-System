@@ -129,6 +129,11 @@ int main(int argc, char **argv) {
         }
     #endif
 
+    ilInit();
+    iluInit();
+    ilEnable(IL_ORIGIN_SET);
+    ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
+
     glutDisplayFunc(renderScene);
     glutReshapeFunc(resize);
     glutKeyboardFunc(processKeys);

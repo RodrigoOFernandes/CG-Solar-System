@@ -130,9 +130,14 @@ void Group::parseModels(tinyxml2::XMLElement* modelsElement) {
         if (colorElement) {
             Material mat = parseMaterial(colorElement);
             model.setMaterial(mat);
+            model.printMaterial(); 
         }
 
-        model.printMaterial(); 
+        tinyxml2::XMLElement* textureElement = modelElement->FirstChildElement("texture");
+        if (textureElement) {
+            model.parseTexture(textureElement);
+        }
+
         models.push_back(model);
     }
 }
