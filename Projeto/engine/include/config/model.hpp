@@ -37,14 +37,18 @@ class Model {
         Material material;
         std::string textureFileName;
         GLuint textID = 0;
+        std::vector<float> verticesCPU;
+        std::vector<float> normalsCPU;
+
 
         void parseModelMaterial(tinyxml2::XMLElement* materialElement);
         void parseModel(tinyxml2::XMLElement* modelElement);
         void loadTexture(std::string filename);
-        void draw() const;
+        void draw( bool viewNormals) const;
         void parseTexture(tinyxml2::XMLElement* textureElement);
         void setMaterial(const Material& mat);
         void setupMaterial() const; 
+        void drawNormals(bool viewNormals) const; 
         void printMaterial();
 };
 

@@ -211,19 +211,18 @@ void Group::applyTransformations(float speed_factor, bool show_catmull) const {
     glMultMatrixf(&matrix[0][0]);
 }
 
-void Group::drawGroup(bool show_catmull, bool lights) const {
+void Group::drawGroup(bool show_catmull, bool lights, bool viewNormals) const {
     float speed_factor = time / 10.0f;
     glPushMatrix();
 
     applyTransformations(speed_factor, show_catmull);
-
+    
     for (const auto& model : models) {
-        if(lights) model.setupMaterial();
-        model.draw();
+        model.draw(viewNormals);
     }
 
     for (const auto& subGroup : subGroups) {
-        subGroup.drawGroup(show_catmull, lights);
+        subGroup.drawGroup(show_catmull, lights, viewNormals);
     }
 
     glPopMatrix();

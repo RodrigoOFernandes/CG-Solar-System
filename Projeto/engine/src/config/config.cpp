@@ -57,7 +57,7 @@ void drawAxis(bool lighting){
 }
 
 
-void Config::draw(bool view_axis, bool show_catmull, bool lighting){
+void Config::draw(bool view_axis, bool show_catmull, bool lighting, bool viewNormals){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -66,15 +66,12 @@ void Config::draw(bool view_axis, bool show_catmull, bool lighting){
               camera.lookAt.x, camera.lookAt.y, camera.lookAt.z,
               camera.up.x, camera.up.y, camera.up.z);
 
-    glEnable(GL_DEPTH_TEST);
-    
+
     if(lighting) drawLights(lights);
 
+    group.drawGroup(show_catmull, lighting, viewNormals);
+    
     if (view_axis) {
         drawAxis(lighting);
     }
-
-    glColor3f(1.0f, 1.0f, 1.0f); // fallback color (se lighting estiver off)
-
-    group.drawGroup(show_catmull, lighting);
 }

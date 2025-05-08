@@ -22,7 +22,7 @@ std::vector<Light> parseLights(tinyxml2::XMLElement* lightsElement) {
 
             l.type = POINT;
             l.position = glm::vec4(x, y, z, 1.0f);
-            l.direction = glm::vec4(0.0f); // não usado
+            l.direction = glm::vec4(0.0f);
             l.cutoff = 0.0f;
         }
         else if (typeStr == "directional") {
@@ -32,7 +32,7 @@ std::vector<Light> parseLights(tinyxml2::XMLElement* lightsElement) {
 
             l.type = DIRECTIONAL;
             l.direction = glm::vec4(dx, dy, dz, 0.0f);
-            l.position = glm::vec4(0.0f); // não usado
+            l.position = glm::vec4(0.0f);
             l.cutoff = 0.0f;
         }
         else if (typeStr == "spot") {
@@ -125,9 +125,9 @@ bool setupLights(std::vector<Light> lights) {
           break;
         }
         case SPOT: {
-          float postion[4] = {light.position.x, light.position.y,
+          float position[4] = {light.position.x, light.position.y,
                               light.position.z, 1.0f};
-          glLightfv(GL_LIGHT0 + i, GL_POSITION, postion);
+          glLightfv(GL_LIGHT0 + i, GL_POSITION, position);
           float direction[4] = {light.direction.x, light.direction.y,
                                 light.direction.z, 0.0f};
           glLightfv(GL_LIGHT0 + i, GL_SPOT_DIRECTION, direction);

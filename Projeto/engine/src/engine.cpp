@@ -12,6 +12,7 @@ bool mouseRightPressed = false;
 bool show_catmull = true;
 bool view_axis = true;
 bool lighting = false;
+bool viewNormals = false;
 // ============================================
 
 void resize(int w, int h) {
@@ -47,7 +48,7 @@ void renderScene() {
     sprintf(frames, "CG-SOLAR-System || FPS: %.2f", fps);
     glutSetWindowTitle(frames);
 
-    configuration.draw(view_axis, show_catmull, lighting);
+    configuration.draw(view_axis, show_catmull, lighting, viewNormals);
     glutPostRedisplay();
     glutSwapBuffers();
 }
@@ -103,9 +104,16 @@ void processKeys(unsigned char key, int x, int y) {
         case 'c':
         case 'C':
             show_catmull = !show_catmull;
-            std::cout << "View axis toggled to: " << (view_axis ? "ON" : "OFF") << std::endl;
+            std::cout << "Catmull toggled to: " << (show_catmull ? "ON" : "OFF") << std::endl;
             glutPostRedisplay();
             break;
+        case 'n':
+        case 'N':
+            viewNormals = !viewNormals;
+            std::cout << "Normals view toggled to: " << (viewNormals ? "ON" : "OFF") << std::endl;
+            glutPostRedisplay();
+            break;
+            
     }
 }
 // ======================================
@@ -145,6 +153,7 @@ int main(int argc, char **argv) {
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
+    glEnable(GL_ALPHA_TEST);
 
     configuration.parseFile(argv[1]);
     glutReshapeWindow(configuration.window.width, configuration.window.height);
