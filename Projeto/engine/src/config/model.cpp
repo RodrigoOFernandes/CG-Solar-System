@@ -50,8 +50,8 @@ void Model::loadTexture(std::string filename){
     
     if (!ilLoadImage(fullPath.c_str())) {
         std::cerr << "======Erro ao carregar a textura: ====" << fullPath << std::endl;
-        ilDeleteImages(1, &t); // limpa mesmo em falha
-        textID = 0; // <--- previne o uso indevido
+        ilDeleteImages(1, &t);
+        textID = 0;
         exit(EXIT_FAILURE);
         return;
     }
@@ -72,7 +72,7 @@ void Model::loadTexture(std::string filename){
 
     
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tw, th, 0, GL_BGRA, GL_UNSIGNED_BYTE, textData);
-    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE); // evita mistura de cores com textura
     glGenerateMipmap(GL_TEXTURE_2D);
 
     ilDeleteImages(1, &t); 
@@ -114,7 +114,7 @@ void Model::parseModel(tinyxml2::XMLElement* modelElement) {
     }
 
     std::string line;
-    std::getline(file, line); // Ignora a primeira linha (modelo do ficheiro)
+    std::getline(file, line);
 
     while (std::getline(file, line)) {
         std::istringstream iss(line);
