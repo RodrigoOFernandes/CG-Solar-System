@@ -17,17 +17,18 @@ void generateBox(int dimension, int divisions, char* outputFile) {
 
     float halfDim = dimension / 2.0f;
     float step = static_cast<float>(dimension) / divisions;
+    float texStep = 1.0f / divisions;
 
     for (int face = 0; face < 6; face++) {
-        float nx = 0.0f, ny = 0.0f, nz = 0.0f;
-        
+        float nx = 0, ny = 0, nz = 0;
+
         switch (face) {
-            case 0: nx = 0.0f;  ny = 0.0f;  nz = 1.0f;  break;  // Front (positive Z)
-            case 1: nx = 0.0f;  ny = 0.0f;  nz = -1.0f; break;  // Back (negative Z)
-            case 2: nx = -1.0f; ny = 0.0f;  nz = 0.0f;  break;  // Left (negative X)
-            case 3: nx = 1.0f;  ny = 0.0f;  nz = 0.0f;  break;  // Right (positive X)
-            case 4: nx = 0.0f;  ny = 1.0f;  nz = 0.0f;  break;  // Top (positive Y)
-            case 5: nx = 0.0f;  ny = -1.0f; nz = 0.0f;  break;  // Bottom (negative Y)
+            case 0: nz = 1; break;  // Frente
+            case 1: nz = -1; break; // Trás
+            case 2: nx = -1; break; // Esquerda
+            case 3: nx = 1; break;  // Direita
+            case 4: ny = 1; break;  // Topo
+            case 5: ny = -1; break; // Base
         }
 
         for (int i = 0; i < divisions; i++) {
@@ -37,65 +38,82 @@ void generateBox(int dimension, int divisions, char* outputFile) {
                 float y1 = -halfDim + i * step;
                 float y2 = y1 + step;
 
+                float tx1 = j * texStep;
+                float tx2 = tx1 + texStep;
+                float ty1 = i * texStep;
+                float ty2 = ty1 + texStep;
+
+                // Os vértices mudam conforme a face, por isso calculamos o valor correto de x/y/z
+                auto emit = [&](float x, float y, float z, float tx, float ty) {
+                    outFile << x << " " << y << " " << z << " "
+                            << nx << " " << ny << " " << nz << " "
+                            << tx << " " << ty << "\n";
+                };
+
                 switch (face) {
-                    case 0: // Frente 
-                        outFile << x1 << " " << y2 << " " << halfDim << " " << nx << " " << ny << " " << nz << " " << 0.0 << " " << 0.0 << "\n";
-                        outFile << x1 << " " << y1 << " " << halfDim << " " << nx << " " << ny << " " << nz << " " << 0.0 << " " << 0.0 << "\n";
-                        outFile << x2 << " " << y2 << " " << halfDim << " " << nx << " " << ny << " " << nz << " " << 0.0 << " " << 0.0 << "\n";
+                    case 0: // Frente (z fixo)
+                        emit(x1, y2, halfDim, tx1, ty2);
+                        emit(x1, y1, halfDim, tx1, ty1);
+                        emit(x2, y2, halfDim, tx2, ty2);
 
-                        outFile << x2 << " " << y2 << " " << halfDim << " " << nx << " " << ny << " " << nz << " " << 0.0 << " " << 0.0 << "\n";
-                        outFile << x1 << " " << y1 << " " << halfDim <<  " " << nx << " " << ny << " " << nz << " " << 0.0 << " " << 0.0 << "\n";
-                        outFile << x2 << " " << y1 << " " << halfDim <<  " " << nx << " " << ny << " " << nz << " " << 0.0 << " " << 0.0 << "\n";
+                        emit(x2, y2, halfDim, tx2, ty2);
+                        emit(x1, y1, halfDim, tx1, ty1);
+                        emit(x2, y1, halfDim, tx2, ty1);
                         break;
-                    case 1: // Trás 
-                        outFile << x1 << " " << y2 << " " << -halfDim <<  " " << nx << " " << ny << " " << nz << " " << 0.0 << " " << 0.0 << "\n";
-                        outFile << x2 << " " << y2 << " " << -halfDim <<  " " << nx << " " << ny << " " << nz << " " << 0.0 << " " << 0.0 << "\n";
-                        outFile << x1 << " " << y1 << " " << -halfDim <<  " " << nx << " " << ny << " " << nz << " " << 0.0 << " " << 0.0 << "\n";
 
-                        outFile << x2 << " " << y2 << " " << -halfDim <<  " " << nx << " " << ny << " " << nz << " " << 0.0 << " " << 0.0 << "\n";
-                        outFile << x2 << " " << y1 << " " << -halfDim <<  " " << nx << " " << ny << " " << nz << " " << 0.0 << " " << 0.0 << "\n";
-                        outFile << x1 << " " << y1 << " " << -halfDim <<  " " << nx << " " << ny << " " << nz << " " << 0.0 << " " << 0.0 << "\n";
-                        break;
-                    case 2: // Esquerda 
-                        outFile << -halfDim << " " << y2 << " " << x1 <<  " " << nx << " " << ny << " " << nz << " " << 0.0 << " " << 0.0 << "\n";
-                        outFile << -halfDim << " " << y1 << " " << x1 <<  " " << nx << " " << ny << " " << nz << " " << 0.0 << " " << 0.0 << "\n";
-                        outFile << -halfDim << " " << y2 << " " << x2 <<  " " << nx << " " << ny << " " << nz << " " << 0.0 << " " << 0.0 << "\n";
+                    case 1: // Trás
+                        emit(x1, y2, -halfDim, tx2, ty2);
+                        emit(x2, y2, -halfDim, tx1, ty2);
+                        emit(x1, y1, -halfDim, tx2, ty1);
 
-                        outFile << -halfDim << " " << y2 << " " << x2 <<  " " << nx << " " << ny << " " << nz << " " << 0.0 << " " << 0.0 << "\n";
-                        outFile << -halfDim << " " << y1 << " " << x1 <<  " " << nx << " " << ny << " " << nz << " " << 0.0 << " " << 0.0 << "\n";
-                        outFile << -halfDim << " " << y1 << " " << x2 <<  " " << nx << " " << ny << " " << nz << " " << 0.0 << " " << 0.0 << "\n";
+                        emit(x2, y2, -halfDim, tx1, ty2);
+                        emit(x2, y1, -halfDim, tx1, ty1);
+                        emit(x1, y1, -halfDim, tx2, ty1);
                         break;
-                    case 3: // Direita 
-                        outFile << halfDim << " " << y2 << " " << x1 <<  " " << nx << " " << ny << " " << nz << " " << 0.0 << " " << 0.0 << "\n";
-                        outFile << halfDim << " " << y2 << " " << x2 <<  " " << nx << " " << ny << " " << nz << " " << 0.0 << " " << 0.0 << "\n";
-                        outFile << halfDim << " " << y1 << " " << x1 <<  " " << nx << " " << ny << " " << nz << " " << 0.0 << " " << 0.0 << "\n";
 
-                        outFile << halfDim << " " << y2 << " " << x2 <<  " " << nx << " " << ny << " " << nz << " " << 0.0 << " " << 0.0 << "\n";
-                        outFile << halfDim << " " << y1 << " " << x2 <<  " " << nx << " " << ny << " " << nz << " " << 0.0 << " " << 0.0 << "\n";
-                        outFile << halfDim << " " << y1 << " " << x1 <<  " " << nx << " " << ny << " " << nz << " " << 0.0 << " " << 0.0 << "\n";
-                        break;
-                    case 4: // Topo 
-                        outFile << x1 << " " << halfDim << " " << y2 <<  " " << nx << " " << ny << " " << nz << " " << 0.0 << " " << 0.0 << "\n";
-                        outFile << x2 << " " << halfDim << " " << y2 <<  " " << nx << " " << ny << " " << nz << " " << 0.0 << " " << 0.0 << "\n";
-                        outFile << x1 << " " << halfDim << " " << y1 <<  " " << nx << " " << ny << " " << nz << " " << 0.0 << " " << 0.0 << "\n";
+                    case 2: // Esquerda (x fixo)
+                        emit(-halfDim, y2, x1, tx2, ty2);
+                        emit(-halfDim, y1, x1, tx2, ty1);
+                        emit(-halfDim, y2, x2, tx1, ty2);
 
-                        outFile << x2 << " " << halfDim << " " << y2 <<  " " << nx << " " << ny << " " << nz << " " << 0.0 << " " << 0.0 << "\n";
-                        outFile << x2 << " " << halfDim << " " << y1 <<  " " << nx << " " << ny << " " << nz << " " << 0.0 << " " << 0.0 << "\n";
-                        outFile << x1 << " " << halfDim << " " << y1 <<  " " << nx << " " << ny << " " << nz << " " << 0.0 << " " << 0.0 << "\n";
+                        emit(-halfDim, y2, x2, tx1, ty2);
+                        emit(-halfDim, y1, x1, tx2, ty1);
+                        emit(-halfDim, y1, x2, tx1, ty1);
                         break;
+
+                    case 3: // Direita
+                        emit(halfDim, y2, x1, tx1, ty2);
+                        emit(halfDim, y2, x2, tx2, ty2);
+                        emit(halfDim, y1, x1, tx1, ty1);
+
+                        emit(halfDim, y2, x2, tx2, ty2);
+                        emit(halfDim, y1, x2, tx2, ty1);
+                        emit(halfDim, y1, x1, tx1, ty1);
+                        break;
+
+                    case 4: // Topo (y fixo)
+                        emit(x1, halfDim, y2, tx1, ty2);
+                        emit(x2, halfDim, y2, tx2, ty2);
+                        emit(x1, halfDim, y1, tx1, ty1);
+
+                        emit(x2, halfDim, y2, tx2, ty2);
+                        emit(x2, halfDim, y1, tx2, ty1);
+                        emit(x1, halfDim, y1, tx1, ty1);
+                        break;
+
                     case 5: // Base
-                        outFile << x1 << " " << -halfDim << " " << y2 <<  " " << nx << " " << ny << " " << nz << " " << 0.0 << " " << 0.0 << "\n";
-                        outFile << x1 << " " << -halfDim << " " << y1 <<  " " << nx << " " << ny << " " << nz << " " << 0.0 << " " << 0.0 << "\n";
-                        outFile << x2 << " " << -halfDim << " " << y2 <<  " " << nx << " " << ny << " " << nz << " " << 0.0 << " " << 0.0 << "\n";
+                        emit(x1, -halfDim, y2, tx1, ty2);
+                        emit(x1, -halfDim, y1, tx1, ty1);
+                        emit(x2, -halfDim, y2, tx2, ty2);
 
-                        outFile << x2 << " " << -halfDim << " " << y2 <<  " " << nx << " " << ny << " " << nz << " " << 0.0 << " " << 0.0 << "\n";
-                        outFile << x1 << " " << -halfDim << " " << y1 <<  " " << nx << " " << ny << " " << nz << " " << 0.0 << " " << 0.0 << "\n";
-                        outFile << x2 << " " << -halfDim << " " << y1 <<  " " << nx << " " << ny << " " << nz << " " << 0.0 << " " << 0.0 << "\n";
+                        emit(x2, -halfDim, y2, tx2, ty2);
+                        emit(x1, -halfDim, y1, tx1, ty1);
+                        emit(x2, -halfDim, y1, tx2, ty1);
                         break;
                 }
             }
         }
     }
+
     outFile.close();
 }
-

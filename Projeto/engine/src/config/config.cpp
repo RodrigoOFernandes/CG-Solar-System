@@ -37,7 +37,8 @@ void Config::parseFile(const char* filename) {
 }
 
 
-void drawAxis(void){
+void drawAxis(bool lighting){
+    if(lighting) glDisable(GL_LIGHTING);
 	glBegin(GL_LINES);
 		// X axis in red
 		glColor3f(1.0f, 0.0f, 0.0f);
@@ -52,10 +53,11 @@ void drawAxis(void){
 		glVertex3f(0.0f, 0.0f, -100.0f);
 		glVertex3f(0.0f, 0.0f, 100.0f);
 	glEnd();
+    if(lighting) glEnable(GL_LIGHTING);
 }
 
 
-void Config::draw(bool view_axis, bool show_catmull, bool lighting){
+void Config::draw(bool view_axis, bool show_catmull, bool lighting, bool viewNormals){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -64,15 +66,12 @@ void Config::draw(bool view_axis, bool show_catmull, bool lighting){
               camera.lookAt.x, camera.lookAt.y, camera.lookAt.z,
               camera.up.x, camera.up.y, camera.up.z);
 
-    glEnable(GL_DEPTH_TEST);
-    
+
     if(lighting) drawLights(lights);
 
+    group.drawGroup(show_catmull, lighting, viewNormals);
+    
     if (view_axis) {
-        drawAxis();
+        drawAxis(lighting);
     }
-
-    glColor3f(1.0f, 1.0f, 1.0f); // fallback color (se lighting estiver off)
-
-    group.drawGroup(show_catmull, lighting);
 }
