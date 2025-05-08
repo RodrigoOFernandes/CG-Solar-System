@@ -119,5 +119,44 @@ else()  # Linux e macOS
         target_link_libraries(generator ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES} ${GLEW_LIBRARIES})
         target_link_libraries(engine ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES} ${GLEW_LIBRARIES})
     endif()
-endif()
 
+    # === DevIL (IL + ILU) ===
+    if(APPLE)
+        find_path(IL_INCLUDE_DIR IL/il.h
+            PATHS /opt/homebrew/include /usr/local/include
+        )
+
+        find_library(IL_LIBRARY IL
+            PATHS /opt/homebrew/lib /usr/local/lib
+        )
+
+        find_library(ILU_LIBRARY ILU
+            PATHS /opt/homebrew/lib /usr/local/lib
+        )
+
+        if(NOT IL_INCLUDE_DIR OR NOT IL_LIBRARY OR NOT ILU_LIBRARY)
+            message(FATAL_ERROR "DevIL/ILU não encontrados! Instale com: brew install devil")
+        else()
+            message(STATUS "DevIL e ILU encontrados!")
+        endif()
+
+        include_directories(${IL_INCLUDE_DIR})
+        target_link_libraries(engine ${IL_LIBRARY} ${ILU_LIBRARY})
+        target_link_libraries(generator ${IL_LIBRARY} ${ILU_LIBRARY})
+
+    else()
+        find_path(IL_INCLUDE_DIR IL/il.h /usr/include /usr/local/include)
+        find_library(IL_LIBRARY IL /usr/lib /usr/local/lib)
+        find_library(ILU_LIBRARY ILU /usr/lib /usr/local/lib)
+
+        if(NOT IL_INCLUDE_DIR OR NOT IL_LIBRARY OR NOT ILU_LIBRARY)
+            message(FATAL_ERROR "DevIL/ILU não encontrados! Instale com: sudo apt install libdevil-dev")
+        else()
+            message(STATUS "DevIL e ILU encontrados!")
+        endif()
+
+        include_directories(${IL_INCLUDE_DIR})
+        target_link_libraries(engine ${IL_LIBRARY} ${ILU_LIBRARY})
+        target_link_libraries(generator ${IL_LIBRARY} ${ILU_LIBRARY})
+    endif()
+endif()

@@ -13,6 +13,10 @@
 #include <sstream> 
 #include <vector>
 
+#include <IL/il.h>
+#include <IL/ilu.h>   
+#include <IL/ilut.h>  
+
 #include "../include/parser/tinyxml2.h"
 #include "../include/config/material.hpp"
 
@@ -31,12 +35,20 @@ class Model {
         Model() : vboID(0) {}
         GLsizei triangle_count;
         Material material;
+        std::string textureFileName;
+        GLuint textID = 0;
+        std::vector<float> verticesCPU;
+        std::vector<float> normalsCPU;
+
 
         void parseModelMaterial(tinyxml2::XMLElement* materialElement);
         void parseModel(tinyxml2::XMLElement* modelElement);
-        void draw() const;
+        void loadTexture(std::string filename);
+        void draw( bool viewNormals) const;
+        void parseTexture(tinyxml2::XMLElement* textureElement);
         void setMaterial(const Material& mat);
         void setupMaterial() const; 
+        void drawNormals(bool viewNormals) const; 
         void printMaterial();
 };
 

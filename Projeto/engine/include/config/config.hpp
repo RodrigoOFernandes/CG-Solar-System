@@ -20,7 +20,7 @@ class Config{
         std::vector<Light> lights;
 
         void parseFile(const char* filename);
-        void draw(bool view_axis, bool show_catmull, bool lighting);
+        void draw(bool view_axis, bool show_catmull, bool lighting, bool viewNormals);
         void print() const;
 };
 
