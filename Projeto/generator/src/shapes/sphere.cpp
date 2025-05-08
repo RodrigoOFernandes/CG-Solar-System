@@ -1,51 +1,56 @@
 #include "../shapes/sphere.hpp"
-
+#include <cmath>
+#include <fstream>
+#include <iostream>
 
 void generateSphere(int radius, int slices, int stacks, char* outputFile){
     std::string fullPath = "../models/" + std::string(outputFile);
     std::ofstream outFile(fullPath);
-    
-    if(!outFile.is_open())
-    {
-        std::cerr << "Error opening outputfile" << outputFile << std::endl;
+
+    if(!outFile.is_open()) {
+        std::cerr << "Error opening outputfile " << outputFile << std::endl;
         return;
     }
 
-    outFile << "sphere" << "\n";
+    outFile << "sphere\n";
 
     for (int i = 0; i < slices; ++i) {
-        float theta1 = static_cast<float>(i) * M_PI / static_cast<float>(stacks);
-        float theta2 = static_cast<float>(i + 1) * M_PI / static_cast<float>(stacks);
-
+        float theta1 = i * M_PI / slices;
+        float theta2 = (i + 1) * M_PI / slices;
 
         for (int j = 0; j < stacks; ++j) {
-        float phi1 = static_cast<float>(j) * 2.0f * static_cast<float>(M_PI) / static_cast<float>(stacks);
-        float phi2 = static_cast<float>(j + 1) * 2.0f * static_cast<float>(M_PI) / static_cast<float>(stacks);
+            float phi1 = j * 2.0f * M_PI / stacks;
+            float phi2 = (j + 1) * 2.0f * M_PI / stacks;
 
-            float z1 = radius * std::sin(theta1) * std::cos(phi1);
-            float x1 = radius * std::sin(theta1) * std::sin(phi1);
-            float y1 = radius * std::cos(theta1);
+            auto writeVertex = [&](float theta, float phi) {
+                float x = radius * sin(theta) * sin(phi);
+                float y = radius * cos(theta);
+                float z = radius * sin(theta) * cos(phi);
 
-            float z2 = radius * std::sin(theta1) * std::cos(phi2);
-            float x2 = radius * std::sin(theta1) * std::sin(phi2);
-            float y2 = radius * std::cos(theta1);
+                float nx = sin(theta) * sin(phi);
+                float ny = cos(theta);
+                float nz = sin(theta) * cos(phi);
 
-            float z3 = radius * std::sin(theta2) * std::cos(phi1);
-            float x3 = radius * std::sin(theta2) * std::sin(phi1);
-            float y3 = radius * std::cos(theta2);
+                float u = phi / (2.0f * M_PI);
+                float v = 1.0f - (theta / M_PI);
 
-            float z4 = radius * std::sin(theta2) * std::cos(phi2);
-            float x4 = radius * std::sin(theta2) * std::sin(phi2);
-            float y4 = radius * std::cos(theta2);          
+                outFile << x << " " << y << " " << z << " ";
+                outFile << nx << " " << ny << " " << nz << " ";
+                outFile << u << " " << v << "\n";
+            };
 
-            outFile << x1 << " " << y1 << " " << z1 << std::endl;
-            outFile << x4 << " " << y4 << " " << z4 << std::endl;
-            outFile << x2 << " " << y2 << " " << z2 << std::endl;
-            
-            outFile << x1 << " " << y1 << " " << z1 << std::endl;
-            outFile << x3 << " " << y3 << " " << z3 << std::endl;
-            outFile << x4 << " " << y4 << " " << z4 << std::endl;
+            // Triângulo 1
+            writeVertex(theta1, phi1);
+            writeVertex(theta2, phi2);
+            writeVertex(theta1, phi2);
+
+            // Triângulo 2
+            writeVertex(theta1, phi1);
+            writeVertex(theta2, phi1);
+            writeVertex(theta2, phi2);
         }
     }
-    outFile.close();   
+
+    outFile.close();
 }
+
