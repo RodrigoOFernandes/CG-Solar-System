@@ -7,6 +7,13 @@
         <projection fov="60" near="1" far="1000" />
     </camera>
 
+    <lights> 
+        <!-- Luz pontual posicionada ligeiramente acima do sol -->
+        <light type="point" posx="0" posy="20" posz="0" r="1.0" g="0.9" b="0.7" />
+        <!-- Luz spot original mantida -->
+        <light type="spot" posx="0" posy="2" posz="4" dirx="0" diry="-2" dirz="-4" cutoff="10"/>
+    </lights>
+
     <group>
         <!-- "SOL" -->
         <group>
@@ -14,7 +21,9 @@
                 <scale x="10" y="10" z="10" />
             </transform>
             <models>
-                <model file="sphere_1_16_16.3d" />
+                <model file="sphere_1_16_16.3d" >
+                <texture file = "sun.jpg" />
+                </model>
             </models>
         </group>
 
@@ -40,7 +49,9 @@
         <scale x="0.7" y="0.7" z="0.7"/>
     </transform>
     <models>
-        <model file="comet.3d"/>
+        <model file="comet.3d">
+        <texture file="comet.jpg" />
+        </model>
     </models>
 </group>
 
@@ -53,7 +64,9 @@
                 <scale x="1.1" y="1.1" z="1.1" />
             </transform>
             <models>
-                <model file="sphere_1_8_8.3d" />
+                <model file="sphere_1_8_8.3d" > 
+                <texture file="mercury.jpg" />
+                </model>
             </models>
         </group>
 
@@ -66,7 +79,9 @@
                 <scale x="1.2" y="1.2" z="1.2" />
             </transform>
             <models>
-                <model file="sphere_1_8_8.3d" />
+                <model file="sphere_1_8_8.3d" >
+                <texture file="venus.jpg" />
+                </model>
             </models>
         </group>
 
@@ -79,7 +94,9 @@
                 <scale x="2.0" y="2.0" z="2.0" />
             </transform>
             <models>
-                <model file="sphere_1_8_8.3d" />
+                <model file="sphere_1_8_8.3d" >
+                <texture file="earth.jpg" />
+                </model>
             </models>
             <group>
                 <transform>
@@ -89,7 +106,9 @@
                     <scale x="0.3" y="0.3" z="0.3" />
                 </transform>
                 <models>
-                    <model file="sphere_1_8_8.3d" />
+                    <model file="sphere_1_8_8.3d" >
+                    <texture file="moon.jpg" />
+                    </model>
                 </models>
             </group>
         </group>
@@ -103,7 +122,9 @@
                 <scale x="1.5" y="1.5" z="1.5" />
             </transform>
             <models>
-                <model file="sphere_1_8_8.3d" />
+                <model file="sphere_1_8_8.3d" >
+                <texture file="mars.jpg" />
+                </model>
             </models>
             <group>
                 <transform>
@@ -112,14 +133,18 @@
                     <scale x="0.3" y="0.3" z="0.3" />
                 </transform>
                 <models>
-                    <model file="sphere_1_8_8.3d" />
+                    <model file="sphere_1_8_8.3d" >
+                    <texture file="moon.jpg" />
+                    </model>
                 </models>
                 <group>
                     <transform>
                         <translate x="-4" y="2" z="-5" />
                     </transform>
                     <models>
-                        <model file="sphere_1_8_8.3d" />
+                        <model file="sphere_1_8_8.3d">
+                        <texture file="moon.jpg" />
+                        </model>
                     </models>
                 </group>
             </group>
@@ -134,7 +159,9 @@
                 <scale x="4.0" y="4.0" z="4.0" />
             </transform>
             <models>
-                <model file="sphere_1_8_8.3d" />
+                <model file="sphere_1_8_8.3d" >
+                <texture file="jupiter.jpg" />
+                </model>
             </models>
             <group>
                 <transform>
@@ -142,14 +169,14 @@
                     <translate x="1" y="0.5" z="-1" />
                     <scale x="0.1" y="0.1" z="0.1" />
                 </transform>
-                <group><transform><rotate time="15" y="1" /><translate x="-5" y="2" z="-3" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
-                <group><transform><rotate time="3" y="1" /><translate x="7" y="-1" z="5" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
-                <group><transform><rotate time="8" y="1" /><translate x="-3" y="3" z="-6" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
-                <group><transform><rotate time="7" y="1" /><translate x="4" y="-2" z="-4" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
-                <group><transform><rotate time="17" y="1" /><translate x="-6" y="4" z="3" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
-                <group><transform><rotate time="10" y="1" /><translate x="5" y="-3" z="-5" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
-                <group><transform><rotate time="34" y="1" /><translate x="-2" y="2" z="4" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
-                <group><transform><rotate time="4" y="1" /><translate x="-4" y="-1" z="6" /></transform><models><model file="sphere_1_8_8.3d" /></models></group>
+                <group><transform><rotate time="15" y="1" /><translate x="-5" y="2" z="-3" /></transform><models><model file="sphere_1_8_8.3d" ><texture file="moon.jpg" /></model></models></group>
+                <group><transform><rotate time="3" y="1" /><translate x="7" y="-1" z="5" /></transform><models><model file="sphere_1_8_8.3d"><texture file="moon.jpg" /></model></models></group>
+                <group><transform><rotate time="8" y="1" /><translate x="-3" y="3" z="-6" /></transform><models><model file="sphere_1_8_8.3d"><texture file="moon.jpg" /></model></models></group>
+                <group><transform><rotate time="7" y="1" /><translate x="4" y="-2" z="-4" /></transform><models><model file="sphere_1_8_8.3d"><texture file="moon.jpg" /></model></models></group>
+                <group><transform><rotate time="17" y="1" /><translate x="-6" y="4" z="3" /></transform><models><model file="sphere_1_8_8.3d"><texture file="moon.jpg" /></model></models></group>
+                <group><transform><rotate time="10" y="1" /><translate x="5" y="-3" z="-5" /></transform><models><model file="sphere_1_8_8.3d"><texture file="moon.jpg" /></model></models></group>
+                <group><transform><rotate time="34" y="1" /><translate x="-2" y="2" z="4" /></transform><models><model file="sphere_1_8_8.3d"><texture file="moon.jpg" /></model></models></group>
+                <group><transform><rotate time="4" y="1" /><translate x="-4" y="-1" z="6" /></transform><models><model file="sphere_1_8_8.3d"><texture file="moon.jpg" /></model></models></group>
             </group>
         </group>
 
@@ -162,7 +189,9 @@
                 <scale x="3.0" y="3.0" z="3.0" />
             </transform>
             <models>
-                <model file="sphere_1_8_8.3d" />
+                <model file="sphere_1_8_8.3d">
+                <texture file="saturn.jpg" />
+                </model>
             </models>
             <group>
                 <transform>
@@ -170,7 +199,9 @@
                     <rotate x="1" angle="75" />
                 </transform>
                 <models>
-                    <model file="torus_1_9_40_2.3d" />
+                    <model file="torus_1_9_40_2.3d">
+                    <texture file="saturnring.jpg" />
+                    </model>
                 </models>
             </group>
             <!-- Luas de Saturno -->
@@ -181,7 +212,9 @@
                     <scale x="0.1" y="0.1" z="0.1" />
                 </transform>
                 <models>
-                    <model file="sphere_1_8_8.3d" />
+                    <model file="sphere_1_8_8.3d">
+                    <texture file="moon.jpg" />
+                    </model>
                 </models>
             </group>
             <group>
@@ -191,7 +224,9 @@
                     <scale x="0.1" y="0.1" z="0.1" />
                 </transform>
                 <models>
-                    <model file="sphere_1_8_8.3d" />
+                    <model file="sphere_1_8_8.3d">
+                    <texture file="moon.jpg" />
+                    </model>
                 </models>
             </group>
             <group>
@@ -201,7 +236,9 @@
                     <scale x="0.1" y="0.1" z="0.1" />
                 </transform>
                 <models>
-                    <model file="sphere_1_8_8.3d" />
+                    <model file="sphere_1_8_8.3d">
+                    <texture file="moon.jpg" />
+                    </model>
                 </models>
             </group>
             <group>
@@ -211,7 +248,9 @@
                     <scale x="0.1" y="0.1" z="0.1" />
                 </transform>
                 <models>
-                    <model file="sphere_1_8_8.3d" />
+                    <model file="sphere_1_8_8.3d">
+                    <texture file="moon.jpg" />
+                    </model>
                 </models>
             </group>
             <group>
@@ -221,7 +260,9 @@
                     <scale x="0.1" y="0.1" z="0.1" />
                 </transform>
                 <models>
-                    <model file="sphere_1_8_8.3d" />
+                    <model file="sphere_1_8_8.3d">
+                    <texture file="moon.jpg" />
+                    </model>
                 </models>
             </group>
         </group>
@@ -235,7 +276,9 @@
                 <scale x="2.0" y="2.0" z="2.0" />
             </transform>
             <models>
-                <model file="sphere_1_8_8.3d" />
+                <model file="sphere_1_8_8.3d">
+                <texture file="uranus.jpg" />
+                </model>
             </models>
             <!-- Luas de Urano -->
             <group>
@@ -245,7 +288,9 @@
                     <scale x="0.1" y="0.1" z="0.1" />
                 </transform>
                 <models>
-                    <model file="sphere_1_8_8.3d" />
+                    <model file="sphere_1_8_8.3d">
+                    <texture file="moon.jpg" />
+                    </model>
                 </models>
             </group>
             <group>
@@ -255,7 +300,9 @@
                     <scale x="0.1" y="0.1" z="0.1" />
                 </transform>
                 <models>
-                    <model file="sphere_1_8_8.3d" />
+                    <model file="sphere_1_8_8.3d">
+                    <texture file="moon.jpg" />
+                    </model>
                 </models>
             </group>
             <group>
@@ -265,7 +312,9 @@
                     <scale x="0.1" y="0.1" z="0.1" />
                 </transform>
                 <models>
-                    <model file="sphere_1_8_8.3d" />
+                    <model file="sphere_1_8_8.3d">
+                    <texture file="moon.jpg" />
+                    </model>
                 </models>
             </group>
             <group>
@@ -275,7 +324,9 @@
                     <scale x="0.1" y="0.1" z="0.1" />
                 </transform>
                 <models>
-                    <model file="sphere_1_8_8.3d" />
+                    <model file="sphere_1_8_8.3d">
+                    <texture file="moon.jpg" />
+                    </model>
                 </models>
             </group>
         </group>
@@ -289,7 +340,9 @@
                 <scale x="1.5" y="1.5" z="1.5" />
             </transform>
             <models>
-                <model file="sphere_1_8_8.3d" />
+                <model file="sphere_1_8_8.3d">
+                <texture file="neptune.jpg" />
+                </model>
             </models>
             <!-- Luas de Netuno -->
             <group>
@@ -299,7 +352,9 @@
                     <scale x="0.1" y="0.1" z="0.1" />
                 </transform>
                 <models>
-                    <model file="sphere_1_8_8.3d" />
+                    <model file="sphere_1_8_8.3d">
+                    <texture file="moon.jpg" />
+                    </model>
                 </models>
             </group>
             <group>
@@ -309,7 +364,9 @@
                     <scale x="0.1" y="0.1" z="0.1" />
                 </transform>
                 <models>
-                    <model file="sphere_1_8_8.3d" />
+                    <model file="sphere_1_8_8.3d">
+                    <texture file="moon.jpg" />
+                    </model>
                 </models>
             </group>
             <group>
@@ -319,7 +376,9 @@
                     <scale x="0.1" y="0.1" z="0.1" />
                 </transform>
                 <models>
-                    <model file="sphere_1_8_8.3d" />
+                    <model file="sphere_1_8_8.3d">
+                    <texture file="moon.jpg" />
+                    </model>
                 </models>
             </group>
             <group>
@@ -329,7 +388,9 @@
                     <scale x="0.1" y="0.1" z="0.1" />
                 </transform>
                 <models>
-                    <model file="sphere_1_8_8.3d" />
+                    <model file="sphere_1_8_8.3d">
+                    <texture file="moon.jpg" />
+                    </model>
                 </models>
             </group>
         </group>
