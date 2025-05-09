@@ -32,6 +32,30 @@ void resize(int w, int h) {
     glLoadIdentity();
 }
 
+void processMenuEvents(int option) {
+    switch (option) {
+        case 1:
+            view_axis = !view_axis;
+            std::cout << "View axis: " << (view_axis ? "ON" : "OFF") << std::endl;
+            break;
+        case 2:
+            show_catmull = !show_catmull;
+            std::cout << "Catmull: " << (show_catmull ? "ON" : "OFF") << std::endl;
+            break;
+        case 3:
+            viewNormals = !viewNormals;
+            std::cout << "View Normals: " << (viewNormals ? "ON" : "OFF") << std::endl;
+            break;
+        case 4:
+            lighting = !lighting;
+            std::cout << "Lighting: " << (lighting ? "ON" : "OFF") << std::endl;
+            break;
+    }
+
+    glutPostRedisplay();
+}
+
+
 void renderScene() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
@@ -116,6 +140,19 @@ void processKeys(unsigned char key, int x, int y) {
             
     }
 }
+
+void processSpecialKeys(int key, int x, int y) {
+    switch (key) {
+        case GLUT_KEY_UP:
+            configuration.camera.updateZoom(-5);  // Zoom in
+            glutPostRedisplay();
+            break;
+        case GLUT_KEY_DOWN:
+            configuration.camera.updateZoom(5);   // Zoom out
+            glutPostRedisplay();
+            break;
+    }
+}
 // ======================================
 
 int main(int argc, char **argv) {
@@ -145,6 +182,7 @@ int main(int argc, char **argv) {
     glutDisplayFunc(renderScene);
     glutReshapeFunc(resize);
     glutKeyboardFunc(processKeys);
+    glutSpecialFunc(processSpecialKeys);
 
     // === Registo de callbacks de rato ===
     glutMouseFunc(mouseButton);
@@ -160,6 +198,13 @@ int main(int argc, char **argv) {
     resize(configuration.window.width, configuration.window.height);
 
     lighting = setupLights(configuration.lights);
+    int menu = glutCreateMenu(processMenuEvents);
+    glutAddMenuEntry("Toggle View Axis", 1);
+    glutAddMenuEntry("Toggle Catmull Curve", 2);
+    glutAddMenuEntry("Toggle Normals", 3);
+    glutAddMenuEntry("Toggle Lighting", 4);
+    glutAttachMenu(GLUT_RIGHT_BUTTON); 
     glutMainLoop();
+
     return 0;
 }
