@@ -1,45 +1,72 @@
 #include "../shapes/torus.hpp"
+#include <fstream>
+#include <cmath>
+#include <string>
+
+struct Vertex {
+    float x, y, z;     // posição
+    float nx, ny, nz;  // normal
+    float u, v;        // coordenadas de textura
+
+    void writeTo(std::ofstream& out) const {
+        out << x << " " << y << " " << z << " "
+            << nx << " " << ny << " " << nz << " "
+            << u << " " << v << "\n";
+    }
+};
+
+Vertex computeTorusVertex(float minorR, float majorR, float sliceAngle, float stackAngle) {
+    float cosSlice = cosf(sliceAngle);
+    float sinSlice = sinf(sliceAngle);
+    float cosStack = cosf(stackAngle);
+    float sinStack = sinf(stackAngle);
+
+    float x = (majorR + minorR * cosSlice) * cosStack;
+    float y = (majorR + minorR * cosSlice) * sinStack;
+    float z = minorR * sinSlice;
+
+    float nx = cosSlice * cosStack;
+    float ny = cosSlice * sinStack;
+    float nz = sinSlice;
+
+    float u = stackAngle / (2.0f * M_PI);
+    float v = sliceAngle / (2.0f * M_PI);
+
+    return {x, y, z, nx, ny, nz, u, v};
+}
 
 void generateTorus(int minorRadius, int majorRadius, int stacks, int slices, char* outputFile) {
     std::string fullPath = "../models/" + std::string(outputFile);
     std::ofstream outFile(fullPath);
-    
-    float sliceStep = (float) 2 * M_PI / slices;
-    float stackStep = (float) 2 * M_PI / stacks;
 
-    outFile << "torus" << "\n";
+    outFile << "torus\n";
 
-    for(int i = 0; i < slices; i++) {
-        float sliceAngle1 = i * sliceStep;       
-        float sliceAngle2 = (i + 1) * sliceStep; 
+    float sliceStep = 2.0f * M_PI / slices;
+    float stackStep = 2.0f * M_PI / stacks;
 
-        for(int j = 0; j < stacks; j++) {
-            float stackAngle1 = j * stackStep;       
-            float stackAngle2 = (j + 1) * stackStep; 
+    for (int i = 0; i < slices; ++i) {
+        float slice1 = i * sliceStep;
+        float slice2 = (i + 1) * sliceStep;
 
-            float x1 = (majorRadius + minorRadius * cosf(sliceAngle1)) * cosf(stackAngle1);
-            float y1 = (majorRadius + minorRadius * cosf(sliceAngle1)) * sinf(stackAngle1);
-            float z1 = minorRadius * sinf(sliceAngle1);
+        for (int j = 0; j < stacks; ++j) {
+            float stack1 = j * stackStep;
+            float stack2 = (j + 1) * stackStep;
 
-            float x2 = (majorRadius + minorRadius * cosf(sliceAngle1)) * cosf(stackAngle2);
-            float y2 = (majorRadius + minorRadius * cosf(sliceAngle1)) * sinf(stackAngle2);
-            float z2 = minorRadius * sinf(sliceAngle1);
+            // 4 vértices do quadrado
+            Vertex v1 = computeTorusVertex(minorRadius, majorRadius, slice1, stack1);
+            Vertex v2 = computeTorusVertex(minorRadius, majorRadius, slice1, stack2);
+            Vertex v3 = computeTorusVertex(minorRadius, majorRadius, slice2, stack1);
+            Vertex v4 = computeTorusVertex(minorRadius, majorRadius, slice2, stack2);
 
-            float x3 = (majorRadius + minorRadius * cosf(sliceAngle2)) * cosf(stackAngle1);
-            float y3 = (majorRadius + minorRadius * cosf(sliceAngle2)) * sinf(stackAngle1);
-            float z3 = minorRadius * sinf(sliceAngle2);
+            // 2 triângulos
+            v1.writeTo(outFile);
+            v2.writeTo(outFile);
+            v3.writeTo(outFile);
 
-            float x4 = (majorRadius + minorRadius * cosf(sliceAngle2)) * cosf(stackAngle2);
-            float y4 = (majorRadius + minorRadius * cosf(sliceAngle2)) * sinf(stackAngle2);
-            float z4 = minorRadius * sinf(sliceAngle2);
-
-            outFile << x1 << " " << y1 << " " << z1 << std::endl;
-            outFile << x2 << " " << y2 << " " << z2 << std::endl;
-            outFile << x3 << " " << y3 << " " << z3 << std::endl;
-
-            outFile << x2 << " " << y2 << " " << z2 << std::endl;
-            outFile << x4 << " " << y4 << " " << z4 << std::endl;
-            outFile << x3 << " " << y3 << " " << z3 << std::endl;
+            v2.writeTo(outFile);
+            v4.writeTo(outFile);
+            v3.writeTo(outFile);
         }
     }
 }
+
