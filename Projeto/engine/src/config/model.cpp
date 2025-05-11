@@ -185,13 +185,13 @@ void Model::printMaterial() {
 }
 
 
-void Model::drawNormals(bool viewNormals) const{
-    if(!viewNormals) return;
-    if (verticesCPU.empty() || normalsCPU.empty()) return;
+void Model::drawNormals(bool viewNormals) const {
+    if (!viewNormals) return;
 
+    glPushAttrib(GL_ENABLE_BIT); // guarda estado de iluminação
     glDisable(GL_LIGHTING);
-    glColor3f(1.0f, 0.0f, 0.0f); 
 
+    glColor3f(1.0f, 0.0f, 0.0f); 
     glBegin(GL_LINES);
     for (size_t i = 0; i < verticesCPU.size(); i += 3) {
         float vx = verticesCPU[i];
@@ -202,11 +202,11 @@ void Model::drawNormals(bool viewNormals) const{
         float ny = normalsCPU[i + 1];
         float nz = normalsCPU[i + 2];
 
-        glVertex3f(vx, vy, vz);                      
-        glVertex3f(vx + nx * 0.2f,                   
-                   vy + ny * 0.2f,
-                   vz + nz * 0.2f);
+        glVertex3f(vx, vy, vz);
+        glVertex3f(vx + nx * 0.2f, vy + ny * 0.2f, vz + nz * 0.2f);
     }
     glEnd();
-    glEnable(GL_LIGHTING);
+
+    glPopAttrib(); // restaura estado de iluminação
 }
+
